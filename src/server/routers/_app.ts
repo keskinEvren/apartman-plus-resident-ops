@@ -1,6 +1,8 @@
 import { router } from "../trpc";
 import { userRouter } from "./user";
 import { siteRouter } from "./site";
+import { notificationRouter } from "./notification";
+import { announcementRouter } from "./announcement";
 
 /**
  * Root tRPC Router
@@ -9,6 +11,8 @@ import { siteRouter } from "./site";
 export const appRouter = router({
   user: userRouter,
   site: siteRouter,
+  notification: notificationRouter,
+  announcement: announcementRouter,
 });
 
 export type AppRouter = typeof appRouter;
