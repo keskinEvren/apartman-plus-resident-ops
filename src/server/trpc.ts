@@ -23,9 +23,45 @@ export const createContext = async (opts: { req?: Request }) => {
     }
   }
 
+  let activeMembership = null;
+  const siteId = opts.req?.headers.get("x-site-id");
+
+  if (user && siteId && siteId !== "undefined" && siteId !== "null") {
+    try {
+      const { memberships, roles } = await import("@/db/schema");
+      const { eq, and } = await import("drizzle-orm");
+
+      const [membershipRecord] = await db
+        .select()
+        .from(memberships)
+        .where(
+          and(
+            eq(memberships.userId, user.userId),
+            eq(memberships.siteId, siteId),
+            eq(memberships.isActive, true),
+          ),
+        )
+        .leftJoin(roles, eq(memberships.roleId, roles.id));
+
+      if (membershipRecord) {
+        activeMembership = {
+          id: membershipRecord.memberships.id,
+          siteId: membershipRecord.memberships.siteId,
+          unitId: membershipRecord.memberships.unitId,
+          roleId: membershipRecord.memberships.roleId,
+          roleName: membershipRecord.roles?.name || "User",
+          permissions: membershipRecord.roles?.permissions || [],
+        };
+      }
+    } catch (e) {
+      // error fetching membership, activeMembership remains null
+    }
+  }
+
   return {
     db,
     user,
+    activeMembership,
     req: opts.req,
   };
 };
@@ -71,3 +107,29 @@ export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
     },
   });
 });
+
+/**
+ * Dynamic RBAC check - requires a specific permission in the active site membership
+ */
+export const hasPermission = (permission: string) => {
+  return protectedProcedure.use(async ({ ctx, next }) => {
+    if (!ctx.activeMembership) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "No active site membership selected or membership is inactive",
+      });
+    }
+
+    const isSuperAdmin = ctx.activeMembership.roleName === "SUPER_ADMIN";
+    const hasPerm = ctx.activeMembership.permissions.includes(permission);
+
+    if (!hasPerm && !isSuperAdmin) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: `Insufficient permissions: missing ${permission}`,
+      });
+    }
+
+    return next({ ctx });
+  });
+};

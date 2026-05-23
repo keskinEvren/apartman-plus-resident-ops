@@ -1,5 +1,6 @@
 import { router } from "../trpc";
 import { userRouter } from "./user";
+import { siteRouter } from "./site";
 
 /**
  * Root tRPC Router
@@ -7,6 +8,7 @@ import { userRouter } from "./user";
  */
 export const appRouter = router({
   user: userRouter,
+  site: siteRouter,
 });
 
 export type AppRouter = typeof appRouter;
