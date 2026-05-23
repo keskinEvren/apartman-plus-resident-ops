@@ -6,6 +6,8 @@ import { announcementRouter } from "./announcement";
 import { ticketRouter } from "./ticket";
 import { visitorRouter } from "./visitor";
 import { packageRouter } from "./package";
+import { bookingRouter } from "./booking";
+import { amenityRouter } from "./amenity";
 
 /**
  * Root tRPC Router
@@ -19,6 +21,8 @@ export const appRouter = router({
   ticket: ticketRouter,
   visitor: visitorRouter,
   package: packageRouter,
+  booking: bookingRouter,
+  amenity: amenityRouter,
 });
 
 export type AppRouter = typeof appRouter;
