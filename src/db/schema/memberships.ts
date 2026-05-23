@@ -3,6 +3,7 @@ import { users } from "./users";
 import { sites } from "./sites";
 import { units } from "./units";
 import { roles } from "./roles";
+import { blocks } from "./blocks";
 
 export const memberships = pgTable("memberships", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -13,6 +14,7 @@ export const memberships = pgTable("memberships", {
     .references(() => sites.id)
     .notNull(),
   unitId: uuid("unit_id").references(() => units.id),
+  blockId: uuid("block_id").references(() => blocks.id),
   roleId: uuid("role_id")
     .references(() => roles.id)
     .notNull(),
