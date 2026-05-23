@@ -16,3 +16,8 @@ export * from "./schema/auditLogs";
 export * from "./schema/notifications";
 export * from "./schema/announcements";
 export * from "./schema/announcementReadReceipts";
+export * from "./schema/tickets";
+export * from "./schema/ticketActivities";
+export * from "./schema/ticketAttachments";
+export * from "./schema/visitorPasses";
+export * from "./schema/packageDeliveries";

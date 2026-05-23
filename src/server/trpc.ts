@@ -48,6 +48,7 @@ export const createContext = async (opts: { req?: Request }) => {
           id: membershipRecord.memberships.id,
           siteId: membershipRecord.memberships.siteId,
           unitId: membershipRecord.memberships.unitId,
+          blockId: membershipRecord.memberships.blockId,
           roleId: membershipRecord.memberships.roleId,
           roleName: membershipRecord.roles?.name || "User",
           permissions: membershipRecord.roles?.permissions || [],

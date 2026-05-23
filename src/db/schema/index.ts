@@ -8,3 +8,8 @@ export * from "./auditLogs";
 export * from "./notifications";
 export * from "./announcements";
 export * from "./announcementReadReceipts";
+export * from "./tickets";
+export * from "./ticketActivities";
+export * from "./ticketAttachments";
+export * from "./visitorPasses";
+export * from "./packageDeliveries";
