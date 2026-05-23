@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "schema": {
+    "requiredFiles": [
+      "src/db/schema.ts",
+      "src/db/schema/index.ts",
+      "src/db/index.ts"
+    ],
+    "requiredPatterns": [
+      {
+        "file": "src/db/schema.ts",
+        "pattern": "export * from \"./schema/",
+        "description": "schema aggregator must re-export concrete schema modules"
+      },
+      {
+        "file": "src/db/index.ts",
+        "pattern": "export * from \"./schema\"",
+        "description": "db index must expose schema exports"
+      }
+    ]
+  },
+  "api": {
+    "requiredFiles": [
+      "src/server/trpc.ts",
+      "src/server/index.ts",
+      "src/server/routers/_app.ts",
+      "src/app/api/trpc/[trpc]/route.ts"
+    ],
+    "requiredPatterns": [
+      {
+        "file": "src/server/index.ts",
+        "pattern": "export const appRouter",
+        "description": "root appRouter export is mandatory"
+      },
+      {
+        "file": "src/server/index.ts",
+        "pattern": "export type AppRouter",
+        "description": "AppRouter type export is mandatory"
+      },
+      {
+        "file": "src/app/api/trpc/[trpc]/route.ts",
+        "pattern": "fetchRequestHandler",
+        "description": "TRPC route handler wiring is mandatory"
+      }
+    ]
+  },
+  "performance": {
+    "clientComponentMaxLines": 350,
+    "forbiddenClientImports": [
+      "pg",
+      "drizzle-orm",
+      "child_process",
+      "fs",
+      "node:fs",
+      "node:child_process"
+    ]
+  },
+  "modularArchitecture": {
+    "frontendPathPrefixes": ["src/app/", "src/components/", "src/lib/"],
+    "backendPathPrefixes": ["src/server/", "src/db/"],
+    "frontendMaxLines": 180,
+    "backendMaxLines": 220,
+    "globalHardMaxLines": 260,
+    "ignorePathPrefixes": ["src/app/_template/", "src/server/routers/_template"]
+  },
+  "uiPack": {
+    "requiredPaths": ["src/components/ui", "src/app/globals.css"],
+    "requiredCssVars": ["--background", "--foreground"],
+    "requiredUiFilesMin": 1
+  },
+  "formatting": {
+    "prettierTargets": [
+      "src/**/*.{ts,tsx,js,jsx,css}",
+      "scripts/**/*.{js,cjs,mjs,ts}",
+      "config/**/*.json",
+      "docs/**/*.md",
+      "*.json",
+      "*.md"
+    ]
+  }
+}

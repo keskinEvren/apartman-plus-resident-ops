@@ -1,0 +1,48 @@
+{
+  "name": "@asanmod/asanmod-mcp",
+  "version": "1.0.0",
+  "description": "ASANMOD MCP Server - MOD ve Worker arasında merkezi doğrulama ve denetim katmanı",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "asanmod-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --coverage --ci --reporters=default --reporters=jest-junit",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "mcp",
+    "asanmod",
+    "verification",
+    "lint",
+    "mod",
+    "worker"
+  ],
+  "author": "ASANMOD Community",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "chrome-launcher": "^1.1.2",
+    "lighthouse": "^12.4.0",
+    "playwright": "^1.57.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "ts-jest": "^29.1.0",
+    "tsx": "^4.0.0",
+    "typescript": "5.3.3"
+  }
+}

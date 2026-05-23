@@ -1,0 +1,20 @@
+{
+  "capturedAt": "2026-05-23T10:05:28.571Z",
+  "platform": {
+    "os": "Darwin",
+    "release": "25.3.0",
+    "arch": "arm64",
+    "cpus": 8,
+    "totalMemoryGb": 16,
+    "freeMemoryGb": 0.3,
+    "shell": "/bin/zsh"
+  },
+  "tools": {
+    "node": "v24.14.1",
+    "npm": "11.11.0",
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "pm2": "-------------\n\n__/\\\\\\\\\\\\\\\\\\\\\\\\\\____/\\\\\\\\____________/\\\\\\\\____/\\\\\\\\\\\\\\\\\\_____\n _\\/\\\\\\/////////\\\\\\_\\/\\\\\\\\\\\\________/\\\\\\\\\\\\__/\\\\\\///////\\\\\\___\n  _\\/\\\\\\_______\\/\\\\\\_\\/\\\\\\//\\\\\\____/\\\\\\//\\\\\\_\\///______\\//\\\\\\__\n   _\\/\\\\\\\\\\\\\\\\\\\\\\\\\\/__\\/\\\\\\\\///\\\\\\/\\\\\\/_\\/\\\\\\___________/\\\\\\/___\n    _\\/\\\\\\/////////____\\/\\\\\\__\\///\\\\\\/___\\/\\\\\\________/\\\\\\//_____\n     _\\/\\\\\\_____________\\/\\\\\\____\\///_____\\/\\\\\\_____/\\\\\\//________\n      _\\/\\\\\\_____________\\/\\\\\\_____________\\/\\\\\\___/\\\\\\/___________\n       _\\/\\\\\\_____________\\/\\\\\\_____________\\/\\\\\\__/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\_\n        _\\///______________\\///______________\\///__\\///////////////__\n\n\n                          Runtime Edition\n\n        PM2 is a Production Process Manager for Node.js applications\n                     with a built-in Load Balancer.\n\n                Start and Daemonize any application:\n                $ pm2 start app.js\n\n                Load Balance 4 instances of api.js:\n                $ pm2 start api.js -i 4\n\n                Monitor in production:\n                $ pm2 monitor\n\n                Make pm2 auto-boot at server restart:\n                $ pm2 startup\n\n                To go further checkout:\n                http://pm2.io/\n\n\n                        -------------\n\n[PM2] Spawning PM2 daemon with pm2_home=/Users/evren/.pm2\n[PM2] PM2 Successfully daemonized\n7.0.1",
+    "psql": "psql (PostgreSQL) 18.3 (Homebrew)",
+    "docker": null
+  }
+}

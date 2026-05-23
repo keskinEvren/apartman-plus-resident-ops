@@ -1,0 +1,99 @@
+<!--
+ASANMOD v1.0.0 - PROJECT CONTEXT
+ID: CONST-005
+STATUS: TEMPLATE
+TYPE: RULES
+LAST_UPDATED: 2026-01-18
+VERSION: v1.0.0
+-->
+
+# [PROJECT_NAME] - ASANMOD PROJECT CONTEXT
+
+## 📌 PROJECT IDENTITY
+
+- **App:** [PROJECT_NAME] ([PROJECT_DESCRIPTION])
+- **Stack:** Next.js 15 (App Router), tRPC, Drizzle ORM, PostgreSQL, TailwindCSS
+- **Governance:** ASANMOD v1.0.0
+
+## 🚀 QUICK START
+
+**Single Reference:** `docs/AGENT_QUICK_REF.md`
+
+### Quick Commands
+
+```bash
+npm run verify      # Quality check (0/0/0)
+npm run fix         # Auto-fix lint
+npm run dev         # Start development
+npm run deploy-prod # Production deploy
+```
+
+### PM2 Commands (v10.0 AI-Responsive)
+
+```bash
+./scripts/mod-tools/pm dev status     # Check status
+./scripts/mod-tools/pm dev errors     # 🤖 Error scan (UTC+3)
+./scripts/mod-tools/pm prod diag      # 🤖 Full diagnostic
+./scripts/mod-tools/pm dev health     # �� Health check
+```
+
+---
+
+## 🛡️ IRON CURTAIN ISOLATION
+
+> **SOURCE OF TRUTH:** `docs/asanmod-core.json`
+
+| Environment | PM2 Name | Port |
+|-------------|----------|------|
+| DEV | app-dev | 3000 |
+| PROD | app-prod | 3002 |
+
+**PROD Binding:** `127.0.0.1` (MANDATORY - No external access)
+
+---
+
+## 🧩 CODING PATTERNS (STRICT)
+
+### 1. Next.js App Router
+- **Client Components:** `'use client'` at top.
+- **Server Components:** Default (no directive).
+
+### 2. TypeScript Safety
+- **No `any`:** Prohibited. Use proper types or `unknown`.
+
+### 3. tRPC Patterns
+- **Routers:** `src/server/routers/`
+- **Validation:** Zod schemas required for all inputs.
+
+### 4. ASANMOD Protocols
+- **Verify:** `npm run verify` before commit.
+- **Fix:** `npm run fix` for auto-linting.
+
+---
+
+## 🟢 AGENT INITIALIZATION
+
+1. Read `docs/AGENT_QUICK_REF.md`
+2. Run `npm run verify`
+3. Report: "**ASANMOD v1.0.0 ONLINE. Project: [PROJECT_NAME]**"
+
+---
+
+## 📋 PROJECT MODULES
+
+[WIZARD_WILL_FILL: List of enabled modules]
+
+## 🛡️ AGENT DISCIPLINE (Hard Constraints)
+
+### ZERO-TRUST VERIFICATION
+**Never trust previous step output.** Always verify file existence.
+
+### CONTEXT PRESERVATION
+Log changes in `CHANGELOG.md` using `type(scope): description`.
+
+### GHOST-DEV RULE
+If a command fails **3 consecutive times**, stop and request "Host Hardware Intervention".
+
+---
+
+*ASANMOD v1.0.0 - AI-Responsive PM2*

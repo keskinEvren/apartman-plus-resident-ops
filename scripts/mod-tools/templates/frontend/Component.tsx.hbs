@@ -1,0 +1,18 @@
+import React from "react";
+import { cn } from "@/lib/utils";
+
+interface {{componentName}}Props {
+  className?: string;
+  // Add specific props here
+}
+
+/**
+ * {{componentName}} Component
+ */
+export function {{componentName}}({ className }: {{componentName}}Props) {
+  return (
+    <div className={cn("flex flex-col gap-2", className)}>
+      <span className="text-sm font-medium">{{componentName}}</span>
+    </div>
+  );
+}

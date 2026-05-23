@@ -1,0 +1,107 @@
+{
+  "version": "1.0.0",
+  "requiredRunbooks": [
+    {
+      "path": "docs/runbooks/README.md",
+      "requiredHeadings": [
+        "# Runbook Index",
+        "## Quick Routing",
+        "## Required Runbooks",
+        "## Evidence Policy"
+      ]
+    },
+    {
+      "path": "docs/runbooks/INCIDENT_TRIAGE.md",
+      "requiredHeadings": [
+        "# Incident Triage",
+        "## Trigger",
+        "## First 10 Minutes",
+        "## Severity",
+        "## Output Contract"
+      ]
+    },
+    {
+      "path": "docs/runbooks/SELF_HEAL_LOOP.md",
+      "requiredHeadings": [
+        "# Self Heal Loop",
+        "## Trigger",
+        "## Flow",
+        "## Evidence",
+        "## Exit Criteria"
+      ]
+    },
+    {
+      "path": "docs/runbooks/GATE_FAILURE_PLAYBOOK.md",
+      "requiredHeadings": [
+        "# Gate Failure Playbook",
+        "## Trigger",
+        "## Gate Remediation Matrix",
+        "## Retry Rule"
+      ]
+    },
+    {
+      "path": "docs/runbooks/PORT_ENV_DRIFT.md",
+      "requiredHeadings": [
+        "# Port and Env Drift",
+        "## Trigger",
+        "## Detection",
+        "## Fix"
+      ]
+    },
+    {
+      "path": "docs/runbooks/AGENT_DRIFT_CONTROL.md",
+      "requiredHeadings": [
+        "# Agent Drift Control",
+        "## Trigger",
+        "## Control Rules",
+        "## Recovery"
+      ]
+    },
+    {
+      "path": "docs/runbooks/SAFE_UPDATE_PROTOCOL.md",
+      "requiredHeadings": [
+        "# Safe Update Protocol",
+        "## Trigger",
+        "## Update Sequence",
+        "## Rollback"
+      ]
+    },
+    {
+      "path": "docs/runbooks/RECOVERY_ROLLBACK.md",
+      "requiredHeadings": [
+        "# Recovery and Rollback",
+        "## Trigger",
+        "## Recovery Steps",
+        "## Rollback Steps"
+      ]
+    },
+    {
+      "path": "docs/runbooks/EVIDENCE_STANDARD.md",
+      "requiredHeadings": [
+        "# Evidence Standard",
+        "## Required Artifacts",
+        "## File Naming",
+        "## Completion Criteria"
+      ]
+    },
+    {
+      "path": "docs/runbooks/SCHEDULED_HEALTH_CHECKS.md",
+      "requiredHeadings": [
+        "# Scheduled Health Checks",
+        "## Daily Checks",
+        "## Weekly Checks",
+        "## Alert Thresholds"
+      ]
+    },
+    {
+      "path": "docs/runbooks/SECRET_ROTATION.md",
+      "requiredHeadings": [
+        "# Secret Rotation",
+        "## Trigger",
+        "## Detection",
+        "## Rotation Flow",
+        "## Verification"
+      ]
+    }
+  ]
+}

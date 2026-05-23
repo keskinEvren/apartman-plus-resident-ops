@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "canonicalMirrorRules": [
+    {
+      "source": "docs/AGENT_QUICK_REF.md",
+      "mirrors": [
+        "CLAUDE.md",
+        "CURSOR.md",
+        "GEMINI.md",
+        "docs/CLAUDE.md",
+        "docs/CURSOR.md",
+        "docs/GEMINI.md"
+      ],
+      "mode": "full-copy"
+    }
+  ],
+  "impactRules": [
+    {
+      "whenChanged": "config/asanmod-universal/agent-contract.json",
+      "mustAlsoChange": ["docs/AGENT_DRIVE_MODEL.md", "README.md"]
+    },
+    {
+      "whenChanged": "config/asanmod-universal/profiles.json",
+      "mustAlsoChange": ["config/asanmod-universal/gates.json", "README.md"]
+    },
+    {
+      "whenChanged": "config/asanmod-universal/gates.json",
+      "mustAlsoChange": ["scripts/mod-tools/verify-universal.cjs", "README.md"]
+    },
+    {
+      "whenChanged": "config/asanmod-universal/architecture-map.json",
+      "mustAlsoChange": ["scripts/mod-tools/structure-check.cjs", "README.md"]
+    },
+    {
+      "whenChanged": "config/asanmod-universal/doc-templates.json",
+      "mustAlsoChange": [
+        "scripts/mod-tools/docs-template-check.cjs",
+        "docs/templates/FEATURE_SPEC_TEMPLATE.md",
+        "docs/templates/PRODUCT_INTAKE_TEMPLATE.md"
+      ]
+    },
+    {
+      "whenChanged": "config/asanmod-universal/runbooks.json",
+      "mustAlsoChange": [
+        "scripts/mod-tools/runbook-check.cjs",
+        "docs/runbooks/README.md"
+      ]
+    }
+  ]
+}

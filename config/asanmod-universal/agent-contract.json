@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "mode": "only-agent-driven",
+  "aiNative": true,
+  "aiResponsive": true,
+  "agents": ["codex", "gemini", "claude"],
+  "requiredOutputFormat": {
+    "error": ["reason", "fix", "next"],
+    "evidence": ["command", "purpose", "status", "artifact"]
+  },
+  "rules": {
+    "humanManualFlowDefault": false,
+    "deterministicVerification": true,
+    "riskBasedProfileEscalation": true
+  }
+}

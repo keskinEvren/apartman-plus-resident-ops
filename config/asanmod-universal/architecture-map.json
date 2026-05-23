@@ -1,0 +1,153 @@
+{
+  "version": "1.0.0",
+  "policy": "fail-close",
+  "executionModel": "only-agent-driven",
+  "zones": [
+    {
+      "id": "root-meta",
+      "pathPrefix": "",
+      "includeDepth": 1,
+      "allowDirectories": false,
+      "allowedFiles": [
+        "README.md",
+        "VERSION",
+        "CHANGELOG.md",
+        "AGENT_FIRST_PLAN.md",
+        "CREDENTIALS.md",
+        "CLAUDE.md",
+        "CURSOR.md",
+        "GEMINI.md",
+        "package.json",
+        "package-lock.json",
+        ".cursorrules",
+        ".eslintrc.json",
+        ".nvmrc",
+        ".prettierignore",
+        ".prettierrc",
+        ".gitignore",
+        ".env.example",
+        ".env",
+        "tsconfig.json",
+        "next-env.d.ts",
+        "tsconfig.tsbuildinfo",
+        "next.config.js",
+        "drizzle.config.ts",
+        "tailwind.config.js",
+        "postcss.config.js",
+        "jest.config.js",
+        "asanmod.config.json",
+        "project.mdc",
+        "ecosystem.config.cjs",
+        "ecosystem.config.js.example",
+        "install.sh",
+        "nginx.conf.example"
+      ]
+    },
+    {
+      "id": "asanmod-cli",
+      "pathPrefix": "asanmod-cli/",
+      "allowedExtensions": [".js", ".json", ".md", ".ts", ".cjs"],
+      "allowDirectories": true
+    },
+    {
+      "id": "config",
+      "pathPrefix": "config/",
+      "allowedExtensions": [".json", ".md", ".yaml", ".yml"],
+      "allowDirectories": true
+    },
+    {
+      "id": "docs",
+      "pathPrefix": "docs/",
+      "allowedExtensions": [".md", ".json", ".yaml", ".yml", ".txt"],
+      "allowDirectories": true
+    },
+    {
+      "id": "scripts",
+      "pathPrefix": "scripts/",
+      "allowedExtensions": [
+        "",
+        ".js",
+        ".cjs",
+        ".mjs",
+        ".ts",
+        ".sh",
+        ".md",
+        ".json",
+        ".hbs"
+      ],
+      "allowDirectories": true
+    },
+    {
+      "id": "src",
+      "pathPrefix": "src/",
+      "allowedExtensions": [".ts", ".tsx", ".js", ".jsx", ".css", ".json"],
+      "allowDirectories": true
+    },
+    {
+      "id": "tests",
+      "pathPrefix": "__tests__/",
+      "allowedExtensions": [".ts", ".tsx", ".js", ".jsx", ".json", ".md"],
+      "allowDirectories": true
+    },
+    {
+      "id": "mcp-servers",
+      "pathPrefix": "mcp-servers/",
+      "allowedExtensions": [
+        ".ts",
+        ".js",
+        ".cjs",
+        ".json",
+        ".md",
+        ".sh",
+        ".lock"
+      ],
+      "allowDirectories": true
+    },
+    {
+      "id": "drizzle",
+      "pathPrefix": "drizzle/",
+      "allowedExtensions": ["", ".sql", ".ts", ".js", ".json"],
+      "allowDirectories": true
+    },
+    {
+      "id": "reports",
+      "pathPrefix": "reports/",
+      "allowedExtensions": [".md", ".json", ".txt"],
+      "allowDirectories": true
+    },
+    {
+      "id": "asanmod-state",
+      "pathPrefix": ".asanmod/",
+      "allowedExtensions": [".json", ".md", ".txt", ".lock", ""],
+      "allowDirectories": true
+    },
+    {
+      "id": "github",
+      "pathPrefix": ".github/",
+      "allowedExtensions": [".yml", ".yaml", ".md", ".json"],
+      "allowDirectories": true
+    },
+    {
+      "id": "vscode",
+      "pathPrefix": ".vscode/",
+      "allowedExtensions": [".json", ".md"],
+      "allowDirectories": true
+    },
+    {
+      "id": "husky",
+      "pathPrefix": ".husky/",
+      "allowedExtensions": ["", ".sh", ".cjs", ".js"],
+      "allowDirectories": true
+    }
+  ],
+  "ignoredPrefixes": [
+    ".git/",
+    "node_modules/",
+    ".next/",
+    "dist/",
+    "build/",
+    "coverage/",
+    ".nyc_output/",
+    "logs/"
+  ]
+}

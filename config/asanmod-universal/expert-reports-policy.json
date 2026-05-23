@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "policyDocPath": "docs/EXPERT_REPORT_POLICY.md",
+  "profiles": {
+    "rapid": {
+      "required": false
+    },
+    "standard": {
+      "required": false
+    },
+    "strict": {
+      "required": true
+    }
+  },
+  "requiredReportsWhenEnabled": [
+    "reports/expert/template-readiness-report.md",
+    "docs/backlog/TEMPLATE_IMPROVEMENT_BACKLOG.md"
+  ]
+}

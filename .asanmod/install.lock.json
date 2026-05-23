@@ -1,0 +1,18 @@
+{
+  "installedAt": "2026-05-23T10:05:33.471Z",
+  "profile": "standard",
+  "executionModel": "only-agent-driven",
+  "aiNative": true,
+  "aiResponsive": true,
+  "projectName": "ASANMOD Project",
+  "projectDescription": "AI-responsive application",
+  "agentContractPath": "config/asanmod-universal/agent-contract.json",
+  "baselineReport": "reports/environment-baseline.json",
+  "intakePlan": "docs/plans/product-intake.json",
+  "ports": {
+    "dev": 3000,
+    "prod": 3002
+  },
+  "envPath": ".env",
+  "corePath": "docs/asanmod-core.json"
+}

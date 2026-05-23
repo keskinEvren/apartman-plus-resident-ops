@@ -1,0 +1,14 @@
+{
+  "projectName": "apartman-plus-resident-ops",
+  "installedAt": "2026-05-23T09:54:51.837Z",
+  "env": {
+    "os": "macOS",
+    "node": "v24.14.1",
+    "npm": "11.11.0",
+    "git": "git version 2.50.1 (Apple Git-155)"
+  },
+  "ports": {
+    "dev": 3000,
+    "prod": 3002
+  }
+}

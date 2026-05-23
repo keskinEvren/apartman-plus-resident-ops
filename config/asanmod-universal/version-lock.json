@@ -1,0 +1,63 @@
+{
+  "versionSource": "VERSION",
+  "required": [
+    { "file": "package.json", "jsonPath": "version", "format": "plain" },
+    { "file": "asanmod.config.json", "jsonPath": "version", "format": "plain" },
+    {
+      "file": "asanmod.config.json",
+      "jsonPath": "protocol.version",
+      "format": "prefixed"
+    },
+    {
+      "file": "docs/asanmod-core.json",
+      "jsonPath": "version",
+      "format": "plain"
+    },
+    {
+      "file": "docs/asanmod-core.json",
+      "jsonPath": "lockedVersion",
+      "format": "plain"
+    },
+    {
+      "file": "docs/asanmod-core.json",
+      "jsonPath": "agent_config.protocol_version",
+      "format": "plain"
+    },
+    {
+      "file": "mcp-servers/asanmod-mcp/package.json",
+      "jsonPath": "version",
+      "format": "plain"
+    },
+    {
+      "file": "asanmod-cli/package.json",
+      "jsonPath": "version",
+      "format": "plain"
+    }
+  ],
+  "forbiddenVersionPatterns": [
+    "\\bv3\\.[0-9]+\\.[0-9]+\\b",
+    "\\b3\\.[0-9]+\\.[0-9]+\\b",
+    "\\b2\\.1\\.0-alpha\\b"
+  ],
+  "scanGlobs": [
+    "README.md",
+    "CHANGELOG.md",
+    "project.mdc",
+    "install.sh",
+    "docs/**/*.md",
+    "scripts/**/*.sh",
+    "scripts/**/*.js",
+    "scripts/**/*.cjs",
+    "scripts/**/*.ts",
+    "config/**/*.json",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "excludeGlobs": [
+    "node_modules/**",
+    ".git/**",
+    "dist/**",
+    "build/**",
+    ".next/**"
+  ]
+}

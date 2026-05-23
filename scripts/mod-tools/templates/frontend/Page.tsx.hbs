@@ -1,0 +1,56 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { {{componentName}}Props } from "@/types/{{moduleName}}";
+// import { useToast } from "@/components/ui/use-toast";
+
+/**
+ * {{componentName}} Page
+ *
+ * @description Standardized page component for {{moduleName}}.
+ * @author ASANMOD v6.0 Scaffold
+ */
+export default function {{componentName}}Page() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const { toast } = useToast();
+
+  useEffect(() => {
+    // Initial data fetch
+    const init = async () => {
+      try {
+        // await fetchData();
+      } catch (error) {
+        console.error("[{{componentName}}] Load Error:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    init();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto py-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold tracking-tight">{{title}}</h1>
+        {/* Actions */}
+      </div>
+
+      <div className="grid gap-6">
+        {/* Content */}
+        <div className="p-6 border rounded-lg shadow-sm bg-card">
+          <p className="text-muted-foreground">
+            {{componentName}} content goes here.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}

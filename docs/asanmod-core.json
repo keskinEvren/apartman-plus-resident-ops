@@ -1,0 +1,124 @@
+{
+  "version": "1.0.0",
+  "name": "ASANMOD Project",
+  "lastUpdated": "2026-05-23T10:05:33.470Z",
+  "description": "AI-responsive application",
+  "network": {
+    "dev": {
+      "frontend": 3000,
+      "backend": 3000,
+      "binding": "0.0.0.0"
+    },
+    "prod": {
+      "frontend": 3002,
+      "backend": 3002,
+      "binding": "127.0.0.1"
+    }
+  },
+  "database": {
+    "dev": {
+      "name": "[PROJECT]_dev_db",
+      "host": "localhost",
+      "port": 5432,
+      "user": "[DB_USER]"
+    },
+    "prod": {
+      "name": "[PROJECT]_prod_db",
+      "host": "localhost",
+      "port": 5432,
+      "user": "[DB_USER]"
+    }
+  },
+  "credentials": {
+    "dev": {
+      "admin": {
+        "email": "admin@example.com",
+        "password": "See .env file"
+      }
+    }
+  },
+  "scripts": {
+    "core": {
+      "pm2Wrapper": "scripts/mod-tools/pm",
+      "deployProd": "scripts/mod-tools/deploy-prod.sh",
+      "preFlight": "scripts/mod-tools/pre-flight.cjs"
+    }
+  },
+  "constraints": {
+    "commitFormat": {
+      "pattern": "^(feat|fix|docs|style|refactor|test|chore)(\\(.+\\))?: .+",
+      "example": "feat(auth): add login validation",
+      "enforcer": ".husky/commit-msg"
+    }
+  },
+  "rules": {
+    "zeroTolerance": true,
+    "language": "ENGLISH",
+    "lockedVersion": "1.0.0",
+    "unauthorizedVersionBump": "STRICTLY_FORBIDDEN"
+  },
+  "paths": {
+    "project": ".",
+    "scripts": "scripts/mod-tools/",
+    "docs": "docs/"
+  },
+  "files": {
+    "agentProtocol": "GEMINI.md",
+    "quickRef": "docs/AGENT_QUICK_REF.md",
+    "readme": "README.md"
+  },
+  "agent_config": {
+    "protocol_version": "1.0.0",
+    "strict_mode": true,
+    "auto_fix_lint": false,
+    "observability_file": ".asanmod/manifest.json"
+  },
+  "dependency_map": {
+    "auth": {
+      "files": [
+        "src/server/auth.ts",
+        "src/db/schema.ts"
+      ],
+      "requires": [
+        "db_users_table",
+        "JWT_SECRET"
+      ]
+    },
+    "trpc": {
+      "files": [
+        "src/server/index.ts",
+        "src/trpc/**"
+      ],
+      "requires": [
+        "express_backend",
+        "NEXT_PUBLIC_API_URL"
+      ]
+    },
+    "dashboard": {
+      "files": [
+        "src/app/**"
+      ],
+      "requires": [
+        "auth",
+        "trpc"
+      ]
+    }
+  },
+  "protection_rules": {
+    "read_only_files": [
+      "docs/asanmod-core.json",
+      "package-lock.json",
+      ".asanmod/manifest.json"
+    ],
+    "protected_branches": [
+      "main",
+      "prod"
+    ]
+  },
+  "_meta": {
+    "schema": "1.0.0",
+    "generator": "ASANMOD Enterprise Template v1.0.0",
+    "note": "This file is the single source of truth. Configure for your project."
+  },
+  "lockedVersion": "1.0.0"
+}

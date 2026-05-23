@@ -1,0 +1,16 @@
+import { prisma } from "@/lib/prisma"; import {
+{{serviceName}}Input,
+{{serviceName}}Output } from "@/types/{{moduleName}}"; /** *
+{{serviceName}}
+Service * Handles business logic for
+{{moduleName}}. */ export class
+{{serviceName}}Service { /** * Retrieves
+{{entityName}}
+by ID. */ static async get{{entityName}}(id: string) { if (!id) throw new
+Error("ID is required"); const result = await prisma.{{prismaModel}}.findUnique({
+where: { id }, }); return result; } /** * Creates a new
+{{entityName}}. */ static async create{{entityName}}(data:
+{{serviceName}}Input) { // Validate input logic here if needed beyond type
+checks const result = await prisma.{{prismaModel}}.create({ data: { ...data, //
+Standard fields handled by DB default usually, but explicit if needed }, });
+return result; } }

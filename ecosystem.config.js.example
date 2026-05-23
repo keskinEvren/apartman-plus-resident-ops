@@ -1,0 +1,73 @@
+/**
+ * PM2 Ecosystem Configuration Template
+ * ASANMOD Enterprise Template v1.0.0
+ *
+ * Usage:
+ * 1. Copy to ecosystem.config.js
+ * 2. Update paths and ports
+ * 3. pm2 start ecosystem.config.js
+ */
+
+module.exports = {
+  apps: [
+    // Development Frontend
+    {
+      name: 'my-app-dev-frontend',
+      script: 'npm',
+      args: 'run dev',
+      cwd: './frontend', // Adjust path
+      instances: 1,
+      exec_mode: 'fork',
+      watch: false,
+      env: {
+        NODE_ENV: 'development',
+        PORT: 3000, // Adjust port
+      },
+    },
+
+    // Development Backend (if applicable)
+    {
+      name: 'my-app-dev-backend',
+      script: 'npm',
+      args: 'run dev',
+      cwd: './backend', // Adjust path
+      instances: 1,
+      exec_mode: 'fork',
+      watch: false,
+      env: {
+        NODE_ENV: 'development',
+        PORT: 3001, // Adjust port
+      },
+    },
+
+    // Production Frontend
+    {
+      name: 'my-app-prod-frontend',
+      script: 'node',
+      args: 'server.js', // Or .next/standalone/server.js for Next.js standalone
+      cwd: './frontend/.next/standalone', // Adjust for Next.js standalone build
+      instances: 1,
+      exec_mode: 'fork',
+      watch: false,
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3002, // Adjust port
+      },
+    },
+
+    // Production Backend (if applicable)
+    {
+      name: 'my-app-prod-backend',
+      script: 'npm',
+      args: 'run start',
+      cwd: './backend', // Adjust path
+      instances: 4, // Cluster mode for load balancing
+      exec_mode: 'cluster',
+      watch: false,
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3003, // Adjust port
+      },
+    },
+  ],
+};

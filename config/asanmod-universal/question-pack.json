@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "pack": "product-intake",
+  "questions": [
+    {
+      "id": "problem_statement",
+      "title": "Problem statement",
+      "prompt": "What exact user problem are we solving?"
+    },
+    {
+      "id": "target_user",
+      "title": "Target user",
+      "prompt": "Who is the primary user and usage context?"
+    },
+    {
+      "id": "core_flow",
+      "title": "Core flow",
+      "prompt": "What is the single critical user flow for MVP?"
+    },
+    {
+      "id": "success_metric",
+      "title": "Success metric",
+      "prompt": "How will we measure MVP success in one sentence?"
+    },
+    {
+      "id": "constraints",
+      "title": "Constraints",
+      "prompt": "List hard constraints (time, infra, integrations)."
+    },
+    {
+      "id": "risks",
+      "title": "Risks",
+      "prompt": "What are top 3 delivery risks and fallback actions?"
+    }
+  ]
+}

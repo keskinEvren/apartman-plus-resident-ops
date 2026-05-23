@@ -1,0 +1,48 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "docType": "agent-drive-model",
+      "path": "docs/AGENT_DRIVE_MODEL.md",
+      "requiredHeadings": [
+        "# Agent Drive Model",
+        "## Baseline",
+        "## Contracts",
+        "## Required Flow",
+        "## Failure Output Format"
+      ]
+    },
+    {
+      "docType": "product-intake-template",
+      "path": "docs/templates/PRODUCT_INTAKE_TEMPLATE.md",
+      "requiredHeadings": ["# Product Intake Template"]
+    },
+    {
+      "docType": "feature-spec-template",
+      "path": "docs/templates/FEATURE_SPEC_TEMPLATE.md",
+      "requiredHeadings": ["# Feature Specification Template"]
+    },
+    {
+      "docType": "execution-plan",
+      "path": "docs/plans/UNIVERSAL_ASANMOD_BOILERPLATE_PLAN.md",
+      "requiredHeadings": [
+        "# Universal ASANMOD Boilerplate - Execution Plan",
+        "## Goal",
+        "## Scope Delivered in This Iteration",
+        "## Core Contracts",
+        "## Gate Modes",
+        "## Usage Flow"
+      ]
+    },
+    {
+      "docType": "runbook-index",
+      "path": "docs/runbooks/README.md",
+      "requiredHeadings": [
+        "# Runbook Index",
+        "## Quick Routing",
+        "## Required Runbooks",
+        "## Evidence Policy"
+      ]
+    }
+  ]
+}

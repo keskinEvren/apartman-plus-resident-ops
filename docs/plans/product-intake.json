@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-05-23T10:05:33.462Z",
+  "projectName": "ASANMOD Project",
+  "projectDescription": "AI-responsive application",
+  "profile": "standard",
+  "answers": {
+    "problem_statement": "TODO: What exact user problem are we solving?",
+    "target_user": "TODO: Who is the primary user and usage context?",
+    "core_flow": "TODO: What is the single critical user flow for MVP?",
+    "success_metric": "TODO: How will we measure MVP success in one sentence?",
+    "constraints": "TODO: List hard constraints (time, infra, integrations).",
+    "risks": "TODO: What are top 3 delivery risks and fallback actions?"
+  }
+}

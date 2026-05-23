@@ -1,0 +1,51 @@
+{
+  "$schema": "https://asanmod.com/schemas/v10/config.json",
+  "name": "[PROJECT_NAME]",
+  "version": "1.0.0",
+  "mode": "strict",
+  "protocol": {
+    "version": "v1.0.0",
+    "language": "tr",
+    "timezone": "UTC+3",
+    "enforcementLevel": "hard"
+  },
+  "infrastructure": {
+    "frontend": {
+      "port": 3000,
+      "prodPort": 8080,
+      "type": "nextjs-app",
+      "binding": "0.0.0.0",
+      "prodBinding": "0.0.0.0"
+    },
+    "backend": {
+      "port": 3000,
+      "prodPort": 8080,
+      "type": "server-actions",
+      "binding": "0.0.0.0",
+      "prodBinding": "0.0.0.0"
+    }
+  },
+  "constraints": {
+    "maxFileInteractionLines": 50,
+    "stateTtlMinutes": 30,
+    "consoleLogBan": {
+      "enabled": true,
+      "scope": ["src/server/**/*.ts", "src/lib/**/*.ts"]
+    },
+    "mcpOnlyFileOps": true
+  },
+  "rules": {
+    "zeroTolerance": true,
+    "mcpFirst": true,
+    "surgicalVerify": true,
+    "typeSafety": "strict"
+  },
+  "paths": {
+    "artifacts": ".asanmod/artifacts",
+    "brain": ".asanmod/brain",
+    "state": ".asanmod/state",
+    "logs": ".asanmod/logs",
+    "scripts": ".asanmod/scripts",
+    "docs": "docs"
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "version": "1.0.0",
+  "gates": [
+    {
+      "id": "install_lock",
+      "kind": "internal",
+      "description": "First install lock must exist",
+      "blocking": true,
+      "handler": "checkInstallLock"
+    },
+    {
+      "id": "agent_contract",
+      "kind": "internal",
+      "description": "Only-agent-driven contract must exist and be valid",
+      "blocking": true,
+      "handler": "checkAgentContract"
+    },
+    {
+      "id": "version_lock_check",
+      "kind": "command",
+      "description": "Version lock consistency and legacy version scan",
+      "blocking": true,
+      "command": "npm run version:lock:check"
+    },
+    {
+      "id": "environment_report",
+      "kind": "internal",
+      "description": "Environment baseline report must exist",
+      "blocking": true,
+      "handler": "checkEnvironmentReport"
+    },
+    {
+      "id": "product_docs",
+      "kind": "internal",
+      "description": "Product intake docs must exist",
+      "blocking": true,
+      "handler": "checkProductDocs"
+    },
+    {
+      "id": "no_placeholders",
+      "kind": "internal",
+      "description": "Core files must not contain unresolved placeholders",
+      "blocking": true,
+      "handler": "checkNoPlaceholders"
+    },
+    {
+      "id": "port_env_consistency",
+      "kind": "internal",
+      "description": "Port contract and .env sync consistency",
+      "blocking": true,
+      "handler": "checkPortEnvConsistency"
+    },
+    {
+      "id": "structure_check",
+      "kind": "command",
+      "description": "File/directory architecture contract check",
+      "blocking": true,
+      "command": "npm run structure:check"
+    },
+    {
+      "id": "docs_template_check",
+      "kind": "command",
+      "description": "Required doc template sections check",
+      "blocking": true,
+      "command": "npm run docs:template:check"
+    },
+    {
+      "id": "docs_impact_check",
+      "kind": "command",
+      "description": "Related docs/files change impact check",
+      "blocking": true,
+      "command": "npm run docs:impact:check"
+    },
+    {
+      "id": "docs_sync_check",
+      "kind": "command",
+      "description": "Canonical/mirror docs synchronization check",
+      "blocking": true,
+      "command": "npm run docs:sync:check"
+    },
+    {
+      "id": "runbook_check",
+      "kind": "command",
+      "description": "Operational runbook completeness and heading contract",
+      "blocking": true,
+      "command": "npm run runbook:check"
+    },
+    {
+      "id": "secret_scan_check",
+      "kind": "command",
+      "description": "High-confidence secret pattern scan",
+      "blocking": true,
+      "command": "npm run secret:scan:check"
+    },
+    {
+      "id": "migration_name_check",
+      "kind": "command",
+      "description": "Migration naming quality guard for newly added SQL files",
+      "blocking": true,
+      "command": "npm run migration:name:check"
+    },
+    {
+      "id": "expert_reports_policy_check",
+      "kind": "command",
+      "description": "Expert report policy enforcement by active profile",
+      "blocking": true,
+      "command": "npm run expert:reports:policy:check"
+    },
+    {
+      "id": "schema_contract_check",
+      "kind": "command",
+      "description": "Database schema export and structure contract",
+      "blocking": true,
+      "command": "npm run schema:check"
+    },
+    {
+      "id": "api_contract_check",
+      "kind": "command",
+      "description": "API surface contract and router/handler wiring",
+      "blocking": true,
+      "command": "npm run api:check"
+    },
+    {
+      "id": "perf_contract_check",
+      "kind": "command",
+      "description": "Client component performance guardrails",
+      "blocking": true,
+      "command": "npm run perf:check"
+    },
+    {
+      "id": "modular_architecture_check",
+      "kind": "command",
+      "description": "Frontend/backend god-file ban and modular line budgets",
+      "blocking": true,
+      "command": "npm run modular:check"
+    },
+    {
+      "id": "ui_pack_check",
+      "kind": "command",
+      "description": "UI pack structure and style variable contract",
+      "blocking": true,
+      "command": "npm run ui:check"
+    },
+    {
+      "id": "format_check",
+      "kind": "command",
+      "description": "Prettier formatting contract",
+      "blocking": true,
+      "command": "npm run format:check"
+    },
+    {
+      "id": "lint",
+      "kind": "command",
+      "description": "Code lint gate",
+      "blocking": true,
+      "command": "npm run lint -- --no-cache --quiet"
+    },
+    {
+      "id": "type_check",
+      "kind": "command",
+      "description": "Type safety gate",
+      "blocking": true,
+      "command": "npm run type-check"
+    },
+    {
+      "id": "test",
+      "kind": "command",
+      "description": "Unit/integration tests",
+      "blocking": true,
+      "command": "npm run test -- --runInBand"
+    },
+    {
+      "id": "build",
+      "kind": "command",
+      "description": "Production build",
+      "blocking": true,
+      "command": "npm run build"
+    }
+  ]
+}

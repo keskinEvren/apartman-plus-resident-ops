@@ -1,0 +1,19 @@
+{
+  "name": "@asanmod/cli",
+  "version": "1.0.0",
+  "description": "ASANMOD v1.0.0 - Autonomous Software Factory CLI",
+  "main": "index.js",
+  "bin": {
+    "asan": "./bin/asan.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ASANMOD Team",
+  "license": "Private",
+  "dependencies": {
+    "commander": "^13.0.0",
+    "dotenv": "^16.4.7",
+    "chalk": "^4.1.2"
+  }
+}
