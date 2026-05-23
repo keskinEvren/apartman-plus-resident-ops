@@ -21,3 +21,6 @@ export * from "./schema/ticketActivities";
 export * from "./schema/ticketAttachments";
 export * from "./schema/visitorPasses";
 export * from "./schema/packageDeliveries";
+export * from "./schema/amenities";
+export * from "./schema/amenitySessions";
+export * from "./schema/amenityReservations";
