@@ -1,74 +1,57 @@
 import { z } from "zod";
+import { router, protectedProcedure } from "../trpc";
 import {
-  router,
-  protectedProcedure,
-  publicProcedure,
-  hasPermission,
-} from "../trpc";
-import { sites, blocks, units, roles, memberships, users } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+  sites,
+  blocks,
+  units,
+  roles,
+  memberships,
+  users,
+  invitationTokens,
+} from "@/db/schema";
+import { eq, and, gte } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 
 export const siteRouter = router({
   createSite: protectedProcedure
     .input(
-      z.object({
-        name: z.string().min(1, "Site name is required"),
-        address: z.string().optional(),
-      }),
+      z.object({ name: z.string().min(1), address: z.string().optional() }),
     )
     .mutation(async ({ ctx, input }) => {
-      const [newSite] = await ctx.db
+      const [s] = await ctx.db
         .insert(sites)
-        .values({
-          name: input.name,
-          address: input.address,
-        })
+        .values({ name: input.name, address: input.address })
         .returning();
-      return newSite;
+      return s;
     }),
 
   createBlock: protectedProcedure
-    .input(
-      z.object({
-        siteId: z.string().uuid(),
-        name: z.string().min(1, "Block name is required"),
-      }),
-    )
+    .input(z.object({ siteId: z.string().uuid(), name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      const [newBlock] = await ctx.db
+      const [b] = await ctx.db
         .insert(blocks)
-        .values({
-          siteId: input.siteId,
-          name: input.name,
-        })
+        .values({ siteId: input.siteId, name: input.name })
         .returning();
-      return newBlock;
+      return b;
     }),
 
   createUnit: protectedProcedure
     .input(
-      z.object({
-        blockId: z.string().uuid(),
-        unitNumber: z.string().min(1, "Unit number is required"),
-      }),
+      z.object({ blockId: z.string().uuid(), unitNumber: z.string().min(1) }),
     )
     .mutation(async ({ ctx, input }) => {
-      const [newUnit] = await ctx.db
+      const [u] = await ctx.db
         .insert(units)
-        .values({
-          blockId: input.blockId,
-          unitNumber: input.unitNumber,
-        })
+        .values({ blockId: input.blockId, unitNumber: input.unitNumber })
         .returning();
-      return newUnit;
+      return u;
     }),
 
   createRole: protectedProcedure
     .input(
       z.object({
         siteId: z.string().uuid(),
-        name: z.string().min(1, "Role name is required"),
+        name: z.string().min(1),
         permissions: z.array(z.string()),
       }),
     )
@@ -79,11 +62,10 @@ export const siteRouter = router({
       ) {
         throw new TRPCError({
           code: "FORBIDDEN",
-          message: "You can only manage roles for your active site",
+          message: "Site admin mismatch",
         });
       }
-
-      const [newRole] = await ctx.db
+      const [r] = await ctx.db
         .insert(roles)
         .values({
           siteId: input.siteId,
@@ -91,7 +73,7 @@ export const siteRouter = router({
           permissions: input.permissions,
         })
         .returning();
-      return newRole;
+      return r;
     }),
 
   listMemberships: protectedProcedure
@@ -101,12 +83,8 @@ export const siteRouter = router({
         ctx.activeMembership?.roleName !== "SUPER_ADMIN" &&
         ctx.activeMembership?.siteId !== input.siteId
       ) {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Access denied to site membership list",
-        });
+        throw new TRPCError({ code: "FORBIDDEN", message: "Access denied" });
       }
-
       const records = await ctx.db
         .select()
         .from(memberships)
@@ -134,7 +112,6 @@ export const siteRouter = router({
       }));
     }),
 
-  // Update dynamic user role or active status in membership (requires MANAGE_MEMBERSHIPS or SUPER_ADMIN)
   updateMembership: protectedProcedure
     .input(
       z.object({
@@ -144,42 +121,32 @@ export const siteRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const [targetMembership] = await ctx.db
+      const [target] = await ctx.db
         .select()
         .from(memberships)
         .where(eq(memberships.id, input.membershipId));
-
-      if (!targetMembership) {
+      if (!target)
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Membership record not found",
+          message: "Membership not found",
         });
-      }
-
       if (
         ctx.activeMembership?.roleName !== "SUPER_ADMIN" &&
-        ctx.activeMembership?.siteId !== targetMembership.siteId
+        ctx.activeMembership?.siteId !== target.siteId
       ) {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "You can only update memberships for your active site",
-        });
+        throw new TRPCError({ code: "FORBIDDEN", message: "Access denied" });
       }
-
-      const updateValues: { roleId?: string; isActive?: boolean } = {};
-      if (input.roleId !== undefined) updateValues.roleId = input.roleId;
-      if (input.isActive !== undefined) updateValues.isActive = input.isActive;
-
-      const [updated] = await ctx.db
+      const values: { roleId?: string; isActive?: boolean } = {};
+      if (input.roleId !== undefined) values.roleId = input.roleId;
+      if (input.isActive !== undefined) values.isActive = input.isActive;
+      const [u] = await ctx.db
         .update(memberships)
-        .set(updateValues)
+        .set(values)
         .where(eq(memberships.id, input.membershipId))
         .returning();
-
-      return updated;
+      return u;
     }),
 
-  // Get all active site memberships for the current user
   getMySites: protectedProcedure.query(async ({ ctx }) => {
     const userMemberships = await ctx.db
       .select()
@@ -195,6 +162,8 @@ export const siteRouter = router({
 
     return userMemberships.map((record) => ({
       membershipId: record.memberships.id,
+      unitId: record.memberships.unitId,
+      blockId: record.memberships.blockId,
       site: record.sites
         ? {
             id: record.sites.id,
@@ -210,5 +179,41 @@ export const siteRouter = router({
           }
         : null,
     }));
+  }),
+
+  listRoles: protectedProcedure
+    .input(z.object({ siteId: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      if (
+        ctx.activeMembership?.roleName !== "SUPER_ADMIN" &&
+        ctx.activeMembership?.siteId !== input.siteId
+      ) {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Access denied" });
+      }
+      return ctx.db.select().from(roles).where(eq(roles.siteId, input.siteId));
+    }),
+
+  listBlocks: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.activeMembership)
+      throw new TRPCError({ code: "FORBIDDEN", message: "Access denied" });
+    return ctx.db
+      .select()
+      .from(blocks)
+      .where(eq(blocks.siteId, ctx.activeMembership.siteId));
+  }),
+
+  listUnits: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.activeMembership)
+      throw new TRPCError({ code: "FORBIDDEN", message: "Access denied" });
+    return ctx.db
+      .select({
+        id: units.id,
+        unitNumber: units.unitNumber,
+        blockName: blocks.name,
+      })
+      .from(units)
+      .leftJoin(blocks, eq(units.blockId, blocks.id))
+      .where(eq(blocks.siteId, ctx.activeMembership.siteId))
+      .orderBy(blocks.name, units.unitNumber);
   }),
 });

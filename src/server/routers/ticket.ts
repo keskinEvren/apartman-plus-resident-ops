@@ -65,8 +65,20 @@ export const ticketRouter = router({
       });
     }
     return ctx.db
-      .select()
+      .select({
+        id: tickets.id,
+        category: tickets.category,
+        title: tickets.title,
+        description: tickets.description,
+        status: tickets.status,
+        blockId: tickets.blockId,
+        unitId: tickets.unitId,
+        createdAt: tickets.createdAt,
+        assignedStaffUserId: tickets.assignedStaffUserId,
+        reporter: { id: users.id, name: users.name },
+      })
       .from(tickets)
+      .leftJoin(users, eq(tickets.reporterUserId, users.id))
       .where(
         and(
           eq(tickets.siteId, ctx.activeMembership.siteId),
@@ -98,6 +110,7 @@ export const ticketRouter = router({
         blockId: tickets.blockId,
         unitId: tickets.unitId,
         createdAt: tickets.createdAt,
+        assignedStaffUserId: tickets.assignedStaffUserId,
         reporter: { id: users.id, name: users.name },
       })
       .from(tickets)

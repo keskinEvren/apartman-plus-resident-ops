@@ -1,6 +1,12 @@
 import { z } from "zod";
 import { router, protectedProcedure } from "../trpc";
-import { packageDeliveries, notifications, memberships } from "@/db/schema";
+import {
+  packageDeliveries,
+  notifications,
+  memberships,
+  units,
+  blocks,
+} from "@/db/schema";
 import { eq, and, desc } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 
@@ -86,6 +92,50 @@ export const packageRouter = router({
         ),
       )
       .orderBy(desc(packageDeliveries.receivedAt));
+  }),
+
+  listSitePackages: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.activeMembership) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "No active site membership selected",
+      });
+    }
+
+    // Check permissions
+    const hasPerm =
+      ctx.activeMembership.roleName === "SUPER_ADMIN" ||
+      ctx.activeMembership.roleName === "SITE_ADMIN" ||
+      ctx.activeMembership.roleName === "STAFF" ||
+      ctx.activeMembership.permissions.includes("MANAGE_PACKAGES");
+
+    if (!hasPerm) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Insufficient permissions to list site packages",
+      });
+    }
+
+    const records = await ctx.db
+      .select({
+        id: packageDeliveries.id,
+        siteId: packageDeliveries.siteId,
+        unitId: packageDeliveries.unitId,
+        carrierName: packageDeliveries.carrierName,
+        otpCode: packageDeliveries.otpCode,
+        status: packageDeliveries.status,
+        receivedAt: packageDeliveries.receivedAt,
+        deliveredAt: packageDeliveries.deliveredAt,
+        unitNumber: units.unitNumber,
+        blockName: blocks.name,
+      })
+      .from(packageDeliveries)
+      .leftJoin(units, eq(packageDeliveries.unitId, units.id))
+      .leftJoin(blocks, eq(units.blockId, blocks.id))
+      .where(eq(packageDeliveries.siteId, ctx.activeMembership.siteId))
+      .orderBy(desc(packageDeliveries.receivedAt));
+
+    return records;
   }),
 
   verifyOtpAndDeliver: protectedProcedure

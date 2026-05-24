@@ -1,13 +1,14 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import { Providers } from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "ASANMOD Project",
-  description: "AI-responsive application",
+  title: "Apartman Plus Resident Ops",
+  description: "Akıllı site yönetimi ve sakin operasyonları platformu",
 };
 
 export default function RootLayout({
@@ -16,8 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html
+      lang="tr"
+      className={`dark ${inter.variable} ${outfit.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-body">
         <Providers>{children}</Providers>
       </body>
     </html>

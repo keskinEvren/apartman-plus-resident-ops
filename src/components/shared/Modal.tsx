@@ -1,5 +1,6 @@
+"use client";
+
 import React from "react";
-("use client");
 
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
