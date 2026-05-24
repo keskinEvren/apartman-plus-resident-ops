@@ -24,3 +24,4 @@ export * from "./schema/packageDeliveries";
 export * from "./schema/amenities";
 export * from "./schema/amenitySessions";
 export * from "./schema/amenityReservations";
+export * from "./schema/invitationTokens";

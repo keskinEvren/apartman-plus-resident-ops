@@ -16,3 +16,4 @@ export * from "./packageDeliveries";
 export * from "./amenities";
 export * from "./amenitySessions";
 export * from "./amenityReservations";
+export * from "./invitationTokens";
