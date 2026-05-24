@@ -10,13 +10,21 @@ import { UserPlus } from "lucide-react";
 const visitorSchema = z.object({
   visitorName: z.string().min(1, "Ziyaretçi adı zorunludur"),
   visitDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Geçerli tarih giriniz"),
-  expectedTime: z.string().regex(/^\d{2}:\d{2}$/, "Geçerli saat giriniz").optional().or(z.literal("")),
+  expectedTime: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/, "Geçerli saat giriniz")
+    .optional()
+    .or(z.literal("")),
 });
 
 type VisitorFormData = z.infer<typeof visitorSchema>;
 
 interface VisitorFormProps {
-  onSubmit: (data: { visitorName: string; visitDate: string; expectedTime?: string }) => void;
+  onSubmit: (data: {
+    visitorName: string;
+    visitDate: string;
+    expectedTime?: string;
+  }) => void;
   isPending: boolean;
 }
 
@@ -57,7 +65,9 @@ export function VisitorForm({ onSubmit, isPending }: VisitorFormProps) {
               className="glass-input w-full rounded-xl px-4 py-2.5 text-sm"
             />
             {errors.visitorName && (
-              <p className="text-xs text-red-400">{errors.visitorName.message}</p>
+              <p className="text-xs text-red-400">
+                {errors.visitorName.message}
+              </p>
             )}
           </div>
 

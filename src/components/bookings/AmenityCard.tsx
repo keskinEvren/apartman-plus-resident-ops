@@ -12,7 +12,13 @@ interface AmenityCardProps {
   onSelect: (id: string) => void;
 }
 
-export function AmenityCard({ id, name, description, isSelected, onSelect }: AmenityCardProps) {
+export function AmenityCard({
+  id,
+  name,
+  description,
+  isSelected,
+  onSelect,
+}: AmenityCardProps) {
   return (
     <button
       onClick={() => onSelect(id)}
@@ -26,17 +32,26 @@ export function AmenityCard({ id, name, description, isSelected, onSelect }: Ame
         <div
           className={cn(
             "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors",
-            isSelected ? "bg-primary/20 text-primary" : "bg-white/[0.06] text-muted-foreground",
+            isSelected
+              ? "bg-primary/20 text-primary"
+              : "bg-white/[0.06] text-muted-foreground",
           )}
         >
           <Dumbbell className="h-5 w-5" />
         </div>
         <div className="min-w-0">
-          <h3 className={cn("text-sm font-semibold", isSelected && "text-primary")}>
+          <h3
+            className={cn(
+              "text-sm font-semibold",
+              isSelected && "text-primary",
+            )}
+          >
             {name}
           </h3>
           {description && (
-            <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{description}</p>
+            <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+              {description}
+            </p>
           )}
         </div>
       </div>

@@ -40,7 +40,8 @@ export function VisitorsClient() {
       <div>
         <h1 className="font-heading text-2xl font-bold">Ziyaretçi Ön Kayıt</h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Ziyaretçileriniz için ön kayıt oluşturun, güvenlik ekibini bilgilendirin
+          Ziyaretçileriniz için ön kayıt oluşturun, güvenlik ekibini
+          bilgilendirin
         </p>
       </div>
 
@@ -60,11 +61,7 @@ export function VisitorsClient() {
         <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
           Kayıtlarım
         </h2>
-        {loadingMy ? (
-          <LoadingSpinner />
-        ) : (
-          <VisitorTable passes={myPasses} />
-        )}
+        {loadingMy ? <LoadingSpinner /> : <VisitorTable passes={myPasses} />}
       </section>
 
       {/* Expected Today (Staff/Admin) */}

@@ -54,7 +54,9 @@ export function SessionSlot({
           </span>
         </div>
         {isFull && (
-          <span className="text-[10px] font-semibold text-red-400 uppercase">Dolu</span>
+          <span className="text-[10px] font-semibold text-red-400 uppercase">
+            Dolu
+          </span>
         )}
       </div>
 
@@ -63,7 +65,11 @@ export function SessionSlot({
         <div
           className={cn(
             "h-full rounded-full transition-all duration-500",
-            isFull ? "bg-red-500/60" : fillPercent > 70 ? "bg-amber-500/60" : "bg-primary/50",
+            isFull
+              ? "bg-red-500/60"
+              : fillPercent > 70
+                ? "bg-amber-500/60"
+                : "bg-primary/50",
           )}
           style={{ width: `${fillPercent}%` }}
         />
