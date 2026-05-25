@@ -8,7 +8,6 @@ import {
   hashPassword,
   validatePasswordStrength,
 } from "@/lib/auth";
-import { generateTOTPSecret, generateTOTPUri, verifyTOTP } from "@/lib/totp";
 
 export const securityRouter = router({
   changePassword: protectedProcedure
@@ -59,100 +58,6 @@ export const securityRouter = router({
       await ctx.db
         .update(users)
         .set({ password: hashed, updatedAt: new Date() })
-        .where(eq(users.id, ctx.user.userId));
-
-      return { success: true };
-    }),
-
-  generate2faSecret: protectedProcedure.mutation(async ({ ctx }) => {
-    // Fetch user email to build label
-    const [userRecord] = await ctx.db
-      .select({ email: users.email })
-      .from(users)
-      .where(eq(users.id, ctx.user.userId))
-      .limit(1);
-
-    if (!userRecord) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Kullanıcı bulunamadı",
-      });
-    }
-
-    const secret = generateTOTPSecret();
-    const uri = generateTOTPUri(secret, userRecord.email);
-
-    return { secret, uri };
-  }),
-
-  enable2fa: protectedProcedure
-    .input(
-      z.object({
-        secret: z.string().min(10),
-        code: z.string().length(6, "Doğrulama kodu 6 haneli olmalıdır"),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      // Verify TOTP code
-      const isMfaValid = verifyTOTP(input.code, input.secret);
-      if (!isMfaValid) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Doğrulama kodu geçersiz, lütfen tekrar deneyin",
-        });
-      }
-
-      // Save secret and enable 2FA
-      await ctx.db
-        .update(users)
-        .set({
-          twoFactorSecret: input.secret,
-          twoFactorEnabled: true,
-          updatedAt: new Date(),
-        })
-        .where(eq(users.id, ctx.user.userId));
-
-      return { success: true };
-    }),
-
-  disable2fa: protectedProcedure
-    .input(
-      z.object({
-        code: z.string().length(6, "Doğrulama kodu 6 haneli olmalıdır"),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      // Fetch user secret
-      const [userRecord] = await ctx.db
-        .select()
-        .from(users)
-        .where(eq(users.id, ctx.user.userId))
-        .limit(1);
-
-      if (!userRecord || !userRecord.twoFactorSecret) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "İki aşamalı doğrulama zaten aktif değil",
-        });
-      }
-
-      // Verify code
-      const isMfaValid = verifyTOTP(input.code, userRecord.twoFactorSecret);
-      if (!isMfaValid) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Doğrulama kodu geçersiz, iptal edilemedi",
-        });
-      }
-
-      // Disable 2FA
-      await ctx.db
-        .update(users)
-        .set({
-          twoFactorSecret: null,
-          twoFactorEnabled: false,
-          updatedAt: new Date(),
-        })
         .where(eq(users.id, ctx.user.userId));
 
       return { success: true };

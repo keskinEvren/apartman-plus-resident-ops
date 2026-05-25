@@ -2,7 +2,6 @@
 
 import React from "react";
 import { PasswordChangeCard } from "./PasswordChangeCard";
-import { MfaSetupCard } from "./MfaSetupCard";
 import { SessionManagerCard } from "./SessionManagerCard";
 import { Shield } from "lucide-react";
 
@@ -13,10 +12,13 @@ export function SecurityTab() {
         <Shield className="h-4.5 w-4.5 text-primary" />
         Hesap Güvenliği ve Erişim Kontrolü
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <PasswordChangeCard />
-        <MfaSetupCard />
-        <SessionManagerCard />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-5">
+          <PasswordChangeCard />
+        </div>
+        <div className="lg:col-span-7">
+          <SessionManagerCard />
+        </div>
       </div>
     </div>
   );
