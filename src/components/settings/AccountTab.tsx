@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { trpc } from "@/lib/trpc";
+import { showToast } from "@/components/shared/Toast";
 import { GlassCard } from "@/components/shared/GlassCard";
 import { SiteSwitcher } from "./SiteSwitcher";
 import { JoinSiteCard } from "./JoinSiteCard";
@@ -10,13 +14,6 @@ interface AccountTabProps {
   activeSiteId: string | null;
   activeMembershipId?: string | null;
   currentMembership: any;
-  handleSiteSwitch: (
-    siteId: string,
-    siteName: string,
-    membershipId: string,
-  ) => void;
-  handleSimulatedSwap: (email: string, pass: string) => void;
-  isPending: boolean;
 }
 
 export function AccountTab({
@@ -24,12 +21,43 @@ export function AccountTab({
   activeSiteId,
   activeMembershipId,
   currentMembership,
-  handleSiteSwitch,
-  handleSimulatedSwap,
-  isPending,
 }: AccountTabProps) {
+  const loginMutation = trpc.auth.login.useMutation({
+    onSuccess: (data) => {
+      localStorage.setItem("auth-token", data.token);
+      if (data.memberships && data.memberships.length > 0) {
+        localStorage.setItem("active-site-id", data.memberships[0].siteId);
+      }
+      showToast(
+        "success",
+        `Simülatör Aktif: ${data.user.name} rolüne geçildi!`,
+      );
+      window.location.reload();
+    },
+    onError: (err) => {
+      showToast("error", err.message || "Simülasyon geçişi başarısız oldu");
+    },
+  });
+
+  const handleSiteSwitch = (
+    siteId: string,
+    siteName: string,
+    membershipId: string,
+  ) => {
+    localStorage.setItem("active-site-id", siteId);
+    localStorage.setItem("active-membership-id", membershipId);
+    showToast("success", `Oturum "${siteName}" sitesine başarıyla geçirildi!`);
+    window.location.reload();
+  };
+
+  const handleSimulatedSwap = (email: string, pass: string) => {
+    localStorage.removeItem("auth-token");
+    localStorage.removeItem("active-site-id");
+    loginMutation.mutate({ email, password: pass });
+  };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 text-sm">
       <div className="lg:col-span-7 space-y-6">
         <SiteSwitcher
           mySites={mySites}
@@ -50,7 +78,7 @@ export function AccountTab({
           <SettingsRoleSimulator
             currentRole={currentMembership?.role?.name || ""}
             onSwap={handleSimulatedSwap}
-            isPending={isPending}
+            isPending={loginMutation.isPending}
           />
         </GlassCard>
       </div>
