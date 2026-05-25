@@ -9,7 +9,15 @@ import { MemberManager } from "@/components/settings/MemberManager";
 import { PropertyManager } from "@/components/settings/PropertyManager";
 import { InvitationManager } from "@/components/settings/InvitationManager";
 import { AccountTab } from "@/components/settings/AccountTab";
-import { User, Shield, Users, Building, Mail } from "lucide-react";
+import { AmenityManager } from "@/components/settings/AmenityManager";
+import {
+  User,
+  Shield,
+  Users,
+  Building,
+  Mail,
+  CalendarDays,
+} from "lucide-react";
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("ACCOUNT");
@@ -106,6 +114,7 @@ export default function SettingsPage() {
               { id: "ACCOUNT", label: "Hesap & Katılım", icon: User },
               { id: "PROPERTIES", label: "Mülk Yönetimi", icon: Building },
               { id: "ROLES", label: "Rol Tanımlama", icon: Shield },
+              { id: "AMENITIES", label: "Tesis Yönetimi", icon: CalendarDays },
               { id: "INVITE", label: "Üye Davet Et", icon: Mail },
               { id: "MEMBERS", label: "Üye Yönetimi", icon: Users },
             ].map(({ id, label, icon: Icon }) => (
@@ -144,6 +153,10 @@ export default function SettingsPage() {
 
       {activeTab === "ROLES" && activeSiteId && (
         <RoleManager siteId={activeSiteId} />
+      )}
+
+      {activeTab === "AMENITIES" && activeSiteId && (
+        <AmenityManager siteId={activeSiteId} />
       )}
 
       {activeTab === "INVITE" && activeSiteId && (

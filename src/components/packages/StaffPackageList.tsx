@@ -2,20 +2,33 @@
 
 import React from "react";
 import { GlassCard } from "@/components/shared/GlassCard";
-import { Package, Calendar, CheckCircle2, ShieldCheck, AlertCircle } from "lucide-react";
+import {
+  Package,
+  Calendar,
+  CheckCircle2,
+  ShieldCheck,
+  AlertCircle,
+} from "lucide-react";
 
 interface StaffPackageListProps {
   packages: any[];
   onDeliverClick: (id: string) => void;
 }
 
-export function StaffPackageList({ packages, onDeliverClick }: StaffPackageListProps) {
+export function StaffPackageList({
+  packages,
+  onDeliverClick,
+}: StaffPackageListProps) {
   if (packages.length === 0) {
     return (
       <GlassCard className="text-center py-12">
         <AlertCircle className="h-8 w-8 text-muted-foreground/40 mx-auto mb-3" />
-        <p className="text-sm font-semibold text-muted-foreground">Kayıtlı kargo bulunamadı</p>
-        <p className="text-xs text-muted-foreground/60 mt-1">Rezidans kargo akışınız şu an temiz.</p>
+        <p className="text-sm font-semibold text-muted-foreground">
+          Kayıtlı kargo bulunamadı
+        </p>
+        <p className="text-xs text-muted-foreground/60 mt-1">
+          Rezidans kargo akışınız şu an temiz.
+        </p>
       </GlassCard>
     );
   }
@@ -23,25 +36,38 @@ export function StaffPackageList({ packages, onDeliverClick }: StaffPackageListP
   return (
     <div className="grid grid-cols-1 gap-4">
       {packages.map((pack) => (
-        <GlassCard key={pack.id} className="gradient-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <GlassCard
+          key={pack.id}
+          className="gradient-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+        >
           <div className="flex items-center gap-4">
-            <div className={`h-11 w-11 rounded-xl flex items-center justify-center shrink-0 ${
-              pack.status === "RECEIVED" ? "bg-amber-500/10 text-amber-400" : "bg-emerald-500/10 text-emerald-400"
-            }`}>
+            <div
+              className={`h-11 w-11 rounded-xl flex items-center justify-center shrink-0 ${
+                pack.status === "RECEIVED"
+                  ? "bg-amber-500/10 text-amber-400"
+                  : "bg-emerald-500/10 text-emerald-400"
+              }`}
+            >
               <Package className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-2.5">
-                <span className="font-semibold text-sm">{pack.carrierName}</span>
+                <span className="font-semibold text-sm">
+                  {pack.carrierName}
+                </span>
                 <span className="text-xs bg-white/[0.04] px-2 py-0.5 rounded-lg border border-white/[0.06] text-foreground font-medium">
                   {pack.blockName} - {pack.unitNumber}
                 </span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
-                  pack.status === "RECEIVED" 
-                    ? "bg-amber-500/15 border-amber-500/20 text-amber-400"
-                    : "bg-emerald-500/15 border-emerald-500/20 text-emerald-400"
-                }`}>
-                  {pack.status === "RECEIVED" ? "Teslim Edilmedi" : "Teslim Edildi"}
+                <span
+                  className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
+                    pack.status === "RECEIVED"
+                      ? "bg-amber-500/15 border-amber-500/20 text-amber-400"
+                      : "bg-emerald-500/15 border-emerald-500/20 text-emerald-400"
+                  }`}
+                >
+                  {pack.status === "RECEIVED"
+                    ? "Teslim Edilmedi"
+                    : "Teslim Edildi"}
                 </span>
               </div>
               <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1">

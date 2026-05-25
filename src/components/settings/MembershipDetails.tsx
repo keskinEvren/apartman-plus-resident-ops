@@ -11,7 +11,9 @@ interface MembershipDetailsProps {
   };
 }
 
-export function MembershipDetails({ currentMembership }: MembershipDetailsProps) {
+export function MembershipDetails({
+  currentMembership,
+}: MembershipDetailsProps) {
   return (
     <GlassCard className="gradient-border space-y-4">
       <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">

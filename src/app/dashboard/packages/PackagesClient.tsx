@@ -14,22 +14,33 @@ import { Package, PlusCircle } from "lucide-react";
 export function PackagesClient() {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isDeliverOpen, setIsDeliverOpen] = useState(false);
-  const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
+  const [selectedPackageId, setSelectedPackageId] = useState<string | null>(
+    null,
+  );
 
   const utils = trpc.useUtils();
-  const activeSiteId = typeof window !== "undefined" ? localStorage.getItem("active-site-id") : null;
+  const activeSiteId =
+    typeof window !== "undefined"
+      ? localStorage.getItem("active-site-id")
+      : null;
 
-  const { data: mySites, isLoading: loadingSites } = trpc.site.getMySites.useQuery();
+  const { data: mySites, isLoading: loadingSites } =
+    trpc.site.getMySites.useQuery();
   const currentMembership = mySites?.find((s) => s.site?.id === activeSiteId);
-  const isStaff = currentMembership?.role?.name === "STAFF" || currentMembership?.role?.name === "SITE_ADMIN" || currentMembership?.role?.name === "SUPER_ADMIN";
+  const isStaff =
+    currentMembership?.role?.name === "STAFF" ||
+    currentMembership?.role?.name === "SITE_ADMIN" ||
+    currentMembership?.role?.name === "SUPER_ADMIN";
 
-  const { data: myPackages = [], isLoading: loadingMyPackages } = trpc.package.listMyPackages.useQuery(undefined, {
-    enabled: !isStaff && !!activeSiteId,
-  });
+  const { data: myPackages = [], isLoading: loadingMyPackages } =
+    trpc.package.listMyPackages.useQuery(undefined, {
+      enabled: !isStaff && !!activeSiteId,
+    });
 
-  const { data: sitePackages = [], isLoading: loadingSitePackages } = trpc.package.listSitePackages.useQuery(undefined, {
-    enabled: isStaff && !!activeSiteId,
-  });
+  const { data: sitePackages = [], isLoading: loadingSitePackages } =
+    trpc.package.listSitePackages.useQuery(undefined, {
+      enabled: isStaff && !!activeSiteId,
+    });
 
   const { data: units = [] } = trpc.site.listUnits.useQuery(undefined, {
     enabled: isStaff && !!activeSiteId,
@@ -37,7 +48,10 @@ export function PackagesClient() {
 
   const receiveMutation = trpc.package.receivePackage.useMutation({
     onSuccess: () => {
-      showToast("success", "Kargo kaydı başarıyla oluşturuldu, sakine OTP bildirimi iletildi!");
+      showToast(
+        "success",
+        "Kargo kaydı başarıyla oluşturuldu, sakine OTP bildirimi iletildi!",
+      );
       utils.package.listSitePackages.invalidate();
       setIsAddOpen(false);
     },
@@ -51,7 +65,8 @@ export function PackagesClient() {
       setIsDeliverOpen(false);
       setSelectedPackageId(null);
     },
-    onError: (err) => showToast("error", err.message || "OTP doğrulama başarısız oldu"),
+    onError: (err) =>
+      showToast("error", err.message || "OTP doğrulama başarısız oldu"),
   });
 
   const handleReceive = (carrierName: string, unitId: string) => {
@@ -63,7 +78,9 @@ export function PackagesClient() {
     deliverMutation.mutate({ packageId: selectedPackageId, otpCode });
   };
 
-  const activePackagesCount = (isStaff ? sitePackages : myPackages).filter((p) => p.status === "RECEIVED").length;
+  const activePackagesCount = (isStaff ? sitePackages : myPackages).filter(
+    (p) => p.status === "RECEIVED",
+  ).length;
 
   if (loadingSites || (isStaff ? loadingSitePackages : loadingMyPackages)) {
     return (
@@ -79,8 +96,8 @@ export function PackagesClient() {
         <div>
           <h1 className="font-heading text-2xl font-bold">Kargo Takip</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {isStaff 
-              ? "Rezidansa ulaşan kargoları kaydedin ve OTP koduyla güvenli teslimat yapın" 
+            {isStaff
+              ? "Rezidansa ulaşan kargoları kaydedin ve OTP koduyla güvenli teslimat yapın"
               : "Dairenize ulaşan paketleri görüntüleyin ve teslimat kodlarınızı yönetin"}
           </p>
         </div>
@@ -102,8 +119,12 @@ export function PackagesClient() {
             <Package className="h-5 w-5" />
           </div>
           <div>
-            <p className="text-2xl font-bold font-heading">{activePackagesCount}</p>
-            <p className="text-xs text-muted-foreground">Bekleyen Paket Sayısı</p>
+            <p className="text-2xl font-bold font-heading">
+              {activePackagesCount}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Bekleyen Paket Sayısı
+            </p>
           </div>
         </GlassCard>
       </div>

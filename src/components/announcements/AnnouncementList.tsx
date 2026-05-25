@@ -29,7 +29,8 @@ const priorityLabels: Record<string, string> = {
 const priorityColors: Record<string, string> = {
   NORMAL: "bg-blue-500/15 border-blue-500/20 text-blue-400",
   IMPORTANT: "bg-amber-500/15 border-amber-500/20 text-amber-400 shadow-glow",
-  URGENT: "bg-red-500/15 border-red-500/20 text-red-400 shadow-glow animate-pulse",
+  URGENT:
+    "bg-red-500/15 border-red-500/20 text-red-400 shadow-glow animate-pulse",
 };
 
 const priorityGlows: Record<string, string> = {

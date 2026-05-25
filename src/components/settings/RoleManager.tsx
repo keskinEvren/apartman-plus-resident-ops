@@ -28,7 +28,9 @@ export function RoleManager({ siteId }: RoleManagerProps) {
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
   const utils = trpc.useUtils();
 
-  const { data: roles = [], isLoading } = trpc.site.listRoles.useQuery({ siteId });
+  const { data: roles = [], isLoading } = trpc.site.listRoles.useQuery({
+    siteId,
+  });
 
   const createMutation = trpc.site.createRole.useMutation({
     onSuccess: () => {
@@ -48,8 +50,13 @@ export function RoleManager({ siteId }: RoleManagerProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!roleName.trim()) return showToast("error", "Lütfen geçerli bir rol adı girin");
-    createMutation.mutate({ siteId, name: roleName.toUpperCase(), permissions: selectedPermissions });
+    if (!roleName.trim())
+      return showToast("error", "Lütfen geçerli bir rol adı girin");
+    createMutation.mutate({
+      siteId,
+      name: roleName.toUpperCase(),
+      permissions: selectedPermissions,
+    });
   };
 
   return (
@@ -61,7 +68,9 @@ export function RoleManager({ siteId }: RoleManagerProps) {
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-xs font-medium text-muted-foreground mb-1 block">Rol Adı</label>
+            <label className="text-xs font-medium text-muted-foreground mb-1 block">
+              Rol Adı
+            </label>
             <input
               type="text"
               placeholder="Örn: CONCIERGE, GECE_GUVENLIGI"
@@ -72,7 +81,9 @@ export function RoleManager({ siteId }: RoleManagerProps) {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground block">Yetkiler (Permissions)</label>
+            <label className="text-xs font-medium text-muted-foreground block">
+              Yetkiler (Permissions)
+            </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[220px] overflow-y-auto pr-1">
               {AVAILABLE_PERMISSIONS.map((p) => {
                 const isChecked = selectedPermissions.includes(p.key);
@@ -105,25 +116,35 @@ export function RoleManager({ siteId }: RoleManagerProps) {
       </GlassCard>
 
       <div className="space-y-3">
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Aktif Roller</h4>
+        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          Aktif Roller
+        </h4>
         {isLoading ? (
           <LoadingSpinner />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {roles.map((r) => (
-              <GlassCard key={r.id} className="p-4 border border-white/[0.06] space-y-2">
+              <GlassCard
+                key={r.id}
+                className="p-4 border border-white/[0.06] space-y-2"
+              >
                 <p className="text-xs font-bold text-foreground flex items-center gap-1.5">
                   <Shield className="h-3.5 w-3.5 text-primary" />
                   {r.name}
                 </p>
                 <div className="flex flex-wrap gap-1">
                   {r.permissions.map((p: string) => (
-                    <span key={p} className="text-[9px] bg-white/[0.04] border border-white/[0.06] px-1.5 py-0.5 rounded text-muted-foreground">
+                    <span
+                      key={p}
+                      className="text-[9px] bg-white/[0.04] border border-white/[0.06] px-1.5 py-0.5 rounded text-muted-foreground"
+                    >
                       {p}
                     </span>
                   ))}
                   {r.permissions.length === 0 && (
-                    <span className="text-[9px] text-muted-foreground italic">Yetki tanımlanmamış (Kat Sakini vb.)</span>
+                    <span className="text-[9px] text-muted-foreground italic">
+                      Yetki tanımlanmamış (Kat Sakini vb.)
+                    </span>
                   )}
                 </div>
               </GlassCard>
