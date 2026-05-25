@@ -58,13 +58,17 @@ export const visitorRouter = router({
       });
     }
 
+    if (!ctx.activeMembership.unitId) {
+      return []; // Return empty if user has no unit (e.g., site-level staff)
+    }
+
     return ctx.db
       .select()
       .from(visitorPasses)
       .where(
         and(
           eq(visitorPasses.siteId, ctx.activeMembership.siteId),
-          eq(visitorPasses.createdById, ctx.user.userId),
+          eq(visitorPasses.unitId, ctx.activeMembership.unitId),
         ),
       )
       .orderBy(desc(visitorPasses.createdAt));

@@ -17,11 +17,20 @@ export default function SettingsPage() {
     typeof window !== "undefined"
       ? localStorage.getItem("active-site-id")
       : null;
+  const activeMembershipId =
+    typeof window !== "undefined"
+      ? localStorage.getItem("active-membership-id")
+      : null;
 
   // 1. Fetch user role and memberships
   const { data: mySites = [], isLoading: loadingSites } =
     trpc.site.getMySites.useQuery();
-  const currentMembership = mySites?.find((s) => s.site?.id === activeSiteId);
+
+  // Find membership matching activeMembershipId first, fallback to activeSiteId
+  const currentMembership = activeMembershipId
+    ? mySites?.find((s) => s.membershipId === activeMembershipId)
+    : mySites?.find((s) => s.site?.id === activeSiteId);
+
   const isAdmin =
     currentMembership?.role?.name === "SITE_ADMIN" ||
     currentMembership?.role?.name === "SUPER_ADMIN";
@@ -35,9 +44,13 @@ export default function SettingsPage() {
     enabled: !!activeSiteId && isAdmin,
   });
 
-  const handleSiteSwitch = (siteId: string, siteName: string) => {
-    if (siteId === activeSiteId) return;
+  const handleSiteSwitch = (
+    siteId: string,
+    siteName: string,
+    membershipId: string,
+  ) => {
     localStorage.setItem("active-site-id", siteId);
+    localStorage.setItem("active-membership-id", membershipId);
     showToast("success", `Oturum "${siteName}" sitesine başarıyla geçirildi!`);
     window.location.reload();
   };
@@ -89,61 +102,26 @@ export default function SettingsPage() {
         {/* Admin Tabs */}
         {isAdmin && activeSiteId && (
           <div className="flex flex-wrap bg-white/[0.02] border border-white/[0.06] rounded-xl p-1 gap-1 w-full xl:w-auto shrink-0 animate-fade-in">
-            <button
-              onClick={() => setActiveTab("ACCOUNT")}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-semibold transition-all ${
-                activeTab === "ACCOUNT"
-                  ? "bg-primary text-primary-foreground shadow-glow"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <User className="h-3.5 w-3.5" />
-              Hesap & Katılım
-            </button>
-            <button
-              onClick={() => setActiveTab("PROPERTIES")}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-semibold transition-all ${
-                activeTab === "PROPERTIES"
-                  ? "bg-primary text-primary-foreground shadow-glow"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Building className="h-3.5 w-3.5" />
-              Mülk Yönetimi
-            </button>
-            <button
-              onClick={() => setActiveTab("ROLES")}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-semibold transition-all ${
-                activeTab === "ROLES"
-                  ? "bg-primary text-primary-foreground shadow-glow"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Shield className="h-3.5 w-3.5" />
-              Rol Tanımlama
-            </button>
-            <button
-              onClick={() => setActiveTab("INVITE")}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-semibold transition-all ${
-                activeTab === "INVITE"
-                  ? "bg-primary text-primary-foreground shadow-glow"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Mail className="h-3.5 w-3.5" />
-              Üye Davet Et
-            </button>
-            <button
-              onClick={() => setActiveTab("MEMBERS")}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-semibold transition-all ${
-                activeTab === "MEMBERS"
-                  ? "bg-primary text-primary-foreground shadow-glow"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Users className="h-3.5 w-3.5" />
-              Üye Yönetimi
-            </button>
+            {[
+              { id: "ACCOUNT", label: "Hesap & Katılım", icon: User },
+              { id: "PROPERTIES", label: "Mülk Yönetimi", icon: Building },
+              { id: "ROLES", label: "Rol Tanımlama", icon: Shield },
+              { id: "INVITE", label: "Üye Davet Et", icon: Mail },
+              { id: "MEMBERS", label: "Üye Yönetimi", icon: Users },
+            ].map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveTab(id)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-semibold transition-all ${
+                  activeTab === id
+                    ? "bg-primary text-primary-foreground shadow-glow"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                {label}
+              </button>
+            ))}
           </div>
         )}
       </div>
@@ -152,6 +130,7 @@ export default function SettingsPage() {
         <AccountTab
           mySites={mySites}
           activeSiteId={activeSiteId}
+          activeMembershipId={activeMembershipId}
           currentMembership={currentMembership}
           handleSiteSwitch={handleSiteSwitch}
           handleSimulatedSwap={handleSimulatedSwap}

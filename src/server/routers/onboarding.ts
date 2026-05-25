@@ -143,6 +143,7 @@ export const onboardingRouter = router({
 
       const invitation = await getValidInvitation(ctx.db, input.token);
 
+      const { isNull } = await import("drizzle-orm");
       const [existingMembership] = await ctx.db
         .select()
         .from(memberships)
@@ -150,6 +151,9 @@ export const onboardingRouter = router({
           and(
             eq(memberships.userId, userRecord.id),
             eq(memberships.siteId, invitation.siteId),
+            invitation.unitId
+              ? eq(memberships.unitId, invitation.unitId)
+              : isNull(memberships.unitId),
             eq(memberships.isActive, true),
           ),
         )

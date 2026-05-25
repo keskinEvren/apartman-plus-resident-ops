@@ -22,6 +22,10 @@ export function InvitationJoinCard({ onBack }: InvitationJoinCardProps) {
       localStorage.setItem("auth-token", data.token);
       if (data.memberships && data.memberships.length > 0) {
         localStorage.setItem("active-site-id", data.memberships[0].siteId);
+        localStorage.setItem(
+          "active-membership-id",
+          data.memberships[0].membershipId,
+        );
       }
       showToast("success", `Kayıt Başarılı! Hoş geldiniz, ${data.user.name}!`);
       window.location.href = "/dashboard";
@@ -35,6 +39,10 @@ export function InvitationJoinCard({ onBack }: InvitationJoinCardProps) {
       localStorage.setItem("auth-token", data.token);
       if (data.memberships && data.memberships.length > 0) {
         localStorage.setItem("active-site-id", data.memberships[0].siteId);
+        localStorage.setItem(
+          "active-membership-id",
+          data.memberships[0].membershipId,
+        );
       }
       showToast("success", `Giriş Başarılı! Hoş geldiniz, ${data.user.name}!`);
       window.location.href = "/dashboard";

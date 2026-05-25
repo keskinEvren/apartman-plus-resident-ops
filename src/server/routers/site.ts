@@ -92,23 +92,11 @@ export const siteRouter = router({
         .leftJoin(users, eq(memberships.userId, users.id))
         .leftJoin(roles, eq(memberships.roleId, roles.id));
 
-      return records.map((record) => ({
-        membershipId: record.memberships.id,
-        isActive: record.memberships.isActive,
-        user: record.users
-          ? {
-              id: record.users.id,
-              email: record.users.email,
-              fullName: record.users.name,
-            }
-          : null,
-        role: record.roles
-          ? {
-              id: record.roles.id,
-              name: record.roles.name,
-              permissions: record.roles.permissions,
-            }
-          : null,
+      return records.map(({ memberships: m, users: u, roles: r }) => ({
+        membershipId: m.id,
+        isActive: m.isActive,
+        user: u ? { id: u.id, email: u.email, fullName: u.name } : null,
+        role: r ? { id: r.id, name: r.name, permissions: r.permissions } : null,
       }));
     }),
 
@@ -158,27 +146,22 @@ export const siteRouter = router({
         ),
       )
       .leftJoin(sites, eq(memberships.siteId, sites.id))
-      .leftJoin(roles, eq(memberships.roleId, roles.id));
+      .leftJoin(roles, eq(memberships.roleId, roles.id))
+      .leftJoin(units, eq(memberships.unitId, units.id))
+      .leftJoin(blocks, eq(memberships.blockId, blocks.id));
 
-    return userMemberships.map((record) => ({
-      membershipId: record.memberships.id,
-      unitId: record.memberships.unitId,
-      blockId: record.memberships.blockId,
-      site: record.sites
-        ? {
-            id: record.sites.id,
-            name: record.sites.name,
-            address: record.sites.address,
-          }
-        : null,
-      role: record.roles
-        ? {
-            id: record.roles.id,
-            name: record.roles.name,
-            permissions: record.roles.permissions,
-          }
-        : null,
-    }));
+    return userMemberships.map(
+      ({ memberships: m, units: u, blocks: b, sites: s, roles: r }) => ({
+        membershipId: m.id,
+        unitId: m.unitId,
+        blockId: m.blockId,
+        unit: u
+          ? { id: u.id, unitNumber: u.unitNumber, blockName: b?.name || "" }
+          : null,
+        site: s ? { id: s.id, name: s.name, address: s.address } : null,
+        role: r ? { id: r.id, name: r.name, permissions: r.permissions } : null,
+      }),
+    );
   }),
 
   listRoles: protectedProcedure

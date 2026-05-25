@@ -22,7 +22,7 @@ export default function RootLayout({
       className={`dark ${inter.variable} ${outfit.variable}`}
       suppressHydrationWarning
     >
-      <body className="font-body">
+      <body className="font-body" suppressHydrationWarning>
         <Providers>{children}</Providers>
       </body>
     </html>

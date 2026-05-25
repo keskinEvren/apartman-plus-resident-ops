@@ -10,6 +10,7 @@ export function JoinSiteCard() {
   const claimMutation = trpc.invitation.claimInvitation.useMutation({
     onSuccess: (data) => {
       localStorage.setItem("active-site-id", data.siteId);
+      localStorage.setItem("active-membership-id", data.membershipId);
       showToast(
         "success",
         "Aktivasyon kodu doğrulandı! Yeni siteye başarıyla katıldınız.",
