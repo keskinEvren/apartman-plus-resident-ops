@@ -27,6 +27,8 @@ export interface JWTPayload {
   userId: string;
   email: string;
   role: string;
+  sessionId?: string;
+  requireMfa?: boolean;
 }
 
 export function signToken(payload: JWTPayload): string {

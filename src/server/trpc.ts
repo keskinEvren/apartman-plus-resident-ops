@@ -14,12 +14,39 @@ export const createContext = async (opts: { req?: Request }) => {
   if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
     try {
-      // Decode token using the helper from auth.ts
-      // We need to import it at the top
       const { verifyToken } = await import("@/lib/auth");
-      user = verifyToken(token);
+      const decoded = verifyToken(token);
+
+      if (decoded.sessionId) {
+        const { userSessions } = await import("@/db/schema");
+        const { eq, and } = await import("drizzle-orm");
+
+        const [session] = await db
+          .select()
+          .from(userSessions)
+          .where(
+            and(
+              eq(userSessions.id, decoded.sessionId),
+              eq(userSessions.isActive, true),
+            ),
+          )
+          .limit(1);
+
+        if (session) {
+          user = decoded;
+          // Asynchronously update lastActiveAt for session tracking
+          db.update(userSessions)
+            .set({ lastActiveAt: new Date() })
+            .where(eq(userSessions.id, session.id))
+            .execute()
+            .catch(() => {});
+        }
+      } else {
+        // Fallback for sessions prior to Phase 4 session tracking
+        user = decoded;
+      }
     } catch {
-      // invalid token, user remains null
+      // invalid token or session revoked, user remains null
     }
   }
 
