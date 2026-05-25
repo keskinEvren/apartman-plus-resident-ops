@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { trpc } from "@/lib/trpc";
-import { showToast } from "@/components/shared/Toast";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { RoleManager } from "@/components/settings/RoleManager";
 import { MemberManager } from "@/components/settings/MemberManager";
@@ -10,6 +9,9 @@ import { PropertyManager } from "@/components/settings/PropertyManager";
 import { InvitationManager } from "@/components/settings/InvitationManager";
 import { AccountTab } from "@/components/settings/AccountTab";
 import { AmenityManager } from "@/components/settings/AmenityManager";
+import { ProfileTab } from "@/components/settings/ProfileTab";
+import { PetsTab } from "@/components/settings/PetsTab";
+import { NotificationTab } from "@/components/settings/NotificationTab";
 import {
   User,
   Shield,
@@ -17,6 +19,9 @@ import {
   Building,
   Mail,
   CalendarDays,
+  Sparkles,
+  Heart,
+  Bell,
 } from "lucide-react";
 
 export default function SettingsPage() {
@@ -43,47 +48,28 @@ export default function SettingsPage() {
     currentMembership?.role?.name === "SITE_ADMIN" ||
     currentMembership?.role?.name === "SUPER_ADMIN";
 
-  // Pre-fetch roles & units for subcomponents
+  const tabs = [
+    { id: "ACCOUNT", label: "Hesap & Katılım", icon: User },
+    { id: "PROFILE", label: "Profilim", icon: Sparkles },
+    { id: "PETS", label: "Evcil Hayvanlarım", icon: Heart },
+    { id: "NOTIFICATIONS", label: "Bildirimlerim", icon: Bell },
+    ...(isAdmin
+      ? [
+          { id: "PROPERTIES", label: "Mülk Yönetimi", icon: Building },
+          { id: "ROLES", label: "Rol Tanımlama", icon: Shield },
+          { id: "AMENITIES", label: "Tesis Yönetimi", icon: CalendarDays },
+          { id: "INVITE", label: "Üye Davet Et", icon: Mail },
+          { id: "MEMBERS", label: "Üye Yönetimi", icon: Users },
+        ]
+      : []),
+  ];
+
   const { data: roles = [] } = trpc.site.listRoles.useQuery(
     { siteId: activeSiteId! },
     { enabled: !!activeSiteId && isAdmin },
   );
   const { data: units = [] } = trpc.site.listUnits.useQuery(undefined, {
     enabled: !!activeSiteId && isAdmin,
-  });
-
-  const handleSiteSwitch = (
-    siteId: string,
-    siteName: string,
-    membershipId: string,
-  ) => {
-    localStorage.setItem("active-site-id", siteId);
-    localStorage.setItem("active-membership-id", membershipId);
-    showToast("success", `Oturum "${siteName}" sitesine başarıyla geçirildi!`);
-    window.location.reload();
-  };
-
-  const handleSimulatedSwap = (email: string, pass: string) => {
-    localStorage.removeItem("auth-token");
-    localStorage.removeItem("active-site-id");
-    loginMutation.mutate({ email, password: pass });
-  };
-
-  const loginMutation = trpc.auth.login.useMutation({
-    onSuccess: (data) => {
-      localStorage.setItem("auth-token", data.token);
-      if (data.memberships && data.memberships.length > 0) {
-        localStorage.setItem("active-site-id", data.memberships[0].siteId);
-      }
-      showToast(
-        "success",
-        `Simülatör Aktif: ${data.user.name} rolüne geçildi!`,
-      );
-      window.location.reload();
-    },
-    onError: (err) => {
-      showToast("error", err.message || "Simülasyon geçişi başarısız oldu");
-    },
   });
 
   if (loadingSites) {
@@ -107,17 +93,10 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        {/* Admin Tabs */}
-        {isAdmin && activeSiteId && (
+        {/* Ayarlar Sekmeleri */}
+        {activeSiteId && (
           <div className="flex flex-wrap bg-white/[0.02] border border-white/[0.06] rounded-xl p-1 gap-1 w-full xl:w-auto shrink-0 animate-fade-in">
-            {[
-              { id: "ACCOUNT", label: "Hesap & Katılım", icon: User },
-              { id: "PROPERTIES", label: "Mülk Yönetimi", icon: Building },
-              { id: "ROLES", label: "Rol Tanımlama", icon: Shield },
-              { id: "AMENITIES", label: "Tesis Yönetimi", icon: CalendarDays },
-              { id: "INVITE", label: "Üye Davet Et", icon: Mail },
-              { id: "MEMBERS", label: "Üye Yönetimi", icon: Users },
-            ].map(({ id, label, icon: Icon }) => (
+            {tabs.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 onClick={() => setActiveTab(id)}
@@ -141,11 +120,14 @@ export default function SettingsPage() {
           activeSiteId={activeSiteId}
           activeMembershipId={activeMembershipId}
           currentMembership={currentMembership}
-          handleSiteSwitch={handleSiteSwitch}
-          handleSimulatedSwap={handleSimulatedSwap}
-          isPending={loginMutation.isPending}
         />
       )}
+
+      {activeTab === "PROFILE" && <ProfileTab />}
+
+      {activeTab === "PETS" && <PetsTab />}
+
+      {activeTab === "NOTIFICATIONS" && <NotificationTab />}
 
       {activeTab === "PROPERTIES" && activeSiteId && (
         <PropertyManager siteId={activeSiteId} />

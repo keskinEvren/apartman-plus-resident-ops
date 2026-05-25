@@ -17,3 +17,5 @@ export * from "./amenities";
 export * from "./amenitySessions";
 export * from "./amenityReservations";
 export * from "./invitationTokens";
+export * from "./userPets";
+export * from "./userNotificationPreferences";
