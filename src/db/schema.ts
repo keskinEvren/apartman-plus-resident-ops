@@ -27,3 +27,4 @@ export * from "./schema/amenityReservations";
 export * from "./schema/invitationTokens";
 export * from "./schema/userPets";
 export * from "./schema/userNotificationPreferences";
+export * from "./schema/userSessions";

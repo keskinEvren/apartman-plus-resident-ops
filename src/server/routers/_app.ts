@@ -13,6 +13,7 @@ import { invitationRouter } from "./invitation";
 import { onboardingRouter } from "./onboarding";
 import { petRouter } from "./pet";
 import { preferenceRouter } from "./preference";
+import { securityRouter } from "./security";
 
 /**
  * Root tRPC Router
@@ -33,6 +34,7 @@ export const appRouter = router({
   onboarding: onboardingRouter,
   pet: petRouter,
   preference: preferenceRouter,
+  security: securityRouter,
 });
 
 export type AppRouter = typeof appRouter;

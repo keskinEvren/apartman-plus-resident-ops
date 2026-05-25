@@ -24,7 +24,7 @@ export function AccountTab({
 }: AccountTabProps) {
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: (data) => {
-      localStorage.setItem("auth-token", data.token);
+      localStorage.setItem("auth-token", data.token || "");
       if (data.memberships && data.memberships.length > 0) {
         localStorage.setItem("active-site-id", data.memberships[0].siteId);
       }
