@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { GlassCard } from "@/components/shared/GlassCard";
-import { Users, User, Shield, Power } from "lucide-react";
+import { ResidentProfileModal } from "./ResidentProfileModal";
+import { Users, User, Shield, Power, Eye } from "lucide-react";
 
 interface MemberManagerProps {
   siteId: string;
@@ -11,6 +12,9 @@ interface MemberManagerProps {
 }
 
 export function MemberManager({ siteId, roles }: MemberManagerProps) {
+  const [selectedResidentId, setSelectedResidentId] = useState<string | null>(
+    null,
+  );
   const utils = trpc.useUtils();
 
   const { data: members = [], isLoading: loadingMembers } =
@@ -92,6 +96,14 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
                 </div>
 
                 <button
+                  onClick={() => setSelectedResidentId(member.user?.id || null)}
+                  className="px-3 py-1.5 rounded-lg text-[10px] font-bold border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] text-muted-foreground hover:text-foreground transition-all flex items-center gap-1"
+                >
+                  <Eye className="h-3 w-3" />
+                  Profili İncele
+                </button>
+
+                <button
                   onClick={() =>
                     handleToggleStatus(member.membershipId, member.isActive)
                   }
@@ -118,6 +130,14 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
           </GlassCard>
         )}
       </div>
+
+      {selectedResidentId && (
+        <ResidentProfileModal
+          siteId={siteId}
+          residentUserId={selectedResidentId}
+          onClose={() => setSelectedResidentId(null)}
+        />
+      )}
     </div>
   );
 }
