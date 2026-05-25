@@ -5,29 +5,45 @@ import { Building, MapPin, Check } from "lucide-react";
 interface SiteSwitcherProps {
   mySites: any[];
   activeSiteId: string | null;
-  onSiteSwitch: (siteId: string, siteName: string) => void;
+  activeMembershipId?: string | null;
+  onSiteSwitch: (
+    siteId: string,
+    siteName: string,
+    membershipId: string,
+  ) => void;
 }
 
-export function SiteSwitcher({ mySites, activeSiteId, onSiteSwitch }: SiteSwitcherProps) {
+export function SiteSwitcher({
+  mySites,
+  activeSiteId,
+  activeMembershipId,
+  onSiteSwitch,
+}: SiteSwitcherProps) {
   return (
     <GlassCard className="gradient-border space-y-4">
       <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
         <Building className="h-4 w-4 text-primary" />
-        Aktif Site Değiştirici (Site Switcher)
+        Mülk ve Site Değiştirici
       </h2>
       <p className="text-xs text-muted-foreground leading-relaxed">
-        Hesabınız birden fazla sitede kayıtlıysa, aşağıdan hızlıca siteler
-        arasında geçiş yapabilirsiniz. Tüm veriler seçtiğiniz siteye göre
-        izole edilecektir.
+        Kayıtlı olduğunuz tüm mülkler ve siteler aşağıda listelenmiştir. İşlem
+        yapmak istediğiniz daireyi veya sitenizi seçerek anında geçiş
+        yapabilirsiniz.
       </p>
 
       <div className="space-y-2 pt-2">
         {mySites.map((ms) => {
-          const isSelected = ms.site?.id === activeSiteId;
+          // Fallback to activeSiteId if activeMembershipId is not set
+          const isSelected = activeMembershipId
+            ? ms.membershipId === activeMembershipId
+            : ms.site?.id === activeSiteId;
+
           return (
             <div
-              key={ms.site?.id}
-              onClick={() => onSiteSwitch(ms.site!.id, ms.site!.name)}
+              key={ms.membershipId}
+              onClick={() =>
+                onSiteSwitch(ms.site!.id, ms.site!.name, ms.membershipId)
+              }
               className={`p-4 rounded-xl border flex items-center justify-between cursor-pointer transition-all duration-200 ${
                 isSelected
                   ? "bg-primary/10 border-primary text-primary shadow-glow"
@@ -38,10 +54,18 @@ export function SiteSwitcher({ mySites, activeSiteId, onSiteSwitch }: SiteSwitch
                 <p className="text-sm font-bold text-foreground">
                   {ms.site?.name}
                 </p>
-                <p className="text-[11px] text-muted-foreground/80 flex items-center gap-1">
-                  <MapPin className="h-3 w-3" />
-                  {ms.site?.address}
-                </p>
+                {ms.unit ? (
+                  <p className="text-[11px] text-primary flex items-center gap-1 font-semibold">
+                    <MapPin className="h-3 w-3" />
+                    {ms.unit.blockName ? `${ms.unit.blockName} Blok - ` : ""}
+                    Daire {ms.unit.unitNumber}
+                  </p>
+                ) : (
+                  <p className="text-[11px] text-muted-foreground/80 flex items-center gap-1">
+                    <MapPin className="h-3 w-3" />
+                    {ms.site?.address || "Genel Yetki"}
+                  </p>
+                )}
               </div>
 
               <div className="flex items-center gap-3">

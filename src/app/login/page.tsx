@@ -20,6 +20,7 @@ export default function LoginPage() {
   useEffect(() => {
     localStorage.removeItem("auth-token");
     localStorage.removeItem("active-site-id");
+    localStorage.removeItem("active-membership-id");
   }, []);
 
   const loginMutation = trpc.auth.login.useMutation({
@@ -27,6 +28,10 @@ export default function LoginPage() {
       localStorage.setItem("auth-token", data.token);
       if (data.memberships && data.memberships.length > 0) {
         localStorage.setItem("active-site-id", data.memberships[0].siteId);
+        localStorage.setItem(
+          "active-membership-id",
+          data.memberships[0].membershipId,
+        );
       }
       showToast("success", `Hoş geldiniz, ${data.user.name}!`);
       router.push("/dashboard");

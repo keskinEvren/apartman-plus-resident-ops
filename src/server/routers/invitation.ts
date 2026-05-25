@@ -23,12 +23,11 @@ export const invitationRouter = router({
         .leftJoin(roles, eq(invitationTokens.roleId, roles.id))
         .limit(1);
 
-      if (!invitation) {
+      if (!invitation)
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Geçersiz veya süresi dolmuş aktivasyon kodu!",
         });
-      }
 
       if (invitation.invitation_tokens.isUsed) {
         throw new TRPCError({
@@ -121,24 +120,19 @@ export const invitationRouter = router({
         .leftJoin(blocks, eq(units.blockId, blocks.id))
         .leftJoin(roles, eq(invitationTokens.roleId, roles.id));
 
-      return records.map((record) => ({
-        id: record.invitation_tokens.id,
-        token: record.invitation_tokens.token,
-        email: record.invitation_tokens.email,
-        isUsed: record.invitation_tokens.isUsed,
-        expiresAt: record.invitation_tokens.expiresAt,
-        unit: record.units
-          ? {
-              unitNumber: record.units.unitNumber,
-              blockName: record.blocks?.name || "",
-            }
-          : null,
-        role: record.roles
-          ? {
-              name: record.roles.name,
-            }
-          : null,
-      }));
+      return records.map(
+        ({ invitation_tokens: tok, units: u, blocks: b, roles: r }) => ({
+          id: tok.id,
+          token: tok.token,
+          email: tok.email,
+          isUsed: tok.isUsed,
+          expiresAt: tok.expiresAt,
+          unit: u
+            ? { unitNumber: u.unitNumber, blockName: b?.name || "" }
+            : null,
+          role: r ? { name: r.name } : null,
+        }),
+      );
     }),
 
   claimInvitation: protectedProcedure
@@ -149,12 +143,11 @@ export const invitationRouter = router({
         .from(invitationTokens)
         .where(eq(invitationTokens.token, input.token.trim().toUpperCase()));
 
-      if (!invitation) {
+      if (!invitation)
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Geçersiz aktivasyon kodu!",
         });
-      }
 
       if (invitation.isUsed) {
         throw new TRPCError({
@@ -170,6 +163,8 @@ export const invitationRouter = router({
         });
       }
 
+      // Import and check for existing active membership for this specific unit/role in this site
+      const { isNull } = await import("drizzle-orm");
       const [existing] = await ctx.db
         .select()
         .from(memberships)
@@ -177,6 +172,9 @@ export const invitationRouter = router({
           and(
             eq(memberships.userId, ctx.user.userId),
             eq(memberships.siteId, invitation.siteId),
+            invitation.unitId
+              ? eq(memberships.unitId, invitation.unitId)
+              : isNull(memberships.unitId),
             eq(memberships.isActive, true),
           ),
         );
@@ -184,7 +182,9 @@ export const invitationRouter = router({
       if (existing) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Zaten bu sitenin aktif bir üyesisiniz!",
+          message: invitation.unitId
+            ? "Bu dairede zaten aktif bir üyeliğiniz bulunuyor!"
+            : "Zaten bu sitenin aktif bir yöneticisi veya üyesisiniz!",
         });
       }
 

@@ -25,23 +25,55 @@ export const createContext = async (opts: { req?: Request }) => {
 
   let activeMembership = null;
   const siteId = opts.req?.headers.get("x-site-id");
+  const membershipId = opts.req?.headers.get("x-membership-id");
 
-  if (user && siteId && siteId !== "undefined" && siteId !== "null") {
+  if (user) {
     try {
       const { memberships, roles } = await import("@/db/schema");
       const { eq, and } = await import("drizzle-orm");
 
-      const [membershipRecord] = await db
-        .select()
-        .from(memberships)
-        .where(
-          and(
-            eq(memberships.userId, user.userId),
-            eq(memberships.siteId, siteId),
-            eq(memberships.isActive, true),
-          ),
-        )
-        .leftJoin(roles, eq(memberships.roleId, roles.id));
+      let membershipRecord = null;
+
+      if (
+        membershipId &&
+        membershipId !== "undefined" &&
+        membershipId !== "null"
+      ) {
+        const [record] = await db
+          .select()
+          .from(memberships)
+          .where(
+            and(
+              eq(memberships.id, membershipId),
+              eq(memberships.userId, user.userId),
+              eq(memberships.isActive, true),
+            ),
+          )
+          .leftJoin(roles, eq(memberships.roleId, roles.id));
+        membershipRecord = record;
+      }
+
+      // Fallback: If no membershipId was provided or found, try using siteId
+      if (
+        !membershipRecord &&
+        siteId &&
+        siteId !== "undefined" &&
+        siteId !== "null"
+      ) {
+        const [record] = await db
+          .select()
+          .from(memberships)
+          .where(
+            and(
+              eq(memberships.userId, user.userId),
+              eq(memberships.siteId, siteId),
+              eq(memberships.isActive, true),
+            ),
+          )
+          .leftJoin(roles, eq(memberships.roleId, roles.id))
+          .limit(1);
+        membershipRecord = record;
+      }
 
       if (membershipRecord) {
         activeMembership = {

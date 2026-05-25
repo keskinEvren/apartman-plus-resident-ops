@@ -8,8 +8,13 @@ import { SettingsRoleSimulator } from "./SettingsRoleSimulator";
 interface AccountTabProps {
   mySites: any[];
   activeSiteId: string | null;
+  activeMembershipId?: string | null;
   currentMembership: any;
-  handleSiteSwitch: (siteId: string, siteName: string) => void;
+  handleSiteSwitch: (
+    siteId: string,
+    siteName: string,
+    membershipId: string,
+  ) => void;
   handleSimulatedSwap: (email: string, pass: string) => void;
   isPending: boolean;
 }
@@ -17,6 +22,7 @@ interface AccountTabProps {
 export function AccountTab({
   mySites,
   activeSiteId,
+  activeMembershipId,
   currentMembership,
   handleSiteSwitch,
   handleSimulatedSwap,
@@ -28,6 +34,7 @@ export function AccountTab({
         <SiteSwitcher
           mySites={mySites}
           activeSiteId={activeSiteId}
+          activeMembershipId={activeMembershipId}
           onSiteSwitch={handleSiteSwitch}
         />
 

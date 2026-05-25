@@ -18,12 +18,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
             if (typeof window !== "undefined") {
               const token = localStorage.getItem("auth-token");
               const siteId = localStorage.getItem("active-site-id");
+              const membershipId = localStorage.getItem("active-membership-id");
               const headers: Record<string, string> = {};
               if (token) {
                 headers["authorization"] = `Bearer ${token}`;
               }
               if (siteId) {
                 headers["x-site-id"] = siteId;
+              }
+              if (membershipId) {
+                headers["x-membership-id"] = membershipId;
               }
               return headers;
             }
