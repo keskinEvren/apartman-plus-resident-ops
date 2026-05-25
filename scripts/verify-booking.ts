@@ -218,7 +218,7 @@ async function runTest() {
 
   // Test Cancellation
   console.log("\n🧹 Testing Reservation cancellation...");
-  const cancelledRes = await successfulCaller.booking.cancelReservation({
+  const cancelledRes = await successfulCaller.amenity.cancelReservation({
     reservationId: successfulRes.id,
   });
   expect(cancelledRes.status).toBe("CANCELLED");

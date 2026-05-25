@@ -2,7 +2,13 @@
 
 import React from "react";
 import { GlassCard } from "@/components/shared/GlassCard";
-import { Calendar, User, ClipboardList, CheckCircle, AlertTriangle } from "lucide-react";
+import {
+  Calendar,
+  User,
+  ClipboardList,
+  CheckCircle,
+  AlertTriangle,
+} from "lucide-react";
 
 interface StaffTicketListProps {
   tickets: any[];
@@ -27,8 +33,12 @@ export function StaffTicketList({
     return (
       <GlassCard className="text-center py-12">
         <AlertTriangle className="h-8 w-8 text-muted-foreground/40 mx-auto mb-3" />
-        <p className="text-sm font-semibold text-muted-foreground">Destek talebi bulunamadı</p>
-        <p className="text-xs text-muted-foreground/60 mt-1">Atanmış veya bekleyen açık arıza kaydı yok.</p>
+        <p className="text-sm font-semibold text-muted-foreground">
+          Destek talebi bulunamadı
+        </p>
+        <p className="text-xs text-muted-foreground/60 mt-1">
+          Atanmış veya bekleyen açık arıza kaydı yok.
+        </p>
       </GlassCard>
     );
   }
@@ -50,15 +60,21 @@ export function StaffTicketList({
                 </div>
                 <div className="space-y-1.5 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-bold text-base text-foreground truncate max-w-md">{ticket.title}</span>
+                    <span className="font-bold text-base text-foreground truncate max-w-md">
+                      {ticket.title}
+                    </span>
                     <span className="text-xs text-muted-foreground/80 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-lg font-medium">
                       {categoryLabels[ticket.category]}
                     </span>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${statusColors[ticket.status]}`}>
+                    <span
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${statusColors[ticket.status]}`}
+                    >
                       {statusLabels[ticket.status]}
                     </span>
                   </div>
-                  <p className="text-sm text-muted-foreground line-clamp-1 max-w-2xl">{ticket.description}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-1 max-w-2xl">
+                    {ticket.description}
+                  </p>
                   <div className="flex items-center gap-4 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3.5 w-3.5" />
@@ -74,7 +90,10 @@ export function StaffTicketList({
                 </div>
               </div>
 
-              <div className="flex gap-2 w-full md:w-auto mt-2 md:mt-0" onClick={(e) => e.stopPropagation()}>
+              <div
+                className="flex gap-2 w-full md:w-auto mt-2 md:mt-0"
+                onClick={(e) => e.stopPropagation()}
+              >
                 {!ticket.assignedStaffUserId ? (
                   <button
                     onClick={() => onAssignClick(ticket.id)}

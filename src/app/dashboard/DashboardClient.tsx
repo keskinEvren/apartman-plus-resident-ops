@@ -50,14 +50,14 @@ function StatCard({
 
 export function DashboardClient() {
   const { data: reservations, isLoading: loadingRes } =
-    trpc.booking.listMyReservations.useQuery();
+    trpc.amenity.listMyReservations.useQuery();
   const { data: notifications, isLoading: loadingNot } =
     trpc.notification.listMyNotifications.useQuery();
   const { data: visitors, isLoading: loadingVis } =
     trpc.visitor.listExpectedVisitors.useQuery({});
 
   const activeReservations = reservations?.filter(
-    (r) => r.status === "CONFIRMED",
+    (r: { status: string }) => r.status === "CONFIRMED",
   ).length;
   const unreadNotifications = notifications?.filter((n) => !n.isRead).length;
   const expectedVisitors = visitors?.length;

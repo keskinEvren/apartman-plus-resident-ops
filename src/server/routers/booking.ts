@@ -21,12 +21,11 @@ export const bookingRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.activeMembership) {
+      if (!ctx.activeMembership)
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "No active membership",
         });
-      }
       const [newSession] = await ctx.db
         .insert(amenitySessions)
         .values({
@@ -46,27 +45,92 @@ export const bookingRouter = router({
       z.object({
         amenityId: z.string().uuid(),
         dayOfWeek: z.number().min(0).max(6).optional(),
+        date: z
+          .string()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .optional(),
+        includeInactive: z.boolean().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
-      if (!ctx.activeMembership) {
+      if (!ctx.activeMembership)
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "No active membership",
         });
-      }
       const filters = [
         eq(amenitySessions.siteId, ctx.activeMembership.siteId),
         eq(amenitySessions.amenityId, input.amenityId),
-        eq(amenitySessions.isActive, true),
       ];
-      if (input.dayOfWeek !== undefined) {
+      if (!input.includeInactive)
+        filters.push(eq(amenitySessions.isActive, true));
+      if (input.dayOfWeek !== undefined)
         filters.push(eq(amenitySessions.dayOfWeek, input.dayOfWeek));
-      }
-      return ctx.db
+
+      const sessionsList = await ctx.db
         .select()
         .from(amenitySessions)
         .where(and(...filters));
+
+      if (input.date && sessionsList.length > 0) {
+        const { inArray } = await import("drizzle-orm");
+        const sessionIds = sessionsList.map((s) => s.id);
+        const reservations = await ctx.db
+          .select({ sessionId: amenityReservations.sessionId })
+          .from(amenityReservations)
+          .where(
+            and(
+              eq(amenityReservations.reservationDate, input.date),
+              eq(amenityReservations.status, "CONFIRMED"),
+              inArray(amenityReservations.sessionId, sessionIds),
+            ),
+          );
+
+        const counts = reservations.reduce(
+          (acc, res) => {
+            acc[res.sessionId] = (acc[res.sessionId] || 0) + 1;
+            return acc;
+          },
+          {} as Record<string, number>,
+        );
+
+        return sessionsList.map((s) => ({
+          ...s,
+          bookedCount: counts[s.id] || 0,
+        }));
+      }
+
+      return sessionsList.map((s) => ({
+        ...s,
+        bookedCount: 0,
+      }));
+    }),
+
+  toggleSessionActive: protectedProcedure
+    .input(z.object({ sessionId: z.string().uuid(), isActive: z.boolean() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.activeMembership)
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "No active membership",
+        });
+      const hasPerm =
+        ctx.activeMembership.roleName === "SUPER_ADMIN" ||
+        ctx.activeMembership.roleName === "SITE_ADMIN";
+      if (!hasPerm)
+        throw new TRPCError({ code: "FORBIDDEN", message: "Access denied" });
+
+      const [updated] = await ctx.db
+        .update(amenitySessions)
+        .set({ isActive: input.isActive, updatedAt: new Date() })
+        .where(
+          and(
+            eq(amenitySessions.id, input.sessionId),
+            eq(amenitySessions.siteId, ctx.activeMembership.siteId),
+          ),
+        )
+        .returning();
+      return updated;
     }),
 
   bookSession: protectedProcedure
@@ -77,12 +141,11 @@ export const bookingRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.activeMembership) {
+      if (!ctx.activeMembership)
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "No active membership",
         });
-      }
 
       return ctx.db.transaction(async (tx) => {
         const [session] = await tx
@@ -91,12 +154,11 @@ export const bookingRouter = router({
           .where(eq(amenitySessions.id, input.sessionId))
           .for("update");
 
-        if (!session || !session.isActive) {
+        if (!session || !session.isActive)
           throw new TRPCError({
             code: "NOT_FOUND",
             message: "Active session not found",
           });
-        }
 
         const [amenity] = await tx
           .select()
@@ -145,75 +207,5 @@ export const bookingRouter = router({
 
         return reservation;
       });
-    }),
-
-  listMyReservations: protectedProcedure.query(async ({ ctx }) => {
-    if (!ctx.activeMembership) {
-      throw new TRPCError({
-        code: "FORBIDDEN",
-        message: "No active membership",
-      });
-    }
-    return ctx.db
-      .select({
-        id: amenityReservations.id,
-        reservationDate: amenityReservations.reservationDate,
-        status: amenityReservations.status,
-        createdAt: amenityReservations.createdAt,
-        session: {
-          startTime: amenitySessions.startTime,
-          endTime: amenitySessions.endTime,
-        },
-        amenity: {
-          name: amenities.name,
-        },
-      })
-      .from(amenityReservations)
-      .leftJoin(
-        amenitySessions,
-        eq(amenityReservations.sessionId, amenitySessions.id),
-      )
-      .leftJoin(amenities, eq(amenitySessions.amenityId, amenities.id))
-      .where(
-        and(
-          eq(amenityReservations.siteId, ctx.activeMembership.siteId),
-          eq(amenityReservations.userId, ctx.user.userId),
-        ),
-      )
-      .orderBy(desc(amenityReservations.createdAt));
-  }),
-
-  cancelReservation: protectedProcedure
-    .input(z.object({ reservationId: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
-      if (!ctx.activeMembership) {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "No active membership",
-        });
-      }
-      const [reservation] = await ctx.db
-        .select()
-        .from(amenityReservations)
-        .where(
-          and(
-            eq(amenityReservations.id, input.reservationId),
-            eq(amenityReservations.userId, ctx.user.userId),
-          ),
-        );
-      if (!reservation) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Reservation not found",
-        });
-      }
-
-      const [updated] = await ctx.db
-        .update(amenityReservations)
-        .set({ status: "CANCELLED", updatedAt: new Date() })
-        .where(eq(amenityReservations.id, input.reservationId))
-        .returning();
-
-      return updated;
     }),
 });

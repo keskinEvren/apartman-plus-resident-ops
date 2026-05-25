@@ -16,8 +16,10 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
 
   const utils = trpc.useUtils();
 
-  const { data: blocks = [], isLoading: loadingBlocks } = trpc.site.listBlocks.useQuery();
-  const { data: units = [], isLoading: loadingUnits } = trpc.site.listUnits.useQuery();
+  const { data: blocks = [], isLoading: loadingBlocks } =
+    trpc.site.listBlocks.useQuery();
+  const { data: units = [], isLoading: loadingUnits } =
+    trpc.site.listUnits.useQuery();
 
   const blockMutation = trpc.site.createBlock.useMutation({
     onSuccess: () => {
@@ -46,7 +48,10 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
   const handleCreateUnit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedBlockId || !unitNumber.trim()) return;
-    unitMutation.mutate({ blockId: selectedBlockId, unitNumber: unitNumber.toUpperCase() });
+    unitMutation.mutate({
+      blockId: selectedBlockId,
+      unitNumber: unitNumber.toUpperCase(),
+    });
   };
 
   if (loadingBlocks || loadingUnits) {
@@ -88,16 +93,23 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
             <Layers className="h-4 w-4 text-primary" />
             Yeni Daire Ekle
           </h3>
-          <form onSubmit={handleCreateUnit} className="flex flex-col sm:flex-row gap-3">
+          <form
+            onSubmit={handleCreateUnit}
+            className="flex flex-col sm:flex-row gap-3"
+          >
             <select
               value={selectedBlockId}
               onChange={(e) => setSelectedBlockId(e.target.value)}
               className="glass-input rounded-xl px-3 py-2 text-sm flex-1"
               required
             >
-              <option value="" className="bg-[#121214]">Blok Seçin</option>
+              <option value="" className="bg-[#121214]">
+                Blok Seçin
+              </option>
               {blocks.map((b) => (
-                <option key={b.id} value={b.id} className="bg-[#121214]">{b.name}</option>
+                <option key={b.id} value={b.id} className="bg-[#121214]">
+                  {b.name}
+                </option>
               ))}
             </select>
             <input
@@ -131,19 +143,27 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
           {blocks.map((block) => {
             const blockUnits = units.filter((u) => u.blockName === block.name);
             return (
-              <div key={block.id} className="space-y-2 border-b border-white/[0.04] pb-4 last:border-0 last:pb-0">
+              <div
+                key={block.id}
+                className="space-y-2 border-b border-white/[0.04] pb-4 last:border-0 last:pb-0"
+              >
                 <p className="text-xs font-bold text-foreground flex items-center gap-1.5">
                   <Building2 className="h-4 w-4 text-muted-foreground" />
                   {block.name}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {blockUnits.map((u) => (
-                    <span key={u.id} className="text-[10px] bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] transition px-3 py-1.5 rounded-lg text-muted-foreground font-semibold">
+                    <span
+                      key={u.id}
+                      className="text-[10px] bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] transition px-3 py-1.5 rounded-lg text-muted-foreground font-semibold"
+                    >
                       {u.unitNumber}
                     </span>
                   ))}
                   {blockUnits.length === 0 && (
-                    <span className="text-[10px] text-muted-foreground/60 italic">Bu blok için daire tanımlanmamış.</span>
+                    <span className="text-[10px] text-muted-foreground/60 italic">
+                      Bu blok için daire tanımlanmamış.
+                    </span>
                   )}
                 </div>
               </div>

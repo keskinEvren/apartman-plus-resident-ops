@@ -11,7 +11,11 @@ interface InvitationManagerProps {
   units: any[];
 }
 
-export function InvitationManager({ siteId, roles, units }: InvitationManagerProps) {
+export function InvitationManager({
+  siteId,
+  roles,
+  units,
+}: InvitationManagerProps) {
   const [selectedUnitId, setSelectedUnitId] = useState("");
   const [selectedRoleId, setSelectedRoleId] = useState("");
 
@@ -20,15 +24,17 @@ export function InvitationManager({ siteId, roles, units }: InvitationManagerPro
   const { data: invitations = [], isLoading: loadingInv } =
     trpc.invitation.listInvitations.useQuery({ siteId });
 
-  const createInvitationMutation = trpc.invitation.createInvitation.useMutation({
-    onSuccess: () => {
-      showToast("success", "Aktivasyon kodu başarıyla üretildi!");
-      setSelectedUnitId("");
-      setSelectedRoleId("");
-      utils.invitation.listInvitations.invalidate({ siteId });
+  const createInvitationMutation = trpc.invitation.createInvitation.useMutation(
+    {
+      onSuccess: () => {
+        showToast("success", "Aktivasyon kodu başarıyla üretildi!");
+        setSelectedUnitId("");
+        setSelectedRoleId("");
+        utils.invitation.listInvitations.invalidate({ siteId });
+      },
+      onError: (err) => showToast("error", err.message || "Kod üretilemedi"),
     },
-    onError: (err) => showToast("error", err.message || "Kod üretilemedi"),
-  });
+  );
 
   const handleGenerateCode = (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,15 +63,22 @@ export function InvitationManager({ siteId, roles, units }: InvitationManagerPro
           <PlusCircle className="h-4 w-4 text-primary" />
           Yeni Sakin / Üye Davet Et (Aktivasyon Kodu Üret)
         </h3>
-        <form onSubmit={handleGenerateCode} className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+        <form
+          onSubmit={handleGenerateCode}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end"
+        >
           <div>
-            <label className="text-[10px] font-medium text-muted-foreground mb-1 block">Daire / Birim (Opsiyonel)</label>
+            <label className="text-[10px] font-medium text-muted-foreground mb-1 block">
+              Daire / Birim (Opsiyonel)
+            </label>
             <select
               value={selectedUnitId}
               onChange={(e) => setSelectedUnitId(e.target.value)}
               className="glass-input rounded-xl px-3 py-2.5 text-xs w-full"
             >
-              <option value="" className="bg-[#121214]">Daire Yok (Görevli/Staff)</option>
+              <option value="" className="bg-[#121214]">
+                Daire Yok (Görevli/Staff)
+              </option>
               {units.map((u) => (
                 <option key={u.id} value={u.id} className="bg-[#121214]">
                   {u.blockName} - {u.unitNumber}
@@ -74,14 +87,18 @@ export function InvitationManager({ siteId, roles, units }: InvitationManagerPro
             </select>
           </div>
           <div>
-            <label className="text-[10px] font-medium text-muted-foreground mb-1 block">Rol</label>
+            <label className="text-[10px] font-medium text-muted-foreground mb-1 block">
+              Rol
+            </label>
             <select
               value={selectedRoleId}
               onChange={(e) => setSelectedRoleId(e.target.value)}
               className="glass-input rounded-xl px-3 py-2.5 text-xs w-full"
               required
             >
-              <option value="" className="bg-[#121214]">Rol Seçin</option>
+              <option value="" className="bg-[#121214]">
+                Rol Seçin
+              </option>
               {roles.map((r) => (
                 <option key={r.id} value={r.id} className="bg-[#121214]">
                   {r.name}
@@ -111,7 +128,9 @@ export function InvitationManager({ siteId, roles, units }: InvitationManagerPro
               <GlassCard
                 key={inv.id}
                 className={`p-4 border space-y-2 flex flex-col justify-between ${
-                  inv.isUsed ? "border-white/[0.04] bg-white/[0.01] opacity-60" : "border-primary/20 shadow-glow"
+                  inv.isUsed
+                    ? "border-white/[0.04] bg-white/[0.01] opacity-60"
+                    : "border-primary/20 shadow-glow"
                 }`}
               >
                 <div className="flex justify-between items-start">
@@ -120,7 +139,9 @@ export function InvitationManager({ siteId, roles, units }: InvitationManagerPro
                       {inv.role?.name}
                     </span>
                     <p className="text-[10px] text-muted-foreground/80 mt-1">
-                      {inv.unit ? `${inv.unit.blockName} - ${inv.unit.unitNumber}` : "Birim Atanmamış (Görevli)"}
+                      {inv.unit
+                        ? `${inv.unit.blockName} - ${inv.unit.unitNumber}`
+                        : "Birim Atanmamış (Görevli)"}
                     </p>
                   </div>
                   {!inv.isUsed && (
@@ -133,8 +154,12 @@ export function InvitationManager({ siteId, roles, units }: InvitationManagerPro
                   )}
                 </div>
                 <div className="flex items-center justify-between pt-1">
-                  <span className="text-xs font-bold font-mono text-foreground tracking-wider">{inv.token}</span>
-                  <span className={`text-[9px] font-bold ${inv.isUsed ? "text-muted-foreground" : "text-emerald-400"}`}>
+                  <span className="text-xs font-bold font-mono text-foreground tracking-wider">
+                    {inv.token}
+                  </span>
+                  <span
+                    className={`text-[9px] font-bold ${inv.isUsed ? "text-muted-foreground" : "text-emerald-400"}`}
+                  >
                     {inv.isUsed ? "Kullanıldı" : "Beklemede"}
                   </span>
                 </div>

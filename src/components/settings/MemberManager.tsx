@@ -48,7 +48,9 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
           <GlassCard
             key={member.membershipId}
             className={`gradient-border p-4 transition-all duration-200 ${
-              member.isActive ? "border-white/[0.06]" : "border-red-500/20 bg-red-950/5 opacity-75"
+              member.isActive
+                ? "border-white/[0.06]"
+                : "border-red-500/20 bg-red-950/5 opacity-75"
             }`}
           >
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -60,7 +62,9 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
                   <p className="text-sm font-bold text-foreground">
                     {member.user?.fullName || "İsimsiz Kullanıcı"}
                   </p>
-                  <p className="text-[11px] text-muted-foreground">{member.user?.email}</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    {member.user?.email}
+                  </p>
                 </div>
               </div>
 
@@ -69,12 +73,18 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
                   <Shield className="h-3.5 w-3.5 text-muted-foreground" />
                   <select
                     value={member.role?.id || ""}
-                    onChange={(e) => handleRoleChange(member.membershipId, e.target.value)}
+                    onChange={(e) =>
+                      handleRoleChange(member.membershipId, e.target.value)
+                    }
                     disabled={updateMutation.isPending}
                     className="glass-input rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:outline-none"
                   >
                     {roles.map((r) => (
-                      <option key={r.id} value={r.id} className="bg-[#121214] text-foreground">
+                      <option
+                        key={r.id}
+                        value={r.id}
+                        className="bg-[#121214] text-foreground"
+                      >
                         {r.name}
                       </option>
                     ))}
@@ -82,7 +92,9 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
                 </div>
 
                 <button
-                  onClick={() => handleToggleStatus(member.membershipId, member.isActive)}
+                  onClick={() =>
+                    handleToggleStatus(member.membershipId, member.isActive)
+                  }
                   disabled={updateMutation.isPending}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all flex items-center gap-1 ${
                     member.isActive
@@ -100,7 +112,9 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
 
         {members.length === 0 && (
           <GlassCard className="text-center py-12">
-            <p className="text-sm font-semibold text-muted-foreground">Kayıtlı üye bulunamadı</p>
+            <p className="text-sm font-semibold text-muted-foreground">
+              Kayıtlı üye bulunamadı
+            </p>
           </GlassCard>
         )}
       </div>

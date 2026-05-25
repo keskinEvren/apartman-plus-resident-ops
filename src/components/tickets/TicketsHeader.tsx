@@ -7,7 +7,11 @@ interface TicketsHeaderProps {
   onOpenAdd: () => void;
 }
 
-export function TicketsHeader({ isStaff, blockName, onOpenAdd }: TicketsHeaderProps) {
+export function TicketsHeader({
+  isStaff,
+  blockName,
+  onOpenAdd,
+}: TicketsHeaderProps) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>

@@ -22,27 +22,27 @@ export function BookingsClient() {
     trpc.amenity.listAmenities.useQuery();
 
   const { data: sessions } = trpc.booking.listSessions.useQuery(
-    { amenityId: selectedAmenity!, dayOfWeek: selectedDay },
-    { enabled: !!selectedAmenity },
+    { amenityId: selectedAmenity!, dayOfWeek: selectedDay, date },
+    { enabled: !!selectedAmenity && !!date },
   );
 
   const { data: myReservations = [], isLoading: loadingRes } =
-    trpc.booking.listMyReservations.useQuery();
+    trpc.amenity.listMyReservations.useQuery();
 
   const bookMutation = trpc.booking.bookSession.useMutation({
     onSuccess: () => {
       showToast("success", "Rezervasyon başarıyla oluşturuldu!");
-      utils.booking.listMyReservations.invalidate();
+      utils.amenity.listMyReservations.invalidate();
       utils.booking.listSessions.invalidate();
       setSelectedSession(null);
     },
     onError: (err) => showToast("error", err.message),
   });
 
-  const cancelMutation = trpc.booking.cancelReservation.useMutation({
+  const cancelMutation = trpc.amenity.cancelReservation.useMutation({
     onSuccess: () => {
       showToast("success", "Rezervasyon iptal edildi");
-      utils.booking.listMyReservations.invalidate();
+      utils.amenity.listMyReservations.invalidate();
     },
     onError: (err) => showToast("error", err.message),
   });
@@ -114,7 +114,7 @@ export function BookingsClient() {
                 startTime={s.startTime}
                 endTime={s.endTime}
                 capacity={s.capacity}
-                bookedCount={0}
+                bookedCount={s.bookedCount || 0}
                 isSelected={selectedSession === s.id}
                 onSelect={setSelectedSession}
               />
