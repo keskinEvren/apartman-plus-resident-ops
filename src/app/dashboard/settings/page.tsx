@@ -68,9 +68,33 @@ export default function SettingsPage() {
           ayarlarını yönetin
         </p>
       </div>
+      {/* Mobile Horizontal Tabs Navigation */}
+      <div className="flex lg:hidden overflow-x-auto gap-2 pb-2 scrollbar-none border-b border-border/40 whitespace-nowrap -mx-4 px-4 sm:-mx-6 sm:px-6">
+        {groupedTabs
+          .flatMap((group) => group.items)
+          .map((tab) => {
+            const Icon = tab.icon;
+            const isSelected = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => router.push(`/dashboard/settings?tab=${tab.id}`)}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors shrink-0",
+                  isSelected
+                    ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                    : "bg-secondary/40 text-muted-foreground hover:text-foreground hover:bg-secondary/70",
+                )}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <div className="lg:col-span-3 space-y-6 p-4 rounded-lg bg-card border border-border">
+        <div className="hidden lg:block lg:col-span-3 space-y-6 p-4 rounded-lg bg-card border border-border">
           {groupedTabs.map((group) => (
             <div key={group.title} className="space-y-2">
               <p className="px-2 text-[9px] font-bold text-muted-foreground/50 uppercase tracking-wider">
@@ -103,7 +127,7 @@ export default function SettingsPage() {
           ))}
         </div>
 
-        <div className="lg:col-span-9">
+        <div className="lg:col-span-9 w-full">
           {activeTab === "ACCOUNT" && (
             <AccountTab
               mySites={mySites}
