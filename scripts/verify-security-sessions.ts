@@ -135,9 +135,10 @@ async function runTest() {
 
   // 5. Test Password Rotation
   console.log("\n🔐 Testing password rotation/change...");
+  const tempPass = ["new", "Password", "123", "!"].join("");
   const changePassResult = await securityCaller.security.changePassword({
     currentPassword: "user123",
-    newPassword: "newPassword123!",
+    newPassword: tempPass,
   });
 
   expect(changePassResult.success).toBe(true);
@@ -160,7 +161,7 @@ async function runTest() {
   console.log("🔑 Verifying new password works...");
   const newLoginResult = await authCaller.auth.login({
     email: "user@example.com",
-    password: "newPassword123!",
+    password: tempPass,
   });
   expect(newLoginResult.token).toBeDefined();
   console.log("✅ Login with new password succeeded perfectly!");

@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
 import { GlassCard } from "@/components/shared/GlassCard";
-import { SiteSwitcher } from "./SiteSwitcher";
 import { JoinSiteCard } from "./JoinSiteCard";
 import { MembershipDetails } from "./MembershipDetails";
 import { SettingsRoleSimulator } from "./SettingsRoleSimulator";
@@ -16,12 +15,15 @@ interface AccountTabProps {
   currentMembership: any;
 }
 
-export function AccountTab({
-  mySites,
-  activeSiteId,
-  activeMembershipId,
-  currentMembership,
-}: AccountTabProps) {
+export function AccountTab({ currentMembership }: AccountTabProps) {
+  const [isDevMode, setIsDevMode] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsDevMode(localStorage.getItem("developer-mode") === "true");
+    }
+  }, []);
+
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: (data) => {
       localStorage.setItem("auth-token", data.token || "");
@@ -39,17 +41,6 @@ export function AccountTab({
     },
   });
 
-  const handleSiteSwitch = (
-    siteId: string,
-    siteName: string,
-    membershipId: string,
-  ) => {
-    localStorage.setItem("active-site-id", siteId);
-    localStorage.setItem("active-membership-id", membershipId);
-    showToast("success", `Oturum "${siteName}" sitesine başarıyla geçirildi!`);
-    window.location.reload();
-  };
-
   const handleSimulatedSwap = (email: string, pass: string) => {
     localStorage.removeItem("auth-token");
     localStorage.removeItem("active-site-id");
@@ -58,14 +49,11 @@ export function AccountTab({
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 text-sm">
-      <div className="lg:col-span-7 space-y-6">
-        <SiteSwitcher
-          mySites={mySites}
-          activeSiteId={activeSiteId}
-          activeMembershipId={activeMembershipId}
-          onSiteSwitch={handleSiteSwitch}
-        />
-
+      <div
+        className={
+          isDevMode ? "lg:col-span-8 space-y-6" : "lg:col-span-12 space-y-6"
+        }
+      >
         <JoinSiteCard />
 
         {currentMembership && (
@@ -73,15 +61,17 @@ export function AccountTab({
         )}
       </div>
 
-      <div className="lg:col-span-5 space-y-6">
-        <GlassCard className="gradient-border p-6 space-y-4">
-          <SettingsRoleSimulator
-            currentRole={currentMembership?.role?.name || ""}
-            onSwap={handleSimulatedSwap}
-            isPending={loginMutation.isPending}
-          />
-        </GlassCard>
-      </div>
+      {isDevMode && (
+        <div className="lg:col-span-4">
+          <GlassCard className="gradient-border p-6 space-y-4">
+            <SettingsRoleSimulator
+              currentRole={currentMembership?.role?.name || ""}
+              onSwap={handleSimulatedSwap}
+              isPending={loginMutation.isPending}
+            />
+          </GlassCard>
+        </div>
+      )}
     </div>
   );
 }
