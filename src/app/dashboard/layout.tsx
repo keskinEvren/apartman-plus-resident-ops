@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomNav } from "@/components/layout/BottomNav";
+import { QuickActionFab } from "@/components/dashboard/QuickActionFab";
 import { NotificationDrawer } from "@/components/layout/NotificationDrawer";
 import { ToastContainer } from "@/components/shared/Toast";
 import { trpc } from "@/lib/trpc";
@@ -83,6 +84,7 @@ export default function DashboardLayout({
         onClose={() => setIsDrawerOpen(false)}
       />
       <BottomNav />
+      <QuickActionFab />
       <ToastContainer />
     </div>
   );

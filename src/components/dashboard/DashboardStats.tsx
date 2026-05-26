@@ -55,14 +55,14 @@ export function DashboardStats({
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="flex overflow-x-auto gap-4 pb-2 scrollbar-none snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-4 md:gap-4 md:pb-0">
       {stats.map((s) => {
         const Icon = s.icon;
         return (
           <Link
             key={s.label}
             href={s.href}
-            className="p-4 rounded bg-card border border-border flex items-center justify-between hover:bg-secondary/40 transition-colors"
+            className="p-4 rounded bg-card border border-border flex items-center justify-between hover:bg-secondary/40 transition-colors shrink-0 w-[230px] sm:w-[260px] snap-center md:w-auto"
           >
             <div className="space-y-1">
               <p className="text-2xl font-bold font-heading text-foreground">
