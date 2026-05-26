@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { DashboardClient } from "./DashboardClient";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Apartman Plus",
+  title: "Kontrol Paneli | komşu.site",
   description: "Site yönetimi genel bakış paneli",
 };
 

@@ -9,11 +9,13 @@ export function LoginHero({ onSelect }: LoginHeroProps) {
   return (
     <div className="lg:col-span-7 flex flex-col justify-center text-left space-y-6 animate-fade-in">
       <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-base font-bold shadow-glow">
-          A+
-        </div>
-        <span className="font-heading text-2xl font-bold bg-gradient-to-r from-primary via-purple-400 to-accent bg-clip-text text-transparent">
-          Apartman Plus
+        <img
+          src="/komsu.jpeg"
+          alt="komşu"
+          className="h-10 w-10 rounded-xl object-cover shadow-glow"
+        />
+        <span className="font-heading text-2xl font-bold text-foreground">
+          komşu<span className="text-primary font-medium">.site</span>
         </span>
       </div>
       <div className="space-y-4">

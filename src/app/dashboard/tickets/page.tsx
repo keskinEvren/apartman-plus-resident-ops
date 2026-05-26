@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { TicketsClient } from "./TicketsClient";
 
 export const metadata: Metadata = {
-  title: "Destek Talepleri | Apartman Plus",
+  title: "Destek Talepleri | komşu.site",
   description: "Talep ve arıza bildirim takip sistemi",
 };
 

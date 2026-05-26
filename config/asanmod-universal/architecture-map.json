@@ -84,6 +84,20 @@
       "allowDirectories": true
     },
     {
+      "id": "public",
+      "pathPrefix": "public/",
+      "allowedExtensions": [
+        ".jpeg",
+        ".jpg",
+        ".png",
+        ".svg",
+        ".ico",
+        ".json",
+        ".txt"
+      ],
+      "allowDirectories": true
+    },
+    {
       "id": "tests",
       "pathPrefix": "__tests__/",
       "allowedExtensions": [".ts", ".tsx", ".js", ".jsx", ".json", ".md"],

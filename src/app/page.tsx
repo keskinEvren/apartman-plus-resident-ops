@@ -18,9 +18,11 @@ export default function HomePage() {
       {/* Navigation Header */}
       <header className="container mx-auto px-6 py-5 flex items-center justify-between border-b border-white/[0.04] z-10">
         <div className="flex items-center gap-2">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-primary to-purple-600 flex items-center justify-center shadow-glow text-white font-bold text-lg font-heading">
-            K
-          </div>
+          <img
+            src="/komsu.jpeg"
+            alt="komşu"
+            className="h-9 w-9 rounded-xl object-cover shadow-glow"
+          />
           <span className="font-heading text-lg font-bold tracking-tight bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
             komşu<span className="text-primary font-medium">.site</span>
           </span>
