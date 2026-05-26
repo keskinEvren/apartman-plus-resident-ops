@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import React, { useState, useEffect, Suspense } from "react";
+import { usePathname } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomNav } from "@/components/layout/BottomNav";
@@ -21,11 +21,10 @@ export default function DashboardLayout({
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     setIsMobileSidebarOpen(false);
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -64,10 +63,12 @@ export default function DashboardLayout({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <Sidebar
-          isMobileOpen={isMobileSidebarOpen}
-          onClose={() => setIsMobileSidebarOpen(false)}
-        />
+        <Suspense fallback={null}>
+          <Sidebar
+            isMobileOpen={isMobileSidebarOpen}
+            onClose={() => setIsMobileSidebarOpen(false)}
+          />
+        </Suspense>
         {isMobileSidebarOpen && (
           <div
             onClick={() => setIsMobileSidebarOpen(false)}
@@ -83,7 +84,9 @@ export default function DashboardLayout({
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
       />
-      <BottomNav />
+      <Suspense fallback={null}>
+        <BottomNav />
+      </Suspense>
       <QuickActionFab />
       <ToastContainer />
     </div>

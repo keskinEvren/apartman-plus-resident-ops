@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
@@ -17,11 +17,10 @@ import { SecurityTab } from "@/components/settings/SecurityTab";
 import { cn } from "@/lib/utils";
 import { getGroupedTabs } from "./SettingsData";
 
-export default function SettingsPage() {
+function SettingsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "ACCOUNT";
-
   const activeSiteId =
     typeof window !== "undefined"
       ? localStorage.getItem("active-site-id")
@@ -39,7 +38,6 @@ export default function SettingsPage() {
   const isAdmin =
     currentMembership?.role?.name === "SITE_ADMIN" ||
     currentMembership?.role?.name === "SUPER_ADMIN";
-
   const groupedTabs = getGroupedTabs(!!isAdmin);
 
   const { data: roles = [] } = trpc.site.listRoles.useQuery(
@@ -162,5 +160,19 @@ export default function SettingsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SettingsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-[50vh] items-center justify-center">
+          <LoadingSpinner size="lg" />
+        </div>
+      }
+    >
+      <SettingsPageContent />
+    </Suspense>
   );
 }
