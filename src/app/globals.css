@@ -4,39 +4,39 @@
 
 @layer base {
   :root {
-    /* ── Dark Glassmorphism Palette ── */
-    --background: 222 47% 6%;
-    --foreground: 210 40% 96%;
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 96%;
-    --popover: 222 47% 9%;
-    --popover-foreground: 210 40% 96%;
-    --primary: 262 83% 58%;
+    /* ── B2B SaaS Stripe/Linear Color Palette ── */
+    --background: 222 33% 6%;
+    --foreground: 210 40% 98%;
+    --card: 223 36% 10%;
+    --card-foreground: 210 40% 98%;
+    --popover: 223 36% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 246 90% 66%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 215 28% 17%;
-    --secondary-foreground: 210 40% 96%;
-    --muted: 215 28% 17%;
-    --muted-foreground: 215 20% 55%;
-    --accent: 172 66% 50%;
-    --accent-foreground: 222 47% 6%;
-    --destructive: 0 72% 51%;
+    --secondary: 225 36% 13%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 225 36% 13%;
+    --muted-foreground: 215 16% 65%;
+    --accent: 246 90% 66%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-    --border: 215 28% 17%;
-    --input: 215 28% 17%;
-    --ring: 262 83% 58%;
-    --radius: 0.75rem;
+    --border: 225 31% 20%;
+    --input: 225 31% 20%;
+    --ring: 246 90% 66%;
+    --radius: 0.5rem;
 
-    /* ── Glass Tokens ── */
-    --glass-bg: hsla(222, 47%, 11%, 0.55);
-    --glass-border: hsla(262, 83%, 58%, 0.12);
-    --glass-blur: 20px;
-    --glass-hover: hsla(0, 0%, 100%, 0.04);
+    /* ── Clean SaaS Tokens (No neon, no excessive glows) ── */
+    --glass-bg: hsla(223, 36%, 10%, 0.7);
+    --glass-border: hsla(225, 31%, 20%, 0.4);
+    --glass-blur: 12px;
+    --glass-hover: hsla(255, 100%, 100%, 0.02);
 
-    /* ── Glow ── */
-    --glow-primary: 0 0 20px hsla(262, 83%, 58%, 0.3);
-    --glow-accent: 0 0 20px hsla(172, 66%, 50%, 0.25);
-    --glow-success: 0 0 16px hsla(142, 71%, 45%, 0.3);
-    --glow-destructive: 0 0 16px hsla(0, 72%, 51%, 0.3);
+    /* ── Subtle Elevation Shadows ── */
+    --glow-primary: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --glow-accent: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --glow-success: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --glow-destructive: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   * {
@@ -100,9 +100,9 @@
     padding: 1px;
     background: linear-gradient(
       135deg,
-      hsla(262, 83%, 58%, 0.4),
-      hsla(172, 66%, 50%, 0.2),
-      hsla(262, 83%, 58%, 0.1)
+      hsla(246, 90%, 66%, 0.15),
+      hsla(225, 31%, 20%, 0.3),
+      transparent
     );
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,

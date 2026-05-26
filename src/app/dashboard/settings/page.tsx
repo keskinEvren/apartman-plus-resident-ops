@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { RoleManager } from "@/components/settings/RoleManager";
@@ -13,21 +14,14 @@ import { ProfileTab } from "@/components/settings/ProfileTab";
 import { PetsTab } from "@/components/settings/PetsTab";
 import { NotificationTab } from "@/components/settings/NotificationTab";
 import { SecurityTab } from "@/components/settings/SecurityTab";
-import {
-  User,
-  Shield,
-  Users,
-  Building,
-  Mail,
-  CalendarDays,
-  Sparkles,
-  Heart,
-  Bell,
-  Lock,
-} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { getGroupedTabs } from "./SettingsData";
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("ACCOUNT");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const activeTab = searchParams.get("tab") || "ACCOUNT";
+
   const activeSiteId =
     typeof window !== "undefined"
       ? localStorage.getItem("active-site-id")
@@ -37,35 +31,16 @@ export default function SettingsPage() {
       ? localStorage.getItem("active-membership-id")
       : null;
 
-  // 1. Fetch user role and memberships
   const { data: mySites = [], isLoading: loadingSites } =
     trpc.site.getMySites.useQuery();
-
-  // Find membership matching activeMembershipId first, fallback to activeSiteId
   const currentMembership = activeMembershipId
     ? mySites?.find((s) => s.membershipId === activeMembershipId)
     : mySites?.find((s) => s.site?.id === activeSiteId);
-
   const isAdmin =
     currentMembership?.role?.name === "SITE_ADMIN" ||
     currentMembership?.role?.name === "SUPER_ADMIN";
 
-  const tabs = [
-    { id: "ACCOUNT", label: "Hesap & Katılım", icon: User },
-    { id: "PROFILE", label: "Profilim", icon: Sparkles },
-    { id: "SECURITY", label: "Güvenlik", icon: Lock },
-    { id: "PETS", label: "Evcil Hayvanlarım", icon: Heart },
-    { id: "NOTIFICATIONS", label: "Bildirimlerim", icon: Bell },
-    ...(isAdmin
-      ? [
-          { id: "PROPERTIES", label: "Mülk Yönetimi", icon: Building },
-          { id: "ROLES", label: "Rol Tanımlama", icon: Shield },
-          { id: "AMENITIES", label: "Tesis Yönetimi", icon: CalendarDays },
-          { id: "INVITE", label: "Üye Davet Et", icon: Mail },
-          { id: "MEMBERS", label: "Üye Yönetimi", icon: Users },
-        ]
-      : []),
-  ];
+  const groupedTabs = getGroupedTabs(!!isAdmin);
 
   const { data: roles = [] } = trpc.site.listRoles.useQuery(
     { siteId: activeSiteId! },
@@ -75,84 +50,93 @@ export default function SettingsPage() {
     enabled: !!activeSiteId && isAdmin,
   });
 
-  if (loadingSites) {
+  if (loadingSites)
     return (
       <div className="flex h-[50vh] items-center justify-center">
         <LoadingSpinner size="lg" />
       </div>
     );
-  }
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
-        <div>
-          <h1 className="font-heading text-2xl font-bold">
-            Ayarlar & Üyelikler
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Site oturumunu değiştirin, daire tanımlayın, dinamik rolleri
-            yapılandırın veya sakin üyeliklerini yönetin
-          </p>
-        </div>
-
-        {/* Ayarlar Sekmeleri */}
-        {activeSiteId && (
-          <div className="flex flex-wrap bg-white/[0.02] border border-white/[0.06] rounded-xl p-1 gap-1 w-full xl:w-auto shrink-0 animate-fade-in">
-            {tabs.map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                onClick={() => setActiveTab(id)}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-semibold transition-all ${
-                  activeTab === id
-                    ? "bg-primary text-primary-foreground shadow-glow"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                <Icon className="h-3.5 w-3.5" />
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
+    <div className="space-y-6 max-w-7xl mx-auto animate-fade-in">
+      <div>
+        <h1 className="font-heading text-xl font-bold text-foreground">
+          Ayarlar
+        </h1>
+        <p className="text-xs text-muted-foreground mt-0.5">
+          Kişisel tercihlerinizi, daire üyelerinizi ve mülkünüzün operasyonel
+          ayarlarını yönetin
+        </p>
       </div>
 
-      {activeTab === "ACCOUNT" && (
-        <AccountTab
-          mySites={mySites}
-          activeSiteId={activeSiteId}
-          activeMembershipId={activeMembershipId}
-          currentMembership={currentMembership}
-        />
-      )}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="lg:col-span-3 space-y-6 p-4 rounded-lg bg-card border border-border">
+          {groupedTabs.map((group) => (
+            <div key={group.title} className="space-y-2">
+              <p className="px-2 text-[9px] font-bold text-muted-foreground/50 uppercase tracking-wider">
+                {group.title}
+              </p>
+              <div className="space-y-0.5">
+                {group.items.map((tab) => {
+                  const Icon = tab.icon;
+                  const isSelected = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() =>
+                        router.push(`/dashboard/settings?tab=${tab.id}`)
+                      }
+                      className={cn(
+                        "w-full flex items-center gap-2.5 px-3 py-2 rounded text-xs font-semibold transition-colors",
+                        isSelected
+                          ? "bg-primary/10 text-primary font-bold"
+                          : "text-muted-foreground hover:bg-secondary/40 hover:text-foreground",
+                      )}
+                    >
+                      <Icon className="h-4 w-4 shrink-0" />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
 
-      {activeTab === "PROFILE" && <ProfileTab />}
-
-      {activeTab === "SECURITY" && <SecurityTab />}
-
-      {activeTab === "PETS" && <PetsTab />}
-
-      {activeTab === "NOTIFICATIONS" && <NotificationTab />}
-
-      {activeTab === "PROPERTIES" && activeSiteId && (
-        <PropertyManager siteId={activeSiteId} />
-      )}
-
-      {activeTab === "ROLES" && activeSiteId && (
-        <RoleManager siteId={activeSiteId} />
-      )}
-
-      {activeTab === "AMENITIES" && activeSiteId && (
-        <AmenityManager siteId={activeSiteId} />
-      )}
-
-      {activeTab === "INVITE" && activeSiteId && (
-        <InvitationManager siteId={activeSiteId} roles={roles} units={units} />
-      )}
-
-      {activeTab === "MEMBERS" && activeSiteId && (
-        <MemberManager siteId={activeSiteId} roles={roles} />
-      )}
+        <div className="lg:col-span-9">
+          {activeTab === "ACCOUNT" && (
+            <AccountTab
+              mySites={mySites}
+              activeSiteId={activeSiteId}
+              activeMembershipId={activeMembershipId}
+              currentMembership={currentMembership}
+            />
+          )}
+          {activeTab === "PROFILE" && <ProfileTab />}
+          {activeTab === "SECURITY" && <SecurityTab />}
+          {activeTab === "PETS" && <PetsTab />}
+          {activeTab === "NOTIFICATIONS" && <NotificationTab />}
+          {activeTab === "PROPERTIES" && activeSiteId && (
+            <PropertyManager siteId={activeSiteId} />
+          )}
+          {activeTab === "ROLES" && activeSiteId && (
+            <RoleManager siteId={activeSiteId} />
+          )}
+          {activeTab === "AMENITIES" && activeSiteId && (
+            <AmenityManager siteId={activeSiteId} />
+          )}
+          {activeTab === "INVITE" && activeSiteId && (
+            <InvitationManager
+              siteId={activeSiteId}
+              roles={roles}
+              units={units}
+            />
+          )}
+          {activeTab === "MEMBERS" && activeSiteId && (
+            <MemberManager siteId={activeSiteId} roles={roles} />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
