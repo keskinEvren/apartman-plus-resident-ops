@@ -72,7 +72,7 @@ export function DashboardClient() {
             Ana Sayfa
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Apartman Plus Resident Ops — günlük operasyonel genel bakış
+            komşu.site — günlük operasyonel genel bakış
           </p>
         </div>
         <button

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { AnnouncementsClient } from "./AnnouncementsClient";
 
 export const metadata: Metadata = {
-  title: "Duyurular | Apartman Plus",
+  title: "Duyurular | komşu.site",
   description: "Duyuru ve toplu sakin iletişim sistemi",
 };
 

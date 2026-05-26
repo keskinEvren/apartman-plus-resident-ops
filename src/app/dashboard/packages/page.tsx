@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { PackagesClient } from "./PackagesClient";
 
 export const metadata: Metadata = {
-  title: "Kargo Takip | Apartman Plus",
+  title: "Kargo Takip | komşu.site",
   description: "Paket ve kargo teslimat takip sistemi",
 };
 

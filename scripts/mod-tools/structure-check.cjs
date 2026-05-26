@@ -12,6 +12,7 @@ const MAP_PATH = path.join(
   "architecture-map.json",
 );
 // Structure policy is fully data-driven from architecture-map.json (zone + extension contract)
+// Updated: Added support for Next.js public directory static assets zone
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));

@@ -1,12 +1,10 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Bell, ChevronDown, Check, Building, Menu, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
-
 interface HeaderProps {
   className?: string;
   unreadCount?: number;
@@ -14,7 +12,6 @@ interface HeaderProps {
   onMenuClick?: () => void;
   isMenuOpen?: boolean;
 }
-
 export function Header({
   className,
   unreadCount = 0,
@@ -27,21 +24,17 @@ export function Header({
   const [activeMembershipId, setActiveMembershipId] = useState<string | null>(
     null,
   );
-
   useEffect(() => {
     if (typeof window === "undefined") return;
     setActiveSiteId(localStorage.getItem("active-site-id"));
     setActiveMembershipId(localStorage.getItem("active-membership-id"));
   }, []);
-
   const { data: mySites = [] } = trpc.site.getMySites.useQuery();
-
   const currentMembership = mySites?.find((s) =>
     activeMembershipId
       ? s.membershipId === activeMembershipId
       : s.site?.id === activeSiteId,
   );
-
   const handleSiteSwitch = (siteId: string, name: string, mId: string) => {
     localStorage.setItem("active-site-id", siteId);
     localStorage.setItem("active-membership-id", mId);
@@ -49,7 +42,6 @@ export function Header({
     setIsOpen(false);
     window.location.reload();
   };
-
   return (
     <header
       className={cn(
@@ -73,11 +65,13 @@ export function Header({
           </button>
         )}
         <Link href="/dashboard" className="flex items-center gap-2 shrink-0">
-          <div className="h-6 w-6 rounded bg-primary flex items-center justify-center text-white text-[11px] font-bold shrink-0">
-            A+
-          </div>
+          <img
+            src="/komsu.jpeg"
+            alt="komşu"
+            className="h-6 w-6 rounded object-cover shrink-0"
+          />
           <span className="font-heading text-sm sm:text-base font-bold text-foreground hover:opacity-90 transition-opacity hidden xs:inline-block">
-            Apartman Plus
+            komşu<span className="text-primary font-medium">.site</span>
           </span>
         </Link>
 

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { BookingsClient } from "./BookingsClient";
 
 export const metadata: Metadata = {
-  title: "Tesis Rezervasyonları | Apartman Plus",
+  title: "Tesis Rezervasyonları | komşu.site",
   description:
     "Ortak alan tesislerini görüntüleyin ve seans rezervasyonu yapın",
 };
