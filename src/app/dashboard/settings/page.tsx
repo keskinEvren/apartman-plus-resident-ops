@@ -12,6 +12,7 @@ import { AmenityManager } from "@/components/settings/AmenityManager";
 import { ProfileTab } from "@/components/settings/ProfileTab";
 import { PetsTab } from "@/components/settings/PetsTab";
 import { NotificationTab } from "@/components/settings/NotificationTab";
+import { SecurityTab } from "@/components/settings/SecurityTab";
 import {
   User,
   Shield,
@@ -22,6 +23,7 @@ import {
   Sparkles,
   Heart,
   Bell,
+  Lock,
 } from "lucide-react";
 
 export default function SettingsPage() {
@@ -51,6 +53,7 @@ export default function SettingsPage() {
   const tabs = [
     { id: "ACCOUNT", label: "Hesap & Katılım", icon: User },
     { id: "PROFILE", label: "Profilim", icon: Sparkles },
+    { id: "SECURITY", label: "Güvenlik", icon: Lock },
     { id: "PETS", label: "Evcil Hayvanlarım", icon: Heart },
     { id: "NOTIFICATIONS", label: "Bildirimlerim", icon: Bell },
     ...(isAdmin
@@ -124,6 +127,8 @@ export default function SettingsPage() {
       )}
 
       {activeTab === "PROFILE" && <ProfileTab />}
+
+      {activeTab === "SECURITY" && <SecurityTab />}
 
       {activeTab === "PETS" && <PetsTab />}
 

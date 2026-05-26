@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { router, publicProcedure } from "../trpc";
-import { users, memberships, roles } from "@/db/schema";
+import { users, memberships, roles, userSessions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { comparePassword, signToken } from "@/lib/auth";
 import { TRPCError } from "@trpc/server";
@@ -54,11 +54,28 @@ export const authRouter = router({
         .leftJoin(roles, eq(memberships.roleId, roles.id))
         .where(eq(memberships.userId, userRecord.id));
 
-      // Sign JWT token
+      // Capture session metadata
+      const userAgent =
+        ctx.req?.headers.get("user-agent") || "Bilinmeyen Cihaz";
+      const ipAddress =
+        ctx.req?.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+
+      // Register session in database
+      const [session] = await ctx.db
+        .insert(userSessions)
+        .values({
+          userId: userRecord.id,
+          userAgent,
+          ipAddress,
+        })
+        .returning();
+
+      // Sign JWT token with sessionId
       const token = signToken({
         userId: userRecord.id,
         email: userRecord.email,
         role: userRecord.role || "user",
+        sessionId: session.id,
       });
 
       return {

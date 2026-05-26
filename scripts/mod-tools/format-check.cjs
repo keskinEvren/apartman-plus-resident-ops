@@ -41,8 +41,10 @@ function main() {
   try {
     const contract = readJson(CONTRACT_PATH);
     const changedFiles = getChangedFiles();
-    const targets = changedFiles.filter((file) =>
-      /\.(ts|tsx|js|jsx|css|json|md|cjs|mjs)$/.test(file),
+    const targets = changedFiles.filter(
+      (file) =>
+        fs.existsSync(path.join(ROOT, file)) &&
+        /\.(ts|tsx|js|jsx|css|json|md|cjs|mjs)$/.test(file),
     );
 
     if (targets.length === 0) {

@@ -2,20 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
 import { GlassCard } from "@/components/shared/GlassCard";
-import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { LoginHero } from "@/components/login/LoginHero";
 import { InvitationJoinCard } from "@/components/login/InvitationJoinCard";
-import { User, KeyRound, Building2 } from "lucide-react";
+import { LoginFormCard } from "@/components/login/LoginFormCard";
+import { Building2 } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [showJoinCode, setShowJoinCode] = useState(false);
+  const [simulatedCredentials, setSimulatedCredentials] = useState<{
+    email: string;
+    pass: string;
+    trigger: number;
+  } | null>(null);
 
   useEffect(() => {
     localStorage.removeItem("auth-token");
@@ -23,42 +25,30 @@ export default function LoginPage() {
     localStorage.removeItem("active-membership-id");
   }, []);
 
-  const loginMutation = trpc.auth.login.useMutation({
-    onSuccess: (data) => {
-      localStorage.setItem("auth-token", data.token);
-      if (data.memberships && data.memberships.length > 0) {
-        localStorage.setItem("active-site-id", data.memberships[0].siteId);
-        localStorage.setItem(
-          "active-membership-id",
-          data.memberships[0].membershipId,
-        );
-      }
-      showToast("success", `Hoş geldiniz, ${data.user.name}!`);
-      router.push("/dashboard");
-    },
-    onError: (err) => {
-      setError(
-        err.message || "Giriş başarısız. Lütfen bilgilerinizi kontrol edin.",
+  const handleLoginSuccess = (data: {
+    token: string;
+    user: any;
+    memberships: any[];
+  }) => {
+    localStorage.setItem("auth-token", data.token);
+    if (data.memberships && data.memberships.length > 0) {
+      localStorage.setItem("active-site-id", data.memberships[0].siteId);
+      localStorage.setItem(
+        "active-membership-id",
+        data.memberships[0].membershipId,
       );
-      showToast("error", err.message || "Giriş yapılamadı");
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    if (!email || !password) {
-      setError("E-posta ve şifre gereklidir.");
-      return;
     }
-    loginMutation.mutate({ email, password });
+    showToast("success", `Hoş geldiniz, ${data.user.name}!`);
+    router.push("/dashboard");
   };
 
-  const handleSimulatedLogin = (roleEmail: string, rolePass: string) => {
-    setError("");
-    setEmail(roleEmail);
-    setPassword(rolePass);
-    loginMutation.mutate({ email: roleEmail, password: rolePass });
+  const handleSimulatedSelect = (roleEmail: string, rolePass: string) => {
+    // Set simulated credentials to trigger login form reload/autofill
+    setSimulatedCredentials({
+      email: roleEmail,
+      pass: rolePass,
+      trigger: Date.now(),
+    });
   };
 
   return (
@@ -67,7 +57,7 @@ export default function LoginPage() {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 z-10">
-        <LoginHero onSelect={handleSimulatedLogin} />
+        <LoginHero onSelect={handleSimulatedSelect} />
 
         <div className="lg:col-span-5 flex flex-col justify-center">
           <GlassCard className="gradient-border p-8 space-y-6">
@@ -75,83 +65,12 @@ export default function LoginPage() {
               <InvitationJoinCard onBack={() => setShowJoinCode(false)} />
             ) : (
               <>
-                <div className="space-y-2">
-                  <h2 className="font-heading text-xl font-bold">
-                    Giriş Yapın
-                  </h2>
-                  <p className="text-xs text-muted-foreground">
-                    Kayıtlı e-posta adresiniz ve şifrenizle erişin
-                  </p>
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {error && (
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3.5 rounded-xl text-xs leading-relaxed">
-                      {error}
-                    </div>
-                  )}
-
-                  <div className="space-y-1.5">
-                    <label
-                      htmlFor="email"
-                      className="text-xs font-medium text-muted-foreground"
-                    >
-                      E-Posta Adresi
-                    </label>
-                    <div className="relative">
-                      <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-muted-foreground/50">
-                        <User className="h-4 w-4" />
-                      </span>
-                      <input
-                        id="email"
-                        type="email"
-                        placeholder="ornek@apartman.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="glass-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label
-                      htmlFor="password"
-                      className="text-xs font-medium text-muted-foreground"
-                    >
-                      Şifre
-                    </label>
-                    <div className="relative">
-                      <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-muted-foreground/50">
-                        <KeyRound className="h-4 w-4" />
-                      </span>
-                      <input
-                        id="password"
-                        type="password"
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="glass-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loginMutation.isPending}
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl text-sm font-semibold transition-all shadow-glow disabled:opacity-50 flex items-center justify-center gap-2 mt-2"
-                  >
-                    {loginMutation.isPending ? (
-                      <>
-                        <LoadingSpinner size="sm" className="inline" />
-                        <span>Giriş Yapılıyor...</span>
-                      </>
-                    ) : (
-                      <span>Giriş Yap</span>
-                    )}
-                  </button>
-                </form>
+                <LoginFormCard
+                  onSuccess={handleLoginSuccess}
+                  initialEmail={simulatedCredentials?.email}
+                  initialPassword={simulatedCredentials?.pass}
+                  autofillTrigger={simulatedCredentials?.trigger}
+                />
 
                 <div className="flex flex-col gap-3 pt-2 text-center">
                   <button
