@@ -5,7 +5,8 @@ import { trpc } from "@/lib/trpc";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { GlassCard } from "@/components/shared/GlassCard";
 import { ResidentPreferenceMatrix } from "./ResidentPreferenceMatrix";
-import { User, Phone, ShieldAlert, Heart, Bell, X } from "lucide-react";
+import { ResidentPetsSection } from "./ResidentPetsSection";
+import { User, Phone, ShieldAlert, Bell, X } from "lucide-react";
 
 interface ResidentProfileModalProps {
   siteId: string;
@@ -49,16 +50,19 @@ export function ResidentProfileModal({
       label: "Telefon",
       value: profile.phoneNumber || "Girilmemiş",
       icon: Phone,
+      isPhone: !!profile.phoneNumber,
     },
     {
       label: "Acil Kontak Kişi",
       value: profile.emergencyContactName || "Girilmemiş",
       icon: User,
+      isPhone: false,
     },
     {
       label: "Acil Kontak Telefon",
       value: profile.emergencyContactPhone || "Girilmemiş",
       icon: ShieldAlert,
+      isPhone: !!profile.emergencyContactPhone,
     },
   ];
 
@@ -88,7 +92,6 @@ export function ResidentProfileModal({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          {/* Details */}
           <div className="md:col-span-5 space-y-4">
             <GlassCard className="bg-white/[0.01] border border-white/[0.06] p-4 space-y-4">
               <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
@@ -106,7 +109,16 @@ export function ResidentProfileModal({
                       <span className="text-[10px] text-muted-foreground flex items-center gap-1">
                         <Icon className="h-3.5 w-3.5" /> {d.label}
                       </span>
-                      <span className="font-bold text-xs">{d.value}</span>
+                      {d.isPhone && d.value !== "Girilmemiş" ? (
+                        <a
+                          href={`tel:${d.value}`}
+                          className="font-bold text-xs text-primary hover:text-primary/80 hover:underline transition-all"
+                        >
+                          {d.value}
+                        </a>
+                      ) : (
+                        <span className="font-bold text-xs">{d.value}</span>
+                      )}
                     </div>
                   );
                 })}
@@ -114,48 +126,11 @@ export function ResidentProfileModal({
             </GlassCard>
           </div>
 
-          {/* Pets */}
           <div className="md:col-span-7">
-            <GlassCard className="bg-white/[0.01] border border-white/[0.06] p-4 space-y-4 h-full flex flex-col justify-start">
-              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-white/[0.04] pb-2">
-                <Heart className="h-4 w-4 text-rose-500 fill-rose-500" />{" "}
-                Sakinin Evcil Hayvanları ({pets.length})
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto max-h-[220px] pr-1">
-                {pets.map((pet) => (
-                  <div
-                    key={pet.id}
-                    className="p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl flex flex-col justify-between"
-                  >
-                    <div>
-                      <p className="font-bold text-xs text-foreground">
-                        🐾 {pet.name}
-                      </p>
-                      <p className="text-[9px] text-primary/80 font-semibold mt-0.5">
-                        {pet.species} {pet.breed ? `(${pet.breed})` : ""}
-                      </p>
-                      {pet.notes && (
-                        <p className="text-[9px] text-muted-foreground mt-1.5 bg-black/15 p-1.5 rounded italic">
-                          &ldquo;{pet.notes}&rdquo;
-                        </p>
-                      )}
-                    </div>
-                    <p className="text-[8px] text-muted-foreground mt-2 border-t border-white/[0.04] pt-2">
-                      {pet.vaccineStatus}
-                    </p>
-                  </div>
-                ))}
-                {pets.length === 0 && (
-                  <p className="text-[11px] text-muted-foreground/60 italic py-8 text-center col-span-full">
-                    Kayıtlı evcil hayvanı bulunmuyor.
-                  </p>
-                )}
-              </div>
-            </GlassCard>
+            <ResidentPetsSection pets={pets} />
           </div>
         </div>
 
-        {/* Preferences Matrix */}
         <GlassCard className="bg-white/[0.01] border border-white/[0.06] p-4 space-y-4">
           <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-white/[0.04] pb-2">
             <Bell className="h-4 w-4 text-primary" /> Bildirim Tercih Matrisi

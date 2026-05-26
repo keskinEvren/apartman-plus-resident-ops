@@ -5,6 +5,7 @@ import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
 import { GlassCard } from "@/components/shared/GlassCard";
 import { Plus, Sparkles } from "lucide-react";
+import { MockPetPhotoUploader } from "./MockPetPhotoUploader";
 
 interface PetAddFormProps {
   onSuccess: () => void;
@@ -16,6 +17,7 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
   const [breed, setBreed] = useState("");
   const [vaccineStatus, setVaccineStatus] = useState("Aşıları Tam");
   const [notes, setNotes] = useState("");
+  const [photo, setPhoto] = useState<string | null>(null);
 
   const createPet = trpc.pet.createPet.useMutation({
     onSuccess: () => {
@@ -25,6 +27,7 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
       setBreed("");
       setVaccineStatus("Aşıları Tam");
       setNotes("");
+      setPhoto(null);
       onSuccess();
     },
     onError: (err) =>
@@ -56,6 +59,8 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
             required
           />
         </div>
+
+        <MockPetPhotoUploader photo={photo} onChange={setPhoto} />
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
