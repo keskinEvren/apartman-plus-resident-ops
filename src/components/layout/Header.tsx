@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Bell, ChevronDown, Check, Building, Sparkles } from "lucide-react";
+import { Bell, ChevronDown, Check, Building, Menu, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
 
@@ -11,12 +11,16 @@ interface HeaderProps {
   className?: string;
   unreadCount?: number;
   onNotificationClick?: () => void;
+  onMenuClick?: () => void;
+  isMenuOpen?: boolean;
 }
 
 export function Header({
   className,
   unreadCount = 0,
   onNotificationClick,
+  onMenuClick,
+  isMenuOpen = false,
 }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSiteId, setActiveSiteId] = useState<string | null>(null);
@@ -25,26 +29,23 @@ export function Header({
   );
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setActiveSiteId(localStorage.getItem("active-site-id"));
-      setActiveMembershipId(localStorage.getItem("active-membership-id"));
-    }
+    if (typeof window === "undefined") return;
+    setActiveSiteId(localStorage.getItem("active-site-id"));
+    setActiveMembershipId(localStorage.getItem("active-membership-id"));
   }, []);
 
   const { data: mySites = [] } = trpc.site.getMySites.useQuery();
 
-  const currentMembership = activeMembershipId
-    ? mySites?.find((s) => s.membershipId === activeMembershipId)
-    : mySites?.find((s) => s.site?.id === activeSiteId);
+  const currentMembership = mySites?.find((s) =>
+    activeMembershipId
+      ? s.membershipId === activeMembershipId
+      : s.site?.id === activeSiteId,
+  );
 
-  const handleSiteSwitch = (
-    siteId: string,
-    siteName: string,
-    membershipId: string,
-  ) => {
+  const handleSiteSwitch = (siteId: string, name: string, mId: string) => {
     localStorage.setItem("active-site-id", siteId);
-    localStorage.setItem("active-membership-id", membershipId);
-    showToast("success", `"${siteName}" sitesine başarıyla geçiş yapıldı.`);
+    localStorage.setItem("active-membership-id", mId);
+    showToast("success", `"${name}" sitesine başarıyla geçiş yapıldı.`);
     setIsOpen(false);
     window.location.reload();
   };
@@ -52,31 +53,46 @@ export function Header({
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full h-14 bg-card/60 backdrop-blur-md border-b border-border flex items-center justify-between px-6 shadow-sm",
+        "sticky top-0 z-50 w-full h-14 bg-card/60 backdrop-blur-md border-b border-border flex items-center justify-between px-4 sm:px-6 shadow-sm",
         className,
       )}
     >
       {/* Brand logo & Property Switcher */}
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded bg-primary flex items-center justify-center text-white text-[11px] font-bold">
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+        {onMenuClick && (
+          <button
+            onClick={onMenuClick}
+            className="flex lg:hidden p-1.5 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-colors shrink-0"
+            aria-label="Menüyü aç"
+          >
+            {isMenuOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
+          </button>
+        )}
+        <Link href="/dashboard" className="flex items-center gap-2 shrink-0">
+          <div className="h-6 w-6 rounded bg-primary flex items-center justify-center text-white text-[11px] font-bold shrink-0">
             A+
           </div>
-          <span className="font-heading text-base font-bold text-foreground hover:opacity-90 transition-opacity">
+          <span className="font-heading text-sm sm:text-base font-bold text-foreground hover:opacity-90 transition-opacity hidden xs:inline-block">
             Apartman Plus
           </span>
         </Link>
 
         {mySites.length > 0 && (
-          <div className="relative">
+          <div className="relative shrink-0">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-secondary/50 border border-border text-xs font-semibold text-foreground hover:bg-secondary transition-colors"
+              className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-md bg-secondary/50 border border-border text-[11px] sm:text-xs font-semibold text-foreground hover:bg-secondary transition-colors"
             >
-              <Building className="h-3.5 w-3.5 text-muted-foreground" />
-              <span>{currentMembership?.site?.name || "Mülk Seçin"}</span>
+              <Building className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+              <span className="truncate max-w-[80px] sm:max-w-[150px]">
+                {currentMembership?.site?.name || "Mülk Seçin"}
+              </span>
               {currentMembership?.unit && (
-                <span className="text-[10px] text-muted-foreground font-normal">
+                <span className="hidden md:inline text-[10px] text-muted-foreground font-normal">
                   (
                   {currentMembership.unit.blockName
                     ? `${currentMembership.unit.blockName} `
@@ -84,7 +100,7 @@ export function Header({
                   D.{currentMembership.unit.unitNumber})
                 </span>
               )}
-              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+              <ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
             </button>
 
             {isOpen && (
@@ -102,17 +118,16 @@ export function Header({
                       const isSelected = activeMembershipId
                         ? ms.membershipId === activeMembershipId
                         : ms.site?.id === activeSiteId;
-
+                      const switchSite = () =>
+                        handleSiteSwitch(
+                          ms.site!.id,
+                          ms.site!.name,
+                          ms.membershipId,
+                        );
                       return (
                         <button
                           key={ms.membershipId}
-                          onClick={() =>
-                            handleSiteSwitch(
-                              ms.site!.id,
-                              ms.site!.name,
-                              ms.membershipId,
-                            )
-                          }
+                          onClick={switchSite}
                           className={cn(
                             "w-full text-left p-2 rounded-md flex items-center justify-between text-xs transition-colors",
                             isSelected
@@ -124,18 +139,11 @@ export function Header({
                             <p className="truncate text-foreground font-medium">
                               {ms.site?.name}
                             </p>
-                            {ms.unit ? (
-                              <p className="text-[10px] text-muted-foreground truncate">
-                                {ms.unit.blockName
-                                  ? `${ms.unit.blockName} `
-                                  : ""}
-                                Daire {ms.unit.unitNumber}
-                              </p>
-                            ) : (
-                              <p className="text-[10px] text-muted-foreground truncate">
-                                Genel Yetki
-                              </p>
-                            )}
+                            <p className="text-[10px] text-muted-foreground truncate">
+                              {ms.unit
+                                ? `${ms.unit.blockName ? `${ms.unit.blockName} ` : ""}Daire ${ms.unit.unitNumber}`
+                                : "Genel Yetki"}
+                            </p>
                           </div>
                           {isSelected && (
                             <Check className="h-3.5 w-3.5 text-primary shrink-0" />

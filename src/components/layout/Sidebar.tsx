@@ -9,7 +9,15 @@ import { Terminal } from "lucide-react";
 import { showToast } from "@/components/shared/Toast";
 import { getNavSections } from "./SidebarData";
 
-export function Sidebar({ className }: { className?: string }) {
+export function Sidebar({
+  className,
+  isMobileOpen = false,
+  onClose,
+}: {
+  className?: string;
+  isMobileOpen?: boolean;
+  onClose?: () => void;
+}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const activeTabParam = searchParams.get("tab");
@@ -52,7 +60,8 @@ export function Sidebar({ className }: { className?: string }) {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-14 z-30 h-[calc(100vh-3.5rem)] w-64 bg-card/60 backdrop-blur-md border-r border-border flex flex-col justify-between",
+        "fixed left-0 top-14 z-30 h-[calc(100vh-3.5rem)] w-64 bg-card/95 lg:bg-card/60 backdrop-blur-md border-r border-border flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0",
+        isMobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full",
         className,
       )}
     >
@@ -75,6 +84,7 @@ export function Sidebar({ className }: { className?: string }) {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={onClose}
                     className={cn(
                       "flex items-center gap-2.5 rounded-md px-3 py-2 text-xs font-semibold transition-colors relative",
                       isActive
