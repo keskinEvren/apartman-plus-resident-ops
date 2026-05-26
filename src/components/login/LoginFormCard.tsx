@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
-import { User, KeyRound } from "lucide-react";
+import { User, KeyRound, Eye, EyeOff } from "lucide-react";
 
 interface LoginFormCardProps {
   onSuccess: (data: { token: string; user: any; memberships: any[] }) => void;
@@ -21,6 +21,7 @@ export function LoginFormCard({
 }: LoginFormCardProps) {
   const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState(initialPassword);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -96,13 +97,24 @@ export function LoginFormCard({
               <KeyRound className="h-4 w-4" />
             </span>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="glass-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
+              className="glass-input w-full rounded-xl pl-10 pr-10 py-2.5 text-sm focus:outline-none"
               required
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground/50 hover:text-foreground transition-colors"
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
           </div>
         </div>
 

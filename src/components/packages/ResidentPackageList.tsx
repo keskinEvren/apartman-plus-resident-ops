@@ -2,13 +2,21 @@
 
 import React from "react";
 import { GlassCard } from "@/components/shared/GlassCard";
-import { Truck, Calendar, CheckCircle2, AlertCircle } from "lucide-react";
+import { Truck, Calendar, CheckCircle2, AlertCircle, Copy } from "lucide-react";
+import { showToast } from "@/components/shared/Toast";
 
 interface ResidentPackageListProps {
   packages: any[];
 }
 
 export function ResidentPackageList({ packages }: ResidentPackageListProps) {
+  const handleCopyOtp = (otp: string) => {
+    if (typeof window !== "undefined") {
+      navigator.clipboard.writeText(otp);
+      showToast("success", `OTP Kodu (${otp}) panoya kopyalandı.`);
+    }
+  };
+
   if (packages.length === 0) {
     return (
       <GlassCard className="text-center py-12">
@@ -77,11 +85,17 @@ export function ResidentPackageList({ packages }: ResidentPackageListProps) {
               <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold">
                 TESLİMAT KODUNUZ
               </span>
-              <span className="text-2xl font-mono font-bold text-primary tracking-widest mt-1">
-                {pack.otpCode}
-              </span>
+              <button
+                onClick={() => handleCopyOtp(pack.otpCode)}
+                className="flex items-center gap-2 text-2xl font-mono font-bold text-primary hover:text-primary/80 tracking-widest mt-1 transition-colors group"
+                title="OTP Kodunu Kopyala"
+              >
+                <span>{pack.otpCode}</span>
+                <Copy className="h-4 w-4 text-primary/50 group-hover:text-primary transition-colors" />
+              </button>
               <p className="text-[10px] text-muted-foreground/60 mt-1 max-w-[200px]">
-                Kargonuzu alırken bu kodu güvenliğe söyleyin.
+                Kargonuzu alırken bu kodu güvenliğe söyleyin. (Kopyalamak için
+                tıklayın)
               </p>
             </div>
           )}

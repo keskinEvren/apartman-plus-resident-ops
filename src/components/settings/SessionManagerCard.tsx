@@ -5,7 +5,7 @@ import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
 import { GlassCard } from "@/components/shared/GlassCard";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
-import { Laptop, Power, Globe } from "lucide-react";
+import { Laptop, Smartphone, Power, Globe } from "lucide-react";
 
 export function SessionManagerCard() {
   const utils = trpc.useUtils();
@@ -28,6 +28,35 @@ export function SessionManagerCard() {
       hour: "2-digit",
       minute: "2-digit",
     });
+  };
+
+  const isMobile = (ua: string) => {
+    const lower = ua.toLowerCase();
+    return (
+      lower.includes("android") ||
+      lower.includes("iphone") ||
+      lower.includes("ipad")
+    );
+  };
+
+  const parseUA = (ua: string) => {
+    const lower = ua.toLowerCase();
+    let browser = "Tarayıcı";
+    let os = "Cihaz";
+
+    if (lower.includes("chrome")) browser = "Chrome";
+    else if (lower.includes("safari")) browser = "Safari";
+    else if (lower.includes("firefox")) browser = "Firefox";
+    else if (lower.includes("edge")) browser = "Edge";
+
+    if (lower.includes("android")) os = "Android";
+    else if (lower.includes("iphone") || lower.includes("ipad")) os = "iOS";
+    else if (lower.includes("macintosh") || lower.includes("mac os"))
+      os = "macOS";
+    else if (lower.includes("windows")) os = "Windows";
+    else if (lower.includes("linux")) os = "Linux";
+
+    return `${os} • ${browser}`;
   };
 
   if (isLoading) return <LoadingSpinner size="sm" />;
@@ -54,15 +83,22 @@ export function SessionManagerCard() {
                     : "bg-white/[0.04] text-muted-foreground"
                 }`}
               >
-                <Laptop className="h-4.5 w-4.5" />
+                {isMobile(s.userAgent) ? (
+                  <Smartphone className="h-4.5 w-4.5" />
+                ) : (
+                  <Laptop className="h-4.5 w-4.5" />
+                )}
               </div>
               <div className="min-w-0 space-y-0.5">
                 <div className="flex items-center gap-2">
-                  <p className="font-bold text-foreground truncate">
-                    {s.userAgent}
+                  <p
+                    className="font-bold text-foreground truncate max-w-[120px] sm:max-w-xs"
+                    title={s.userAgent}
+                  >
+                    {parseUA(s.userAgent)}
                   </p>
                   {s.isCurrent && (
-                    <span className="bg-primary/10 text-primary text-[8px] font-bold px-1.5 py-0.5 rounded-full">
+                    <span className="bg-primary/10 text-primary text-[8px] font-bold px-1.5 py-0.5 rounded-full shrink-0">
                       Bu Cihaz
                     </span>
                   )}
@@ -71,7 +107,9 @@ export function SessionManagerCard() {
                   <span className="flex items-center gap-1">
                     <Globe className="h-3 w-3" /> {s.ipAddress}
                   </span>
-                  <span>Son Etkinlik: {formatDate(s.lastActiveAt)}</span>
+                  <span className="hidden sm:inline">
+                    Son Etkinlik: {formatDate(s.lastActiveAt)}
+                  </span>
                 </div>
               </div>
             </div>

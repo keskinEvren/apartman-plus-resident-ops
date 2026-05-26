@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Modal } from "@/components/shared/Modal";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { Hash } from "lucide-react";
+import { OtpInputGroup } from "@/components/shared/OtpInputGroup";
 
 interface DeliverModalProps {
   isOpen: boolean;
@@ -47,16 +48,8 @@ export function DeliverModal({
           </p>
         </div>
 
-        <div className="space-y-1.5 max-w-[240px] mx-auto">
-          <input
-            type="text"
-            maxLength={6}
-            placeholder="000000"
-            value={otpInput}
-            onChange={(e) => setOtpInput(e.target.value.replace(/\D/g, ""))}
-            className="glass-input w-full rounded-xl px-4 py-3 text-xl font-mono text-center tracking-widest focus:outline-none focus:ring-1 focus:ring-amber-500/50"
-            required
-          />
+        <div className="space-y-1.5 py-2">
+          <OtpInputGroup value={otpInput} onChange={setOtpInput} />
         </div>
 
         <button

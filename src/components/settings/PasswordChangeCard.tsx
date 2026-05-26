@@ -5,12 +5,15 @@ import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
 import { GlassCard } from "@/components/shared/GlassCard";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
-import { KeyRound, CheckCircle2 } from "lucide-react";
+import { KeyRound, CheckCircle2, Eye, EyeOff } from "lucide-react";
 
 export function PasswordChangeCard() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const changeMutation = trpc.security.changePassword.useMutation({
     onSuccess: () => {
@@ -42,40 +45,79 @@ export function PasswordChangeCard() {
           <label className="text-[11px] font-semibold text-muted-foreground">
             Mevcut Şifre
           </label>
-          <input
-            type="password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            className="glass-input w-full rounded-lg px-3 py-2 text-sm focus:outline-none"
-            placeholder="••••••••"
-            required
-          />
+          <div className="relative">
+            <input
+              type={showCurrent ? "text" : "password"}
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              className="glass-input w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowCurrent(!showCurrent)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground/50 hover:text-foreground transition-colors"
+            >
+              {showCurrent ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
         </div>
         <div className="space-y-1.5">
           <label className="text-[11px] font-semibold text-muted-foreground">
             Yeni Şifre
           </label>
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className="glass-input w-full rounded-lg px-3 py-2 text-sm focus:outline-none"
-            placeholder="••••••••"
-            required
-          />
+          <div className="relative">
+            <input
+              type={showNew ? "text" : "password"}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="glass-input w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowNew(!showNew)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground/50 hover:text-foreground transition-colors"
+            >
+              {showNew ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
         </div>
         <div className="space-y-1.5">
           <label className="text-[11px] font-semibold text-muted-foreground">
             Yeni Şifre (Tekrar)
           </label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="glass-input w-full rounded-lg px-3 py-2 text-sm focus:outline-none"
-            placeholder="••••••••"
-            required
-          />
+          <div className="relative">
+            <input
+              type={showConfirm ? "text" : "password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="glass-input w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirm(!showConfirm)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground/50 hover:text-foreground transition-colors"
+            >
+              {showConfirm ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
         </div>
         <button
           type="submit"

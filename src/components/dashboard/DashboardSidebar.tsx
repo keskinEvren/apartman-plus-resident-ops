@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Package, AlertCircle, Clock, ArrowRight } from "lucide-react";
+import { Package, AlertCircle, Clock, ArrowRight, Copy } from "lucide-react";
+import { showToast } from "@/components/shared/Toast";
 
 interface DashboardSidebarProps {
   pendingPkgs: any[];
@@ -14,6 +15,13 @@ export function DashboardSidebar({
   openTkts,
   activeRes,
 }: DashboardSidebarProps) {
+  const handleCopyOtp = (otp: string) => {
+    if (typeof window !== "undefined") {
+      navigator.clipboard.writeText(otp);
+      showToast("success", `OTP Kodu (${otp}) panoya kopyalandı.`);
+    }
+  };
+
   return (
     <div className="lg:col-span-4 space-y-6">
       {/* Pending Actions */}
@@ -33,16 +41,21 @@ export function DashboardSidebar({
               className="p-2.5 rounded border border-border bg-secondary/20 flex items-start gap-3"
             >
               <Package className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold truncate">
                   Kargo Teslimatı Bekliyor
                 </p>
                 <p className="text-[10px] text-muted-foreground truncate">
                   {p.carrierName} ile gelen paket.
                 </p>
-                <span className="inline-block mt-1 text-[9px] font-mono bg-amber-500/10 text-amber-600 px-1.5 py-0.5 rounded font-bold">
-                  OTP: {p.otpCode}
-                </span>
+                <button
+                  onClick={() => handleCopyOtp(p.otpCode)}
+                  className="flex items-center gap-1 mt-1.5 text-[9px] font-mono bg-amber-500/10 text-amber-600 hover:bg-amber-500/20 px-1.5 py-0.5 rounded font-bold transition-colors border border-amber-500/10"
+                  title="OTP Kodunu Kopyala"
+                >
+                  <span>OTP: {p.otpCode}</span>
+                  <Copy className="h-2.5 w-2.5 shrink-0" />
+                </button>
               </div>
             </div>
           ))}
