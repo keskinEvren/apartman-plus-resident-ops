@@ -13,6 +13,7 @@ const MAP_PATH = path.join(
 );
 // Structure policy is fully data-driven from architecture-map.json (zone + extension contract)
 // Updated: Added support for Next.js public directory static assets zone
+// Updated: Allowed task.md as an approved root-level file for task tracking.
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
