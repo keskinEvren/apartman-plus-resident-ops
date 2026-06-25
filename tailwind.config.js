@@ -51,7 +51,11 @@ module.exports = {
         },
       },
       fontFamily: {
-        heading: ["Outfit", "sans-serif"],
+        heading: [
+          "var(--font-heading)",
+          "Outfit",
+          "sans-serif",
+        ],
         body: ["Inter", "sans-serif"],
       },
       borderRadius: {

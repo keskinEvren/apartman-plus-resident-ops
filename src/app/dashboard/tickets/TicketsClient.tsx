@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { trpc } from "@/lib/trpc";
+import type { TicketListItem } from "@/lib/types";
 import { showToast } from "@/components/shared/Toast";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { CreateTicketModal } from "@/components/tickets/CreateTicketModal";
@@ -20,7 +21,7 @@ import {
 export function TicketsClient() {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState<any>(null);
+  const [selectedTicket, setSelectedTicket] = useState<TicketListItem | null>(null);
   const utils = trpc.useUtils();
   const activeSiteId =
     typeof window !== "undefined"
@@ -64,7 +65,7 @@ export function TicketsClient() {
       );
       utils.ticket.listStaffTickets.invalidate();
       if (selectedTicket)
-        setSelectedTicket((prev: any) => ({ ...prev, status: "IN_PROGRESS" }));
+        setSelectedTicket((prev: TicketListItem | null) => prev ? { ...prev, status: "IN_PROGRESS" } : null);
     },
     onError: (err) => showToast("error", err.message || "Atama yapılamadı"),
   });
@@ -75,7 +76,7 @@ export function TicketsClient() {
       utils.ticket.listStaffTickets.invalidate();
       utils.ticket.listMyTickets.invalidate();
       if (selectedTicket)
-        setSelectedTicket((prev: any) => ({ ...prev, status: data.status }));
+        setSelectedTicket((prev: TicketListItem | null) => prev ? { ...prev, status: data.status } : null);
     },
     onError: (err) => showToast("error", err.message || "Durum güncellenemedi"),
   });
@@ -156,9 +157,9 @@ export function TicketsClient() {
         }}
         ticket={selectedTicket}
         isStaff={isStaff}
-        onAssign={() => handleAssignToMe(selectedTicket.id)}
+        onAssign={() => selectedTicket && handleAssignToMe(selectedTicket.id)}
         onUpdateStatus={(status) =>
-          statusMutation.mutate({ ticketId: selectedTicket.id, status })
+          selectedTicket && statusMutation.mutate({ ticketId: selectedTicket.id, status })
         }
         statusLabels={statusLabels}
         statusColors={statusColors}

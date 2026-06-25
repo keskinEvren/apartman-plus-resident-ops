@@ -73,7 +73,3 @@ export function validateEnv(): Env {
 // Validate immediately on import
 export const env = validateEnv();
 
-// Log success in development
-if (env.NODE_ENV === "development") {
-  console.log("✅ Environment variables validated successfully");
-}

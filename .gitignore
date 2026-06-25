@@ -6,3 +6,4 @@ logs
 reports/healing
 reports/verification
 dist
+.DS_Store

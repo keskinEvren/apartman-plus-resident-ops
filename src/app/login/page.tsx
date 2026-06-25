@@ -9,6 +9,7 @@ import { InvitationJoinCard } from "@/components/login/InvitationJoinCard";
 import { LoginFormCard } from "@/components/login/LoginFormCard";
 import { Building2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import type { LoginSuccessData } from "@/lib/types";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,11 +26,7 @@ export default function LoginPage() {
     localStorage.removeItem("active-membership-id");
   }, []);
 
-  const handleLoginSuccess = (data: {
-    token: string;
-    user: any;
-    memberships: any[];
-  }) => {
+  const handleLoginSuccess = (data: LoginSuccessData) => {
     localStorage.setItem("auth-token", data.token);
     if (data.memberships && data.memberships.length > 0) {
       localStorage.setItem("active-site-id", data.memberships[0].siteId);

@@ -1,0 +1,16 @@
+{
+  "name": "komşu.site — Apartman Sakin Portalı",
+  "short_name": "komşu",
+  "description": "Apartman sakinlerinin günlük ihtiyaçlarını çözen B2B SaaS platformu",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e1145",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

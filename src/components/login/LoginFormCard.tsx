@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
+import type { LoginSuccessData } from "@/lib/types";
 import { showToast } from "@/components/shared/Toast";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { User, KeyRound, Eye, EyeOff } from "lucide-react";
 
 interface LoginFormCardProps {
-  onSuccess: (data: { token: string; user: any; memberships: any[] }) => void;
+  onSuccess: (data: LoginSuccessData) => void;
   initialEmail?: string;
   initialPassword?: string;
   autofillTrigger?: number;
@@ -36,7 +37,7 @@ export function LoginFormCard({
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: (data) => {
       if (data.token) {
-        onSuccess(data as any);
+        onSuccess(data);
       }
     },
     onError: (err) => {

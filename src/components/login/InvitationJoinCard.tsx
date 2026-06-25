@@ -4,6 +4,7 @@ import { showToast } from "@/components/shared/Toast";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { Sparkles, ArrowLeft } from "lucide-react";
 import { OnboardingForm } from "./OnboardingForm";
+import type { InvitationDetails } from "@/lib/types";
 
 interface InvitationJoinCardProps {
   onBack: () => void;
@@ -12,7 +13,7 @@ interface InvitationJoinCardProps {
 export function InvitationJoinCard({ onBack }: InvitationJoinCardProps) {
   const [step, setStep] = useState<"CHECK" | "ONBOARD">("CHECK");
   const [tokenCode, setTokenCode] = useState("");
-  const [invitationDetails, setInvitationDetails] = useState<any>(null);
+  const [invitationDetails, setInvitationDetails] = useState<InvitationDetails | null>(null);
 
   const utils = trpc.useUtils();
   const [isValidating, setIsValidating] = useState(false);
