@@ -31,7 +31,7 @@ export function AnnouncementDetailModal({
       ) : (
         data && (
           <div className="space-y-5">
-            <div className="space-y-2 pb-3 border-b border-white/[0.06]">
+            <div className="space-y-2 pb-3 border-b border-border">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <h3 className="font-heading text-lg font-bold text-foreground">
                   {data.title}
@@ -56,12 +56,12 @@ export function AnnouncementDetailModal({
               </div>
             </div>
 
-            <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap bg-white/[0.02] border border-white/[0.06] rounded-xl p-4">
+            <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap bg-muted border border-border rounded-xl p-4">
               {data.content}
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-emerald-400 font-semibold bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-3">
-              <Info className="h-4 w-4 text-emerald-400 shrink-0" />
+            <div className="flex items-center gap-2 text-xs text-emerald-600 font-semibold bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+              <Info className="h-4 w-4 text-emerald-600 shrink-0" />
               <span>Bu duyuru tarafınızca okundu olarak işaretlendi.</span>
             </div>
           </div>

@@ -31,7 +31,7 @@ export function AmenityManager({ siteId }: AmenityManagerProps) {
           {selectedId ? (
             <SessionManager amenityId={selectedId} />
           ) : (
-            <GlassCard className="gradient-border p-8 text-center space-y-3 h-full flex flex-col justify-center items-center">
+            <GlassCard className="p-8 text-center space-y-3 h-full flex flex-col justify-center items-center">
               <ShieldAlert className="h-8 w-8 text-muted-foreground/60" />
               <p className="text-xs text-muted-foreground">
                 Lütfen seanslarını ve kontenjanlarını yönetmek için sol listeden

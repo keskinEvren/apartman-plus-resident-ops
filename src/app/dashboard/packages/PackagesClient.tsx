@@ -105,7 +105,7 @@ export function PackagesClient() {
         {isStaff && (
           <button
             onClick={() => setIsAddOpen(true)}
-            className="w-full sm:w-auto px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-sm font-semibold transition-all shadow-glow flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2"
           >
             <PlusCircle className="h-4 w-4" />
             Yeni Kargo Girişi

@@ -47,13 +47,13 @@ export function OnboardingForm({
             ? `${invitationDetails.unit.blockName} - ${invitationDetails.unit.unitNumber}`
             : "Birim Atanmamış (Görevli/Staff)"}
         </p>
-        <span className="inline-block text-[10px] bg-white/[0.06] border border-white/[0.1] px-2 py-0.5 rounded text-primary font-bold">
+        <span className="inline-block text-[10px] bg-muted border border-border px-2 py-0.5 rounded text-primary font-bold">
           Rol: {invitationDetails.role?.name}
         </span>
       </div>
 
       {/* Toggle Register/Login */}
-      <div className="flex bg-white/[0.02] border border-white/[0.06] rounded-xl p-1 gap-1">
+      <div className="flex bg-muted/50 border border-border rounded-xl p-1 gap-1">
         <button
           type="button"
           onClick={() => setMode("REGISTER")}
@@ -92,7 +92,7 @@ export function OnboardingForm({
               placeholder="Ahmet Yılmaz"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="glass-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
+              className="input-field w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
               required
             />
           </div>
@@ -112,7 +112,7 @@ export function OnboardingForm({
             placeholder="ahmet@apartman.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="glass-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
+            className="input-field w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
             disabled={!!invitationDetails.email}
             required
           />
@@ -132,7 +132,7 @@ export function OnboardingForm({
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="glass-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
+            className="input-field w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
             required
           />
         </div>
@@ -141,7 +141,7 @@ export function OnboardingForm({
       <button
         type="submit"
         disabled={isPending}
-        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl text-sm font-semibold transition-all shadow-glow mt-2 flex items-center justify-center gap-1.5"
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl text-sm font-semibold transition-all mt-2 flex items-center justify-center gap-1.5"
       >
         {isPending ? (
           <LoadingSpinner size="sm" />

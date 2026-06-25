@@ -16,7 +16,7 @@ export function RoleSimulator({ onSelect }: RoleSimulatorProps) {
       icon: User,
       desc: "Daire A-1 (Rezervasyon, Ziyaretçi ve Kargo OTP görüntüleme)",
       color:
-        "from-blue-500/20 to-indigo-500/20 border-blue-500/30 text-blue-400",
+        "from-blue-50 to-indigo-50 border-blue-200 text-blue-600",
     },
     {
       title: "Resepsiyon / Güvenlik",
@@ -25,7 +25,7 @@ export function RoleSimulator({ onSelect }: RoleSimulatorProps) {
       icon: UserCheck,
       desc: "A Blok Görevlisi (Ziyaretçi Kabul, Kargo Giriş & OTP Teslim ve Talepler)",
       color:
-        "from-teal-500/20 to-emerald-500/20 border-teal-500/30 text-teal-400",
+        "from-teal-50 to-emerald-50 border-teal-200 text-teal-600",
     },
     {
       title: "Site Yöneticisi",
@@ -34,7 +34,7 @@ export function RoleSimulator({ onSelect }: RoleSimulatorProps) {
       icon: Shield,
       desc: "Tam Yetkili Yönetici (Duyuru Yayınlama, Okunma Raporu ve Tüm Talepler)",
       color:
-        "from-purple-500/20 to-pink-500/20 border-purple-500/30 text-purple-400",
+        "from-purple-50 to-pink-50 border-purple-200 text-purple-600",
     },
   ];
 
@@ -50,9 +50,9 @@ export function RoleSimulator({ onSelect }: RoleSimulatorProps) {
             <div
               key={role.email}
               onClick={() => onSelect(role.email, role.pass)}
-              className={`glass-surface rounded-2xl p-4 border flex items-start gap-4 hover:scale-[1.01] hover:bg-white/[0.04] cursor-pointer transition-all duration-200 ${role.color}`}
+              className={`glass-surface rounded-2xl p-4 border flex items-start gap-4 hover:scale-[1.01] hover:bg-muted/50 cursor-pointer transition-all duration-200 ${role.color}`}
             >
-              <div className="p-2 rounded-xl bg-white/[0.05] shrink-0 mt-0.5">
+              <div className="p-2 rounded-xl bg-muted shrink-0 mt-0.5">
                 <Icon className="h-5 w-5" />
               </div>
               <div className="min-w-0">

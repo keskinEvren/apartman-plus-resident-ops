@@ -58,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="tr"
-      className={`dark ${inter.variable} ${outfit.variable} ${plusJakarta.variable}`}
+      className={`${inter.variable} ${outfit.variable} ${plusJakarta.variable}`}
       suppressHydrationWarning
     >
       <body className="font-body" suppressHydrationWarning>

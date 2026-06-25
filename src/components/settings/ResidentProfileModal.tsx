@@ -27,7 +27,7 @@ export function ResidentProfileModal({
   if (isLoading || !data) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-        <GlassCard className="p-8 max-w-sm w-full gradient-border flex flex-col items-center">
+        <GlassCard className="p-8 max-w-sm w-full flex flex-col items-center">
           <LoadingSpinner size="lg" />
           <p className="text-xs text-muted-foreground mt-4">Yükleniyor...</p>
         </GlassCard>
@@ -68,10 +68,10 @@ export function ResidentProfileModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md overflow-y-auto">
-      <GlassCard className="w-full max-w-4xl gradient-border p-6 space-y-6 relative animate-fade-in text-xs max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between border-b border-white/[0.06] pb-4">
+      <GlassCard className="w-full max-w-4xl p-6 space-y-6 relative animate-fade-in text-xs max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between border-b border-border pb-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-purple-600 font-heading text-lg font-bold text-white shadow-glow">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-purple-600 font-heading text-lg font-bold text-white">
               {initials}
             </div>
             <div>
@@ -85,7 +85,7 @@ export function ResidentProfileModal({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 hover:bg-white/[0.08] text-muted-foreground hover:text-foreground rounded-lg transition-all"
+            className="p-1.5 hover:bg-secondary text-muted-foreground hover:text-foreground rounded-lg transition-all"
           >
             <X className="h-5 w-5" />
           </button>
@@ -93,7 +93,7 @@ export function ResidentProfileModal({
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           <div className="md:col-span-5 space-y-4">
-            <GlassCard className="bg-white/[0.01] border border-white/[0.06] p-4 space-y-4">
+            <GlassCard className="bg-secondary border border-border p-4 space-y-4">
               <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
                 <User className="h-4 w-4 text-primary" /> İletişim & Kontak
                 Bilgileri
@@ -104,7 +104,7 @@ export function ResidentProfileModal({
                   return (
                     <div
                       key={idx}
-                      className="flex justify-between items-center border-b border-white/[0.02] pb-2 last:border-0 last:pb-0"
+                      className="flex justify-between items-center border-b border-border pb-2 last:border-0 last:pb-0"
                     >
                       <span className="text-[10px] text-muted-foreground flex items-center gap-1">
                         <Icon className="h-3.5 w-3.5" /> {d.label}
@@ -131,8 +131,8 @@ export function ResidentProfileModal({
           </div>
         </div>
 
-        <GlassCard className="bg-white/[0.01] border border-white/[0.06] p-4 space-y-4">
-          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-white/[0.04] pb-2">
+        <GlassCard className="bg-secondary border border-border p-4 space-y-4">
+          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-border pb-2">
             <Bell className="h-4 w-4 text-primary" /> Bildirim Tercih Matrisi
             (Salt Okunur)
           </h4>

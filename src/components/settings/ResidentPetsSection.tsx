@@ -10,8 +10,8 @@ interface ResidentPetsSectionProps {
 
 export function ResidentPetsSection({ pets }: ResidentPetsSectionProps) {
   return (
-    <GlassCard className="bg-white/[0.01] border border-white/[0.06] p-4 space-y-4 h-full flex flex-col justify-start">
-      <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-white/[0.04] pb-2">
+    <GlassCard className="p-4 space-y-4 h-full flex flex-col justify-start">
+      <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-border pb-2">
         <Heart className="h-4 w-4 text-rose-500 fill-rose-500" /> Sakinin Evcil
         Hayvanları ({pets.length})
       </h4>
@@ -19,7 +19,7 @@ export function ResidentPetsSection({ pets }: ResidentPetsSectionProps) {
         {pets.map((pet) => (
           <div
             key={pet.id}
-            className="p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl flex flex-col justify-between"
+            className="p-3 bg-muted border border-border rounded-lg flex flex-col justify-between"
           >
             <div>
               <p className="font-bold text-xs text-foreground">🐾 {pet.name}</p>
@@ -27,12 +27,12 @@ export function ResidentPetsSection({ pets }: ResidentPetsSectionProps) {
                 {pet.species} {pet.breed ? `(${pet.breed})` : ""}
               </p>
               {pet.notes && (
-                <p className="text-[9px] text-muted-foreground mt-1.5 bg-black/15 p-1.5 rounded italic">
+                <p className="text-[9px] text-muted-foreground mt-1.5 bg-muted p-1.5 rounded italic">
                   &ldquo;{pet.notes}&rdquo;
                 </p>
               )}
             </div>
-            <p className="text-[8px] text-muted-foreground mt-2 border-t border-white/[0.04] pt-2">
+            <p className="text-[8px] text-muted-foreground mt-2 border-t border-border pt-2">
               {pet.vaccineStatus}
             </p>
           </div>

@@ -18,8 +18,8 @@ export function DayTabs({ selectedDay, onSelect }: DayTabsProps) {
           onClick={() => onSelect(idx)}
           className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
             selectedDay === idx
-              ? "bg-primary/15 text-primary shadow-glow"
-              : "glass-surface text-muted-foreground hover:text-foreground hover:bg-white/[0.04]"
+              ? "bg-primary/15 text-primary"
+              : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-secondary"
           }`}
         >
           {label}

@@ -79,10 +79,10 @@ export function AnnouncementsClient() {
     URGENT: "Acil Durum",
   };
   const priorityColors = {
-    NORMAL: "bg-blue-500/15 border-blue-500/20 text-blue-400",
-    IMPORTANT: "bg-amber-500/15 border-amber-500/20 text-amber-400 shadow-glow",
+    NORMAL: "bg-blue-50 border-blue-200 text-blue-600",
+    IMPORTANT: "bg-amber-50 border-amber-200 text-amber-600",
     URGENT:
-      "bg-red-500/15 border-red-500/20 text-red-400 shadow-glow animate-pulse",
+      "bg-red-50 border-red-200 text-red-600 animate-pulse",
   };
 
   if (loadingSites || loadingAnnouncements) {
@@ -109,7 +109,7 @@ export function AnnouncementsClient() {
         {isAdmin && (
           <button
             onClick={() => setIsAddOpen(true)}
-            className="w-full sm:w-auto px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-sm font-semibold transition-all shadow-glow flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2"
           >
             <PlusCircle className="h-4 w-4" />
             Duyuru Yayınla

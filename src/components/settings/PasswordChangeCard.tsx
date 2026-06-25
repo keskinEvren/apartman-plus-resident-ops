@@ -35,7 +35,7 @@ export function PasswordChangeCard() {
   };
 
   return (
-    <GlassCard className="gradient-border p-5 space-y-4">
+    <GlassCard className="p-5 space-y-4">
       <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
         <KeyRound className="h-4.5 w-4.5 text-primary" />
         Şifre Değiştir
@@ -50,7 +50,7 @@ export function PasswordChangeCard() {
               type={showCurrent ? "text" : "password"}
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              className="glass-input w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
+              className="input-field w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
               placeholder="••••••••"
               required
             />
@@ -76,7 +76,7 @@ export function PasswordChangeCard() {
               type={showNew ? "text" : "password"}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="glass-input w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
+              className="input-field w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
               placeholder="••••••••"
               required
             />
@@ -102,7 +102,7 @@ export function PasswordChangeCard() {
               type={showConfirm ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="glass-input w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
+              className="input-field w-full rounded-lg pl-3 pr-10 py-2 text-sm focus:outline-none"
               placeholder="••••••••"
               required
             />
@@ -122,7 +122,7 @@ export function PasswordChangeCard() {
         <button
           type="submit"
           disabled={changeMutation.isPending}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2 rounded-lg font-bold transition-all shadow-glow flex items-center justify-center gap-1.5 mt-2"
+          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 mt-2"
         >
           {changeMutation.isPending ? (
             <LoadingSpinner size="sm" />

@@ -40,7 +40,7 @@ export function TicketDetailModal({
     >
       <div className="space-y-6">
         {/* Core Info */}
-        <div className="space-y-3 pb-4 border-b border-white/[0.06]">
+        <div className="space-y-3 pb-4 border-b border-border">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <h3 className="font-heading text-lg font-bold text-foreground">
               {ticket.title}
@@ -52,14 +52,14 @@ export function TicketDetailModal({
             </span>
           </div>
           <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-            <span className="bg-white/[0.04] px-2 py-0.5 rounded border border-white/[0.06]">
+            <span className="bg-secondary px-2 py-0.5 rounded border border-border">
               {categoryLabels[ticket.category]}
             </span>
             <span>
               Oluşturulma: {new Date(ticket.createdAt).toLocaleString("tr-TR")}
             </span>
           </div>
-          <p className="text-sm bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 leading-relaxed text-muted-foreground">
+          <p className="text-sm bg-muted border border-border rounded-xl p-4 leading-relaxed text-muted-foreground">
             {ticket.description}
           </p>
         </div>
@@ -75,7 +75,7 @@ export function TicketDetailModal({
               {!ticket.assignedStaffUserId ? (
                 <button
                   onClick={onAssign}
-                  className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-xs font-semibold shadow-glow flex items-center gap-1.5"
+                  className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-xs font-semibold flex items-center gap-1.5"
                 >
                   <ClipboardList className="h-4 w-4" />
                   Talebi Üzerime Ata
@@ -85,7 +85,7 @@ export function TicketDetailModal({
                   {ticket.status !== "RESOLVED" && (
                     <button
                       onClick={() => onUpdateStatus("RESOLVED")}
-                      className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-black rounded-lg text-xs font-semibold shadow-glow flex items-center gap-1.5"
+                      className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-black rounded-lg text-xs font-semibold flex items-center gap-1.5"
                     >
                       <CheckCircle className="h-4 w-4" />
                       Çözüldü Olarak İşaretle
@@ -95,7 +95,7 @@ export function TicketDetailModal({
                     ticket.status !== "RESOLVED" && (
                       <button
                         onClick={() => onUpdateStatus("IN_PROGRESS")}
-                        className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black rounded-lg text-xs font-semibold shadow-glow flex items-center gap-1.5"
+                        className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black rounded-lg text-xs font-semibold flex items-center gap-1.5"
                       >
                         <RefreshCw className="h-4 w-4" />
                         İşleme Al (In Progress)
@@ -112,10 +112,10 @@ export function TicketDetailModal({
           <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
             İşlem ve SLA Tarihçesi
           </h4>
-          <div className="relative border-l border-white/[0.08] pl-5 ml-2.5 space-y-5 py-1">
+          <div className="relative border-l border-border pl-5 ml-2.5 space-y-5 py-1">
             {/* Timeline node */}
             <div className="relative">
-              <span className="absolute -left-[25px] top-1 h-2.5 w-2.5 rounded-full bg-primary shadow-glow" />
+              <span className="absolute -left-[25px] top-1 h-2.5 w-2.5 rounded-full bg-primary" />
               <p className="text-xs text-muted-foreground font-semibold">
                 Tarihçe günlüğünüz otomatik işlenmektedir.
               </p>

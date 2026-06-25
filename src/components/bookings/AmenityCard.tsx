@@ -35,8 +35,8 @@ export function AmenityCard({
       onClick={() => onSelect(id)}
       className={cn(
         "group relative w-full text-left rounded-2xl p-5 transition-all duration-200",
-        "glass-surface glass-surface-hover",
-        isSelected && "gradient-border shadow-glow",
+        "bg-card border border-border hover:bg-secondary",
+        isSelected && "ring-2 ring-primary shadow-card",
       )}
     >
       <div className="flex flex-col gap-4">
@@ -46,7 +46,7 @@ export function AmenityCard({
               "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors",
               isSelected
                 ? "bg-primary/20 text-primary"
-                : "bg-white/[0.06] text-muted-foreground",
+                : "bg-muted text-muted-foreground",
             )}
           >
             <Dumbbell className="h-5 w-5" />
@@ -74,7 +74,7 @@ export function AmenityCard({
             <span>Günlük Doluluk</span>
             <span
               className={cn(
-                occupancy > 60 ? "text-amber-400" : "text-emerald-400",
+                occupancy > 60 ? "text-amber-600" : "text-emerald-600",
               )}
             >
               {occupancy}%

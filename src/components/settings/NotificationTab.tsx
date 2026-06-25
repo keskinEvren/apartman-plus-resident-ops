@@ -76,7 +76,7 @@ export function NotificationTab() {
 
   return (
     <div className="space-y-6 max-w-5xl animate-fade-in text-sm">
-      <GlassCard className="gradient-border p-6 space-y-6">
+      <GlassCard className="p-6 space-y-6">
         <div className="flex items-center gap-2">
           <Bell className="h-5 w-5 text-primary" />
           <div>
@@ -89,7 +89,7 @@ export function NotificationTab() {
         <div className="overflow-x-auto">
           <table className="w-full min-w-[600px] border-collapse text-left">
             <thead>
-              <tr className="border-b border-white/[0.06] text-muted-foreground text-[10px] uppercase font-bold tracking-wider">
+              <tr className="border-b border-border text-muted-foreground text-[10px] uppercase font-bold tracking-wider">
                 <th className="py-3 pr-4">Bildirim Kategorisi</th>
                 <th className="py-3 px-4 text-center">
                   <span className="inline-flex items-center gap-1">
@@ -113,11 +113,11 @@ export function NotificationTab() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.04] text-xs">
+            <tbody className="divide-y divide-border text-xs">
               {ROWS.map((row) => (
                 <tr
                   key={row.key}
-                  className="hover:bg-white/[0.01] transition-all"
+                  className="hover:bg-secondary transition-all"
                 >
                   <td className="py-4 pr-4 max-w-[280px]">
                     <p className="font-bold text-foreground">{row.label}</p>
@@ -140,7 +140,7 @@ export function NotificationTab() {
                               onChange={() => handleToggle(row.key, channel)}
                               className="sr-only peer"
                             />
-                            <div className="w-8 h-4 bg-white/[0.08] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[10px] after:left-[10px] after:bg-muted-foreground after:border-white/[0.2] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary peer-checked:after:bg-white peer-checked:after:border-primary transition-all"></div>
+                            <div className="w-8 h-4 bg-muted peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[10px] after:left-[10px] after:bg-muted-foreground after:border-border after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary peer-checked:after:bg-white peer-checked:after:border-primary transition-all"></div>
                           </label>
                         </td>
                       );

@@ -47,7 +47,7 @@ export function AmenityList({
 
   return (
     <div className="space-y-6">
-      <GlassCard className="gradient-border p-5 space-y-4">
+      <GlassCard className="p-5 space-y-4">
         <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
           <Sparkles className="h-4 w-4 text-primary" />
           Yeni Tesis Ekle
@@ -57,26 +57,26 @@ export function AmenityList({
             placeholder="Tesis Adı (Örn: Barbekü Alanı)"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="glass-input w-full rounded-xl px-4 py-2 text-sm"
+            className="input-field w-full rounded-xl px-4 py-2 text-sm"
             required
           />
           <input
             placeholder="Açıklama / Kurallar"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="glass-input w-full rounded-xl px-4 py-2 text-sm"
+            className="input-field w-full rounded-xl px-4 py-2 text-sm"
           />
           <button
             type="submit"
             disabled={createAmenity.isPending}
-            className="w-full py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 shadow-glow"
+            className="w-full py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 "
           >
             <Plus className="h-4 w-4" /> Tesis Ekle
           </button>
         </form>
       </GlassCard>
 
-      <GlassCard className="gradient-border p-5 space-y-4">
+      <GlassCard className="p-5 space-y-4">
         <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
           Mevcut Tesisler
         </h3>
@@ -88,7 +88,7 @@ export function AmenityList({
               className={`p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${
                 selectedId === a.id
                   ? "bg-primary/10 border-primary text-primary"
-                  : "bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04]"
+                  : "bg-secondary border-border hover:bg-secondary"
               }`}
             >
               <div>
@@ -109,8 +109,8 @@ export function AmenityList({
                 }}
                 className={`text-[10px] px-2 py-1 rounded font-semibold transition ${
                   a.isActive
-                    ? "bg-emerald-500/20 text-emerald-400"
-                    : "bg-red-500/20 text-red-400"
+                    ? "bg-emerald-50 text-emerald-600"
+                    : "bg-red-50 text-red-600"
                 }`}
               >
                 {a.isActive ? "Aktif" : "Pasif"}

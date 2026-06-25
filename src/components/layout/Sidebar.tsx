@@ -60,7 +60,7 @@ export function Sidebar({
   return (
     <aside
       className={cn(
-        "fixed left-0 top-14 z-30 h-[calc(100vh-3.5rem)] w-64 bg-card/95 lg:bg-card/60 backdrop-blur-md border-r border-border flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0",
+        "fixed left-0 top-14 z-30 h-[calc(100vh-3.5rem)] w-64 bg-white border-r border-border flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0",
         isMobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full",
         className,
       )}
@@ -105,7 +105,7 @@ export function Sidebar({
         ))}
       </nav>
 
-      <div className="border-t border-border p-4 bg-secondary/20">
+      <div className="border-t border-border p-4 bg-secondary">
         <button
           onClick={handleDevModeToggle}
           className={cn(

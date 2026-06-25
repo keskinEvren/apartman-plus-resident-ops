@@ -62,7 +62,7 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Block Form */}
-        <GlassCard className="gradient-border p-5 space-y-4">
+        <GlassCard className="p-5 space-y-4">
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
             <Building2 className="h-4 w-4 text-primary" />
             Yeni Blok Ekle
@@ -73,13 +73,13 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
               placeholder="Örn: C BLOK"
               value={blockName}
               onChange={(e) => setBlockName(e.target.value)}
-              className="glass-input flex-1 rounded-xl px-4 py-2 text-sm"
+              className="input-field flex-1 rounded-xl px-4 py-2 text-sm"
               required
             />
             <button
               type="submit"
               disabled={blockMutation.isPending}
-              className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition-all shadow-glow flex items-center gap-1 shrink-0"
+              className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1 shrink-0"
             >
               <Plus className="h-4 w-4" />
               Blok Ekle
@@ -88,7 +88,7 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
         </GlassCard>
 
         {/* Unit Form */}
-        <GlassCard className="gradient-border p-5 space-y-4">
+        <GlassCard className="p-5 space-y-4">
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
             <Layers className="h-4 w-4 text-primary" />
             Yeni Daire Ekle
@@ -100,14 +100,14 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
             <select
               value={selectedBlockId}
               onChange={(e) => setSelectedBlockId(e.target.value)}
-              className="glass-input rounded-xl px-3 py-2 text-sm flex-1"
+              className="input-field rounded-xl px-3 py-2 text-sm flex-1"
               required
             >
-              <option value="" className="bg-[#121214]">
+              <option value="">
                 Blok Seçin
               </option>
               {blocks.map((b) => (
-                <option key={b.id} value={b.id} className="bg-[#121214]">
+                <option key={b.id} value={b.id}>
                   {b.name}
                 </option>
               ))}
@@ -117,13 +117,13 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
               placeholder="Örn: NO 12"
               value={unitNumber}
               onChange={(e) => setUnitNumber(e.target.value)}
-              className="glass-input rounded-xl px-4 py-2 text-sm flex-1"
+              className="input-field rounded-xl px-4 py-2 text-sm flex-1"
               required
             />
             <button
               type="submit"
               disabled={unitMutation.isPending}
-              className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition-all shadow-glow flex items-center gap-1 shrink-0 justify-center"
+              className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1 shrink-0 justify-center"
             >
               <Plus className="h-4 w-4" />
               Daire Ekle
@@ -133,7 +133,7 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
       </div>
 
       {/* Property tree overview */}
-      <GlassCard className="gradient-border p-6 space-y-4">
+      <GlassCard className="p-6 space-y-4">
         <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
           <LayoutGrid className="h-4 w-4 text-primary" />
           Sitedeki Blok ve Daireler
@@ -145,7 +145,7 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
             return (
               <div
                 key={block.id}
-                className="space-y-2 border-b border-white/[0.04] pb-4 last:border-0 last:pb-0"
+                className="space-y-2 border-b border-border pb-4 last:border-0 last:pb-0"
               >
                 <p className="text-xs font-bold text-foreground flex items-center gap-1.5">
                   <Building2 className="h-4 w-4 text-muted-foreground" />
@@ -155,7 +155,7 @@ export function PropertyManager({ siteId }: PropertyManagerProps) {
                   {blockUnits.map((u) => (
                     <span
                       key={u.id}
-                      className="text-[10px] bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] transition px-3 py-1.5 rounded-lg text-muted-foreground font-semibold"
+                      className="text-[10px] bg-secondary border border-border hover:bg-secondary transition px-3 py-1.5 rounded-lg text-muted-foreground font-semibold"
                     >
                       {u.unitNumber}
                     </span>

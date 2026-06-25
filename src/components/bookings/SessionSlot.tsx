@@ -32,11 +32,11 @@ export function SessionSlot({
       disabled={isFull}
       className={cn(
         "relative rounded-xl px-4 py-3 text-left transition-all duration-200",
-        "glass-surface",
+        "bg-card border border-border",
         isFull
           ? "opacity-50 cursor-not-allowed"
-          : "glass-surface-hover cursor-pointer",
-        isSelected && !isFull && "gradient-border shadow-glow",
+          : "hover:bg-secondary cursor-pointer",
+        isSelected && !isFull && "ring-2 ring-primary shadow-card",
       )}
     >
       <div className="flex items-center gap-3 mb-2">
@@ -54,14 +54,14 @@ export function SessionSlot({
           </span>
         </div>
         {isFull && (
-          <span className="text-[10px] font-semibold text-red-400 uppercase">
+          <span className="text-[10px] font-semibold text-red-600 uppercase">
             Dolu
           </span>
         )}
       </div>
 
       {/* Capacity bar */}
-      <div className="mt-2 h-1 w-full rounded-full bg-white/[0.06] overflow-hidden">
+      <div className="mt-2 h-1 w-full rounded-full bg-border overflow-hidden">
         <div
           className={cn(
             "h-full rounded-full transition-all duration-500",

@@ -38,16 +38,16 @@ export function MockPetPhotoUploader({
         Evcil Hayvan Fotoğrafı (Kamera Simülasyonu)
       </label>
       {photo ? (
-        <div className="relative rounded-xl border border-white/[0.08] bg-secondary/10 p-3 flex items-center justify-between">
+        <div className="relative rounded-lg border border-border bg-secondary p-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center text-lg shadow-glow">
+            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-lg">
               🐾
             </div>
             <div>
               <p className="font-semibold text-foreground text-[11px] truncate max-w-[150px]">
                 {photo}
               </p>
-              <p className="text-[9px] text-emerald-400">
+              <p className="text-[9px] text-emerald-600">
                 Yüklendi (Mobil Simülasyon)
               </p>
             </div>
@@ -55,7 +55,7 @@ export function MockPetPhotoUploader({
           <button
             type="button"
             onClick={() => onChange(null)}
-            className="p-1 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 text-[10px] font-semibold transition-colors"
+            className="p-1 rounded bg-red-50 text-red-600 hover:bg-red-100 text-[10px] font-semibold transition-colors"
           >
             Sil
           </button>
@@ -65,7 +65,7 @@ export function MockPetPhotoUploader({
           type="button"
           onClick={handleMockUpload}
           disabled={isCapturing}
-          className="w-full h-14 border border-dashed border-white/[0.08] rounded-xl flex items-center justify-center gap-2 hover:bg-white/[0.02] active:bg-white/[0.04] transition-all"
+          className="w-full h-14 border border-dashed border-border rounded-lg flex items-center justify-center gap-2 hover:bg-secondary active:bg-muted transition-all"
         >
           {isCapturing ? (
             <>

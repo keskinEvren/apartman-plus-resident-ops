@@ -45,7 +45,7 @@ export function Header({
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full h-14 bg-card/60 backdrop-blur-md border-b border-border flex items-center justify-between px-4 sm:px-6 shadow-sm",
+        "sticky top-0 z-50 w-full h-14 bg-white border-b border-border flex items-center justify-between px-4 sm:px-6 shadow-sm",
         className,
       )}
     >
@@ -103,7 +103,7 @@ export function Header({
                   className="fixed inset-0 z-40"
                   onClick={() => setIsOpen(false)}
                 />
-                <div className="absolute left-0 mt-1.5 w-64 rounded-lg bg-card border border-border p-1 shadow-lg z-50 animate-fade-in">
+                <div className="absolute left-0 mt-1.5 w-64 rounded-lg bg-white border border-border p-1 shadow-lg z-50 animate-fade-in">
                   <div className="px-2.5 py-1.5 mb-1 text-[10px] font-bold text-muted-foreground uppercase tracking-wider border-b border-border/40">
                     Kayıtlı Mülkleriniz
                   </div>

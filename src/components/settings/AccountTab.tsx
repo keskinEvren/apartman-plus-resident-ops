@@ -63,7 +63,7 @@ export function AccountTab({ currentMembership }: AccountTabProps) {
 
       {isDevMode && (
         <div className="lg:col-span-4">
-          <GlassCard className="gradient-border p-6 space-y-4">
+          <GlassCard className="p-6 space-y-4">
             <SettingsRoleSimulator
               currentRole={currentMembership?.role?.name || ""}
               onSwap={handleSimulatedSwap}

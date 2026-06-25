@@ -112,7 +112,7 @@ export function InvitationJoinCard({ onBack }: InvitationJoinCardProps) {
             placeholder="ÖRN: AP-A12B-3C4D"
             value={tokenCode}
             onChange={(e) => setTokenCode(e.target.value)}
-            className="glass-input w-full rounded-xl px-4 py-3 text-sm uppercase text-center font-bold tracking-wider focus:outline-none"
+            className="input-field w-full rounded-xl px-4 py-3 text-sm uppercase text-center font-bold tracking-wider focus:outline-none"
             required
             autoFocus
           />
@@ -120,7 +120,7 @@ export function InvitationJoinCard({ onBack }: InvitationJoinCardProps) {
           <button
             type="submit"
             disabled={isValidating}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl text-sm font-semibold transition-all shadow-glow flex items-center justify-center gap-2"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2"
           >
             {isValidating ? (
               <LoadingSpinner size="sm" />

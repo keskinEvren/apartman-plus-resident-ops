@@ -62,13 +62,13 @@ export function SettingsRoleSimulator({
             <div
               key={role.email}
               onClick={() => !isPending && onSwap(role.email, role.pass)}
-              className={`glass-surface rounded-2xl p-4 border flex items-start gap-4 hover:scale-[1.01] hover:bg-white/[0.04] cursor-pointer transition-all duration-200 relative ${
+              className={`bg-white rounded-lg p-4 border flex items-start gap-4 hover:bg-secondary cursor-pointer transition-all duration-200 relative ${
                 role.isActive
                   ? "bg-primary/5 border-primary text-primary"
                   : "text-muted-foreground"
               }`}
             >
-              <div className="p-2 rounded-xl bg-white/[0.05] shrink-0 mt-0.5">
+              <div className="p-2 rounded-lg bg-muted shrink-0 mt-0.5">
                 <Icon className="h-5 w-5" />
               </div>
               <div className="min-w-0 pr-8">

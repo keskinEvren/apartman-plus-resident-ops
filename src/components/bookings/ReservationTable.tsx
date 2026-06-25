@@ -41,7 +41,7 @@ export function ReservationTable({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-white/[0.06]">
+            <tr className="border-b border-border">
               <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Tesis
               </th>
@@ -59,9 +59,9 @@ export function ReservationTable({
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/[0.04]">
+          <tbody className="divide-y divide-border">
             {reservations.map((r) => (
-              <tr key={r.id} className="hover:bg-white/[0.02] transition">
+              <tr key={r.id} className="hover:bg-muted transition">
                 <td className="px-5 py-3.5 text-sm font-medium">
                   {r.amenity?.name || "—"}
                 </td>
@@ -81,7 +81,7 @@ export function ReservationTable({
                     <button
                       onClick={() => onCancel(r.id)}
                       disabled={isCancelling}
-                      className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/10 transition disabled:opacity-50"
+                      className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 transition disabled:opacity-50"
                     >
                       <X className="h-3 w-3" />
                       İptal

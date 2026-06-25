@@ -62,7 +62,7 @@ export function SessionManagerCard() {
   if (isLoading) return <LoadingSpinner size="sm" />;
 
   return (
-    <GlassCard className="gradient-border p-5 space-y-4 col-span-full">
+    <GlassCard className="p-5 space-y-4 col-span-full">
       <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
         <Laptop className="h-4.5 w-4.5 text-primary" /> Aktif Oturumlar ve
         Cihazlar
@@ -71,7 +71,7 @@ export function SessionManagerCard() {
         {sessions.map((s) => (
           <div
             key={s.id}
-            className={`p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl flex items-center justify-between gap-4 transition-all hover:bg-white/[0.04] ${
+            className={`p-3 bg-secondary border border-border rounded-xl flex items-center justify-between gap-4 transition-all hover:bg-secondary ${
               s.isCurrent ? "border-primary/20 bg-primary/[0.01]" : ""
             }`}
           >
@@ -80,7 +80,7 @@ export function SessionManagerCard() {
                 className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 ${
                   s.isCurrent
                     ? "bg-primary/10 text-primary"
-                    : "bg-white/[0.04] text-muted-foreground"
+                    : "bg-secondary text-muted-foreground"
                 }`}
               >
                 {isMobile(s.userAgent) ? (
@@ -118,7 +118,7 @@ export function SessionManagerCard() {
               <button
                 onClick={() => revokeMutation.mutate({ sessionId: s.id })}
                 disabled={revokeMutation.isPending}
-                className="px-2.5 py-1.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-400 rounded-lg font-bold transition-all text-[10px] flex items-center gap-1 shrink-0"
+                className="px-2.5 py-1.5 bg-red-50 border border-red-500/20 hover:bg-red-100 text-red-600 rounded-lg font-bold transition-all text-[10px] flex items-center gap-1 shrink-0"
               >
                 <Power className="h-3 w-3" /> Oturumu Kapat
               </button>

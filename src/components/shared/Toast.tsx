@@ -19,9 +19,9 @@ const icons: Record<ToastType, React.ElementType> = {
 };
 
 const styles: Record<ToastType, string> = {
-  success: "border-emerald-500/30 text-emerald-400",
-  error: "border-red-500/30 text-red-400",
-  info: "border-blue-500/30 text-blue-400",
+  success: "border-emerald-200 text-emerald-600",
+  error: "border-red-200 text-red-600",
+  info: "border-blue-200 text-blue-600",
 };
 
 // Simple event-based toast system
@@ -59,7 +59,7 @@ export function ToastContainer() {
           <div
             key={toast.id}
             className={cn(
-              "glass-surface animate-slide-in-right flex items-center gap-3 rounded-xl border px-4 py-3 shadow-glass",
+              "bg-white animate-slide-in-right flex items-center gap-3 rounded-xl border px-4 py-3 shadow-lg",
               styles[toast.type],
             )}
           >

@@ -20,7 +20,7 @@ export function SiteSwitcher({
   onSiteSwitch,
 }: SiteSwitcherProps) {
   return (
-    <GlassCard className="gradient-border space-y-4">
+    <GlassCard className="space-y-4">
       <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
         <Building className="h-4 w-4 text-primary" />
         Mülk ve Site Değiştirici
@@ -46,8 +46,8 @@ export function SiteSwitcher({
               }
               className={`p-4 rounded-xl border flex items-center justify-between cursor-pointer transition-all duration-200 ${
                 isSelected
-                  ? "bg-primary/10 border-primary text-primary shadow-glow"
-                  : "bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] text-muted-foreground hover:text-foreground"
+                  ? "bg-primary/10 border-primary text-primary"
+                  : "bg-secondary border-border hover:bg-secondary text-muted-foreground hover:text-foreground"
               }`}
             >
               <div className="space-y-1">
@@ -69,7 +69,7 @@ export function SiteSwitcher({
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="text-[10px] bg-white/[0.04] px-2.5 py-1 rounded-md border border-white/[0.06] font-medium text-foreground">
+                <span className="text-[10px] bg-secondary px-2.5 py-1 rounded-md border border-border font-medium text-foreground">
                   {ms.role?.name === "SITE_ADMIN"
                     ? "Yönetici"
                     : ms.role?.name === "STAFF"

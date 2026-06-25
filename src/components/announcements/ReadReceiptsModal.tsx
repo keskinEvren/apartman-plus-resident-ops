@@ -31,7 +31,7 @@ export function ReadReceiptsModal({
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="flex items-center gap-2 p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl text-xs text-muted-foreground">
+          <div className="flex items-center gap-2 p-3 bg-muted border border-border rounded-xl text-xs text-muted-foreground">
             <Clock className="h-4 w-4 text-primary" />
             <span>
               Aşağıdaki sakinler bu duyuruyu kendi mobil panellerinden
@@ -43,7 +43,7 @@ export function ReadReceiptsModal({
             {receipts.map((rec) => (
               <div
                 key={rec.id}
-                className="p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl flex justify-between items-center text-xs"
+                className="p-3 bg-muted border border-border rounded-xl flex justify-between items-center text-xs"
               >
                 <div className="space-y-0.5">
                   <p className="font-semibold text-foreground">
@@ -53,7 +53,7 @@ export function ReadReceiptsModal({
                     {rec.user?.email}
                   </p>
                 </div>
-                <span className="text-[10px] text-muted-foreground bg-white/[0.04] px-2.5 py-1 rounded border border-white/[0.06]">
+                <span className="text-[10px] text-muted-foreground bg-secondary px-2.5 py-1 rounded border border-border">
                   {new Date(rec.readAt).toLocaleString("tr-TR")}
                 </span>
               </div>

@@ -51,15 +51,15 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
         {members.map((member) => (
           <GlassCard
             key={member.membershipId}
-            className={`gradient-border p-4 transition-all duration-200 ${
+            className={`p-4 transition-all duration-200 ${
               member.isActive
-                ? "border-white/[0.06]"
+                ? "border-border"
                 : "border-red-500/20 bg-red-950/5 opacity-75"
             }`}
           >
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-white/[0.04] border border-white/[0.06] text-primary flex items-center justify-center shrink-0">
+                <div className="h-10 w-10 rounded-xl bg-secondary border border-border text-primary flex items-center justify-center shrink-0">
                   <User className="h-5 w-5" />
                 </div>
                 <div>
@@ -81,7 +81,7 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
                       handleRoleChange(member.membershipId, e.target.value)
                     }
                     disabled={updateMutation.isPending}
-                    className="glass-input rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:outline-none"
+                    className="input-field rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:outline-none"
                   >
                     {roles.map((r) => (
                       <option
@@ -97,7 +97,7 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
 
                 <button
                   onClick={() => setSelectedResidentId(member.user?.id || null)}
-                  className="px-3 py-1.5 rounded-lg text-[10px] font-bold border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] text-muted-foreground hover:text-foreground transition-all flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-lg text-[10px] font-bold border border-border bg-secondary hover:bg-secondary text-muted-foreground hover:text-foreground transition-all flex items-center gap-1"
                 >
                   <Eye className="h-3 w-3" />
                   Profili İncele
@@ -110,8 +110,8 @@ export function MemberManager({ siteId, roles }: MemberManagerProps) {
                   disabled={updateMutation.isPending}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all flex items-center gap-1 ${
                     member.isActive
-                      ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
-                      : "bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20"
+                      ? "bg-emerald-50 border-emerald-500/20 text-emerald-600 hover:bg-emerald-100"
+                      : "bg-red-50 border-red-500/20 text-red-600 hover:bg-red-100"
                   }`}
                 >
                   <Power className="h-3 w-3" />

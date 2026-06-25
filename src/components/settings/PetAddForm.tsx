@@ -41,7 +41,7 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
   };
 
   return (
-    <GlassCard className="gradient-border p-6 space-y-4 text-xs">
+    <GlassCard className="p-6 space-y-4 text-xs">
       <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
         <Sparkles className="h-4 w-4 text-primary" /> Evcil Hayvan Ekle
       </h3>
@@ -55,7 +55,7 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
             placeholder="Pamuk, Karabaş vb."
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="glass-input w-full rounded-xl px-3 py-2 text-sm"
+            className="input-field w-full rounded-xl px-3 py-2 text-sm"
             required
           />
         </div>
@@ -71,10 +71,10 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
               id="pet-species-select"
               value={species}
               onChange={(e) => setSpecies(e.target.value)}
-              className="glass-input w-full rounded-xl px-2 py-2 text-sm"
+              className="input-field w-full rounded-xl px-2 py-2 text-sm"
             >
               {["Kedi", "Köpek", "Kuş", "Diğer"].map((v) => (
-                <option key={v} value={v} className="bg-[#121214]">
+                <option key={v} value={v}>
                   {v}
                 </option>
               ))}
@@ -89,7 +89,7 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
               placeholder="Van Kedisi vb."
               value={breed}
               onChange={(e) => setBreed(e.target.value)}
-              className="glass-input w-full rounded-xl px-3 py-2 text-sm"
+              className="input-field w-full rounded-xl px-3 py-2 text-sm"
             />
           </div>
         </div>
@@ -102,11 +102,11 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
             id="pet-vaccine-select"
             value={vaccineStatus}
             onChange={(e) => setVaccineStatus(e.target.value)}
-            className="glass-input w-full rounded-xl px-2 py-2 text-sm"
+            className="input-field w-full rounded-xl px-2 py-2 text-sm"
           >
             {["Aşıları Tam", "Eksik Aşıları Var", "Aşı Takibi Yapılmıyor"].map(
               (v) => (
-                <option key={v} value={v} className="bg-[#121214]">
+                <option key={v} value={v}>
                   {v}
                 </option>
               ),
@@ -123,7 +123,7 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
             placeholder="Alerjileri, özel alışkanlıkları vb."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="glass-input w-full rounded-xl px-3 py-2 text-sm min-h-[60px] resize-none"
+            className="input-field w-full rounded-xl px-3 py-2 text-sm min-h-[60px] resize-none"
           />
         </div>
 
@@ -131,7 +131,7 @@ export function PetAddForm({ onSuccess }: PetAddFormProps) {
           id="pet-submit-btn"
           type="submit"
           disabled={createPet.isPending}
-          className="w-full py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 shadow-glow"
+          className="w-full py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition flex items-center justify-center gap-1"
         >
           <Plus className="h-4 w-4" /> Hayvan Kaydet
         </button>

@@ -11,11 +11,11 @@ type StatusVariant =
   | "info";
 
 const variantStyles: Record<StatusVariant, string> = {
-  confirmed: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-  cancelled: "bg-red-500/15 text-red-400 border-red-500/20",
-  expected: "bg-amber-500/15 text-amber-400 border-amber-500/20",
-  checked_in: "bg-teal-500/15 text-teal-400 border-teal-500/20",
-  info: "bg-blue-500/15 text-blue-400 border-blue-500/20",
+  confirmed: "bg-emerald-50 text-emerald-600 border-emerald-200",
+  cancelled: "bg-red-50 text-red-600 border-red-200",
+  expected: "bg-amber-50 text-amber-600 border-amber-200",
+  checked_in: "bg-teal-50 text-teal-600 border-teal-200",
+  info: "bg-blue-50 text-blue-600 border-blue-200",
 };
 
 const variantLabels: Record<string, { variant: StatusVariant; label: string }> =

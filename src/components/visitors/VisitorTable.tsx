@@ -44,7 +44,7 @@ export function VisitorTable({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-white/[0.06]">
+            <tr className="border-b border-border">
               <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Ziyaretçi
               </th>
@@ -64,9 +64,9 @@ export function VisitorTable({
               )}
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/[0.04]">
+          <tbody className="divide-y divide-border">
             {passes.map((p) => (
-              <tr key={p.id} className="hover:bg-white/[0.02] transition">
+              <tr key={p.id} className="hover:bg-muted transition">
                 <td className="px-5 py-3.5 text-sm font-medium">
                   {p.visitorName}
                 </td>
@@ -85,7 +85,7 @@ export function VisitorTable({
                       <button
                         onClick={() => onCheckIn(p.id)}
                         disabled={isCheckingIn}
-                        className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-teal-400 hover:bg-teal-500/10 transition disabled:opacity-50"
+                        className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-teal-600 hover:bg-teal-50 transition disabled:opacity-50"
                       >
                         <LogIn className="h-3 w-3" />
                         Giriş Yap

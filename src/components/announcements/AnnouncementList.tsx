@@ -27,16 +27,16 @@ const priorityLabels: Record<string, string> = {
 };
 
 const priorityColors: Record<string, string> = {
-  NORMAL: "bg-blue-500/15 border-blue-500/20 text-blue-400",
-  IMPORTANT: "bg-amber-500/15 border-amber-500/20 text-amber-400 shadow-glow",
+  NORMAL: "bg-blue-50 border-blue-200 text-blue-600",
+  IMPORTANT: "bg-amber-50 border-amber-200 text-amber-600",
   URGENT:
-    "bg-red-500/15 border-red-500/20 text-red-400 shadow-glow animate-pulse",
+    "bg-red-50 border-red-200 text-red-600 animate-pulse",
 };
 
 const priorityGlows: Record<string, string> = {
-  NORMAL: "border-white/[0.06]",
-  IMPORTANT: "border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.05)]",
-  URGENT: "border-red-500/25 shadow-[0_0_20px_rgba(239,68,68,0.08)]",
+  NORMAL: "border-border",
+  IMPORTANT: "border-amber-200 shadow-[0_0_15px_rgba(245,158,11,0.05)]",
+  URGENT: "border-red-200 shadow-[0_0_20px_rgba(239,68,68,0.08)]",
 };
 
 export function AnnouncementList({
@@ -65,13 +65,13 @@ export function AnnouncementList({
         <GlassCard
           key={ann.id}
           onClick={() => onViewDetail(ann.id)}
-          className={`gradient-border hover:scale-[1.005] hover:bg-white/[0.03] transition-all duration-200 cursor-pointer ${
+          className={`hover:bg-secondary transition-all duration-200 cursor-pointer ${
             priorityGlows[ann.priority] || priorityGlows.NORMAL
           }`}
         >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="flex items-start gap-4">
-              <div className="h-11 w-11 rounded-xl bg-white/[0.04] border border-white/[0.06] text-primary flex items-center justify-center shrink-0 mt-0.5">
+              <div className="h-11 w-11 rounded-xl bg-muted border border-border text-primary flex items-center justify-center shrink-0 mt-0.5">
                 <Megaphone className="h-5 w-5 text-primary" />
               </div>
               <div className="space-y-1.5 min-w-0">
@@ -111,7 +111,7 @@ export function AnnouncementList({
                   e.stopPropagation();
                   onViewReceipts(ann.id);
                 }}
-                className="w-full md:w-auto px-3.5 py-1.5 bg-white/[0.04] hover:bg-white/[0.08] text-foreground rounded-lg text-xs font-semibold border border-white/[0.06] transition-all flex items-center justify-center gap-1.5"
+                className="w-full md:w-auto px-3.5 py-1.5 bg-muted hover:bg-accent text-foreground rounded-lg text-xs font-semibold border border-border transition-all flex items-center justify-center gap-1.5"
               >
                 <Eye className="h-3.5 w-3.5 text-muted-foreground" />
                 Okunma Raporu

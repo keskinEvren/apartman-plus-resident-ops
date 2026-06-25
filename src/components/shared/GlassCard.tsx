@@ -3,11 +3,10 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-interface GlassCardProps {
+interface CardProps {
   children: React.ReactNode;
   className?: string;
   hover?: boolean;
-  glow?: boolean;
   onClick?: () => void;
 }
 
@@ -15,16 +14,14 @@ export function GlassCard({
   children,
   className,
   hover = false,
-  glow = false,
   onClick,
-}: GlassCardProps) {
+}: CardProps) {
   return (
     <div
       onClick={onClick}
       className={cn(
-        "glass-surface rounded-2xl p-5",
-        hover && "glass-surface-hover cursor-pointer",
-        glow && "shadow-glow",
+        "bg-white rounded-lg border border-[hsl(280,10%,90%)] p-5 shadow-card",
+        hover && "hover:shadow-subtle hover:border-[hsl(280,10%,85%)] cursor-pointer transition-shadow",
         onClick && "cursor-pointer",
         className,
       )}

@@ -60,14 +60,14 @@ export function QuickActionFab() {
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-xs lg:hidden animate-fade-in"
+          className="fixed inset-0 z-30 bg-black/40 lg:hidden animate-fade-in"
         />
       )}
 
       {/* Dynamic Mobile Quick Action Sheet (Bottom Sheet) */}
       <div
         className={cn(
-          "fixed bottom-0 inset-x-0 z-40 bg-card border-t border-border rounded-t-2xl p-5 space-y-4 shadow-2xl transition-transform duration-300 ease-in-out lg:hidden pb-safe",
+          "fixed bottom-0 inset-x-0 z-40 bg-white border-t border-border rounded-t-2xl p-5 space-y-4 shadow-2xl transition-transform duration-300 ease-in-out lg:hidden pb-safe",
           isOpen ? "translate-y-0" : "translate-y-full",
         )}
       >

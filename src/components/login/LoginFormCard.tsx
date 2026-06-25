@@ -66,7 +66,7 @@ export function LoginFormCard({
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-xl leading-relaxed font-semibold">
+          <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl leading-relaxed font-semibold">
             {error}
           </div>
         )}
@@ -83,7 +83,7 @@ export function LoginFormCard({
               placeholder="ornek@apartman.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="glass-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
+              className="input-field w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none"
               required
             />
           </div>
@@ -102,7 +102,7 @@ export function LoginFormCard({
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="glass-input w-full rounded-xl pl-10 pr-10 py-2.5 text-sm focus:outline-none"
+              className="input-field w-full rounded-xl pl-10 pr-10 py-2.5 text-sm focus:outline-none"
               required
             />
             <button
@@ -122,7 +122,7 @@ export function LoginFormCard({
         <button
           type="submit"
           disabled={loginMutation.isPending}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl text-sm font-semibold transition-all shadow-glow disabled:opacity-50 flex items-center justify-center gap-2 mt-2"
+          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-2"
         >
           {loginMutation.isPending ? <LoadingSpinner size="sm" /> : "Giriş Yap"}
         </button>

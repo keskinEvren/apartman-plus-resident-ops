@@ -61,7 +61,7 @@ export function RoleManager({ siteId }: RoleManagerProps) {
 
   return (
     <div className="space-y-6">
-      <GlassCard className="gradient-border p-6 space-y-4">
+      <GlassCard className="p-6 space-y-4">
         <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
           <Shield className="h-4 w-4 text-primary" />
           Yeni Dinamik Rol Tanımla
@@ -76,7 +76,7 @@ export function RoleManager({ siteId }: RoleManagerProps) {
               placeholder="Örn: CONCIERGE, GECE_GUVENLIGI"
               value={roleName}
               onChange={(e) => setRoleName(e.target.value)}
-              className="glass-input w-full rounded-xl px-4 py-2.5 text-sm"
+              className="input-field w-full rounded-xl px-4 py-2.5 text-sm"
               required
             />
           </div>
@@ -93,8 +93,8 @@ export function RoleManager({ siteId }: RoleManagerProps) {
                     onClick={() => handleTogglePermission(p.key)}
                     className={`p-2.5 rounded-lg border text-xs flex items-center justify-between cursor-pointer transition-all ${
                       isChecked
-                        ? "bg-primary/10 border-primary text-primary shadow-glow"
-                        : "bg-white/[0.01] border-white/[0.04] text-muted-foreground hover:text-foreground"
+                        ? "bg-primary/10 border-primary text-primary"
+                        : "bg-secondary border-border text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     <span>{p.label}</span>
@@ -107,7 +107,7 @@ export function RoleManager({ siteId }: RoleManagerProps) {
           <button
             type="submit"
             disabled={createMutation.isPending}
-            className="w-full py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition-all shadow-glow flex items-center justify-center gap-1 disabled:opacity-50"
+            className="w-full py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 disabled:opacity-50"
           >
             <Plus className="h-4 w-4" />
             Rolü Kaydet
@@ -126,7 +126,7 @@ export function RoleManager({ siteId }: RoleManagerProps) {
             {roles.map((r) => (
               <GlassCard
                 key={r.id}
-                className="p-4 border border-white/[0.06] space-y-2"
+                className="p-4 border border-border space-y-2"
               >
                 <p className="text-xs font-bold text-foreground flex items-center gap-1.5">
                   <Shield className="h-3.5 w-3.5 text-primary" />
@@ -136,7 +136,7 @@ export function RoleManager({ siteId }: RoleManagerProps) {
                   {r.permissions.map((p: string) => (
                     <span
                       key={p}
-                      className="text-[9px] bg-white/[0.04] border border-white/[0.06] px-1.5 py-0.5 rounded text-muted-foreground"
+                      className="text-[9px] bg-secondary border border-border px-1.5 py-0.5 rounded text-muted-foreground"
                     >
                       {p}
                     </span>

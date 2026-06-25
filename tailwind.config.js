@@ -64,16 +64,9 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        glow: "var(--glow-primary)",
-        "glow-accent": "var(--glow-accent)",
-        "glow-success": "var(--glow-success)",
-        "glow-destructive": "var(--glow-destructive)",
-        glass: "0 8px 32px hsla(0, 0%, 0%, 0.3)",
-      },
-      backdropBlur: {
-        xs: "2px",
-        "2xl": "40px",
-        "3xl": "64px",
+        subtle:
+          "rgba(14, 59, 101, 0.06) 0px 32px 24px -12px, rgba(14, 59, 101, 0.01) 0px 11px 4px 0px, rgba(14, 59, 101, 0.02) 0px 6px 4px 0px, rgba(14, 59, 101, 0.03) 0px 3px 3px 0px, rgba(14, 59, 101, 0.04) 0px 1px 1px 0px",
+        card: "rgba(18, 55, 105, 0.08) 0px 2px 4px 0px, rgba(18, 55, 105, 0.04) 0px 1px 1px 0px",
       },
     },
   },

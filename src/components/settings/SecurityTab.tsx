@@ -8,7 +8,7 @@ import { Shield } from "lucide-react";
 export function SecurityTab() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-white/[0.04] pb-2">
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-border pb-2">
         <Shield className="h-4.5 w-4.5 text-primary" />
         Hesap Güvenliği ve Erişim Kontrolü
       </h2>

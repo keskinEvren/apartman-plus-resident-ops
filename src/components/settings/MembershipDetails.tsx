@@ -15,14 +15,14 @@ export function MembershipDetails({
   currentMembership,
 }: MembershipDetailsProps) {
   return (
-    <GlassCard className="gradient-border space-y-4">
+    <GlassCard className="space-y-4">
       <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
         <Settings className="h-4 w-4 text-primary" />
         Üyelik Detayları
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-2">
-        <div className="p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl space-y-1">
+        <div className="p-3 bg-secondary border border-border rounded-xl space-y-1">
           <span className="text-[10px] text-muted-foreground uppercase font-semibold">
             Aktif Site
           </span>
@@ -30,7 +30,7 @@ export function MembershipDetails({
             {currentMembership.site?.name}
           </p>
         </div>
-        <div className="p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl space-y-1">
+        <div className="p-3 bg-secondary border border-border rounded-xl space-y-1">
           <span className="text-[10px] text-muted-foreground uppercase font-semibold">
             Sistem Rolü
           </span>
@@ -39,7 +39,7 @@ export function MembershipDetails({
             {currentMembership.role?.name}
           </p>
         </div>
-        <div className="p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl space-y-1">
+        <div className="p-3 bg-secondary border border-border rounded-xl space-y-1">
           <span className="text-[10px] text-muted-foreground uppercase font-semibold">
             Blok / Kısım Mape
           </span>
@@ -49,7 +49,7 @@ export function MembershipDetails({
               : "Tüm Bloklar"}
           </p>
         </div>
-        <div className="p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl space-y-1">
+        <div className="p-3 bg-secondary border border-border rounded-xl space-y-1">
           <span className="text-[10px] text-muted-foreground uppercase font-semibold">
             Daire Numarası
           </span>

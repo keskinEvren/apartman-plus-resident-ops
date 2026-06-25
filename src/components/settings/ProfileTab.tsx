@@ -66,8 +66,8 @@ export function ProfileTab() {
         className="grid grid-cols-1 md:grid-cols-12 gap-6"
       >
         <div className="md:col-span-4 space-y-6">
-          <GlassCard className="gradient-border p-6 flex flex-col items-center text-center space-y-4">
-            <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-primary to-purple-600 font-heading text-2xl font-bold text-white shadow-glow">
+          <GlassCard className="p-6 flex flex-col items-center text-center space-y-4">
+            <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-primary to-purple-600 font-heading text-2xl font-bold text-white">
               {initials}
             </div>
             <div>
@@ -83,7 +83,7 @@ export function ProfileTab() {
         </div>
 
         <div className="md:col-span-8 space-y-6">
-          <GlassCard className="gradient-border p-6 space-y-4">
+          <GlassCard className="p-6 space-y-4">
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
               <User className="h-4 w-4 text-primary" /> Kişisel Bilgiler
             </h3>
@@ -98,7 +98,7 @@ export function ProfileTab() {
                   onChange={(e) =>
                     setForm((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="glass-input w-full rounded-xl px-3 py-2 text-sm"
+                  className="input-field w-full rounded-xl px-3 py-2 text-sm"
                   required
                 />
               </div>
@@ -113,13 +113,13 @@ export function ProfileTab() {
                   onChange={(e) =>
                     setForm((prev) => ({ ...prev, phone: e.target.value }))
                   }
-                  className="glass-input w-full rounded-xl px-3 py-2 text-sm"
+                  className="input-field w-full rounded-xl px-3 py-2 text-sm"
                 />
               </div>
             </div>
           </GlassCard>
 
-          <GlassCard className="gradient-border p-6 space-y-4">
+          <GlassCard className="p-6 space-y-4">
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
               <ShieldAlert className="h-4 w-4 text-amber-500" /> Acil Durum
               Kontağı
@@ -136,7 +136,7 @@ export function ProfileTab() {
                   onChange={(e) =>
                     setForm((prev) => ({ ...prev, eName: e.target.value }))
                   }
-                  className="glass-input w-full rounded-xl px-3 py-2 text-sm"
+                  className="input-field w-full rounded-xl px-3 py-2 text-sm"
                 />
               </div>
               <div className="space-y-1">
@@ -150,7 +150,7 @@ export function ProfileTab() {
                   onChange={(e) =>
                     setForm((prev) => ({ ...prev, ePhone: e.target.value }))
                   }
-                  className="glass-input w-full rounded-xl px-3 py-2 text-sm"
+                  className="input-field w-full rounded-xl px-3 py-2 text-sm"
                 />
               </div>
             </div>
@@ -161,7 +161,7 @@ export function ProfileTab() {
               id="profile-submit-btn"
               type="submit"
               disabled={updateProfile.isPending}
-              className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-glow"
+              className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-bold transition flex items-center gap-1.5"
             >
               {updateProfile.isPending ? (
                 <LoadingSpinner size="sm" />

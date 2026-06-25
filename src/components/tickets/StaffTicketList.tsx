@@ -50,12 +50,12 @@ export function StaffTicketList({
         return (
           <GlassCard
             key={ticket.id}
-            className="gradient-border hover:scale-[1.005] hover:bg-white/[0.03] transition-all duration-200 cursor-pointer"
+            className="hover:bg-secondary transition-all duration-200 cursor-pointer"
             onClick={() => onSelect(ticket)}
           >
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div className="flex items-start gap-4">
-                <div className="h-12 w-12 rounded-xl bg-white/[0.04] border border-white/[0.06] text-primary flex items-center justify-center shrink-0 mt-0.5">
+                <div className="h-12 w-12 rounded-xl bg-muted border border-border text-primary flex items-center justify-center shrink-0 mt-0.5">
                   <Icon className="h-6 w-6 text-primary" />
                 </div>
                 <div className="space-y-1.5 min-w-0">
@@ -63,7 +63,7 @@ export function StaffTicketList({
                     <span className="font-bold text-base text-foreground truncate max-w-md">
                       {ticket.title}
                     </span>
-                    <span className="text-xs text-muted-foreground/80 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-lg font-medium">
+                    <span className="text-xs text-muted-foreground/80 bg-secondary border border-border px-2 py-0.5 rounded-lg font-medium">
                       {categoryLabels[ticket.category]}
                     </span>
                     <span
@@ -97,14 +97,14 @@ export function StaffTicketList({
                 {!ticket.assignedStaffUserId ? (
                   <button
                     onClick={() => onAssignClick(ticket.id)}
-                    className="w-full md:w-auto px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-xs font-semibold transition-all shadow-glow flex items-center justify-center gap-1"
+                    className="w-full md:w-auto px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1"
                   >
                     <ClipboardList className="h-4 w-4" />
                     Üzerime Ata
                   </button>
                 ) : (
-                  <span className="text-xs text-muted-foreground/80 bg-white/[0.02] border border-white/[0.06] px-3.5 py-2 rounded-lg flex items-center gap-1">
-                    <CheckCircle className="h-4 w-4 text-emerald-400" />
+                  <span className="text-xs text-muted-foreground/80 bg-muted border border-border px-3.5 py-2 rounded-lg flex items-center gap-1">
+                    <CheckCircle className="h-4 w-4 text-emerald-600" />
                     Size Atandı
                   </span>
                 )}

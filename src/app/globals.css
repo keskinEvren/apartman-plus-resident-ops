@@ -4,39 +4,27 @@
 
 @layer base {
   :root {
-    /* ── B2B SaaS Stripe/Linear Color Palette ── */
-    --background: 222 33% 6%;
-    --foreground: 210 40% 98%;
-    --card: 223 36% 10%;
-    --card-foreground: 210 40% 98%;
-    --popover: 223 36% 9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 246 90% 66%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 225 36% 13%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 225 36% 13%;
-    --muted-foreground: 215 16% 65%;
-    --accent: 246 90% 66%;
-    --accent-foreground: 210 40% 98%;
+    /* ── Wiza-Inspired Light Mode Palette ── */
+    --background: 0 0% 100%;
+    --foreground: 258 60% 17%;
+    --card: 0 0% 100%;
+    --card-foreground: 258 60% 17%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 258 60% 17%;
+    --primary: 268 66% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 252 33% 97%;
+    --secondary-foreground: 258 60% 17%;
+    --muted: 252 33% 97%;
+    --muted-foreground: 259 8% 40%;
+    --accent: 268 66% 35%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 225 31% 20%;
-    --input: 225 31% 20%;
-    --ring: 246 90% 66%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 280 10% 90%;
+    --input: 280 10% 90%;
+    --ring: 268 66% 35%;
     --radius: 0.5rem;
-
-    /* ── Clean SaaS Tokens (No neon, no excessive glows) ── */
-    --glass-bg: hsla(223, 36%, 10%, 0.7);
-    --glass-border: hsla(225, 31%, 20%, 0.4);
-    --glass-blur: 12px;
-    --glass-hover: hsla(255, 100%, 100%, 0.02);
-
-    /* ── Subtle Elevation Shadows ── */
-    --glow-primary: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --glow-accent: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --glow-success: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --glow-destructive: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   * {
@@ -54,80 +42,34 @@
   }
 }
 
-/* ── Glass Surface Utilities ── */
+/* ── Clean Card Utilities ── */
 @layer components {
-  .glass-surface {
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
+  .card-surface {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
   }
 
-  .glass-surface-hover {
-    transition:
-      background 200ms ease,
-      box-shadow 200ms ease;
-  }
-  .glass-surface-hover:hover {
-    background: var(--glass-hover);
-  }
-
-  .glass-input {
-    background: hsla(222, 47%, 11%, 0.7);
-    border: 1px solid hsla(215, 28%, 30%, 0.4);
+  .input-field {
+    background: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
     color: hsl(var(--foreground));
     transition:
       border-color 200ms ease,
       box-shadow 200ms ease;
   }
-  .glass-input:focus {
+  .input-field:focus {
     outline: none;
     border-color: hsl(var(--primary));
-    box-shadow: 0 0 0 3px hsla(262, 83%, 58%, 0.15);
+    box-shadow: 0 0 0 3px hsla(268, 66%, 35%, 0.1);
   }
-  .glass-input::placeholder {
+  .input-field::placeholder {
     color: hsl(var(--muted-foreground));
-  }
-
-  .gradient-border {
-    position: relative;
-  }
-  .gradient-border::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-      135deg,
-      hsla(246, 90%, 66%, 0.15),
-      hsla(225, 31%, 20%, 0.3),
-      transparent
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
   }
 }
 
 /* ── Animations ── */
 @layer utilities {
-  @keyframes glow-pulse {
-    0%,
-    100% {
-      box-shadow: var(--glow-primary);
-    }
-    50% {
-      box-shadow: 0 0 30px hsla(262, 83%, 58%, 0.5);
-    }
-  }
-  .animate-glow-pulse {
-    animation: glow-pulse 2s ease-in-out infinite;
-  }
-
   @keyframes slide-in-right {
     from {
       transform: translateX(100%);
@@ -168,24 +110,11 @@
     background: linear-gradient(
       90deg,
       transparent 30%,
-      hsla(262, 83%, 58%, 0.08) 50%,
+      hsla(268, 66%, 35%, 0.06) 50%,
       transparent 70%
     );
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
-  }
-
-  @keyframes badge-pulse {
-    0%,
-    100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.15);
-    }
-  }
-  .animate-badge-pulse {
-    animation: badge-pulse 1.5s ease-in-out infinite;
   }
 }
 
@@ -198,9 +127,9 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsla(215, 28%, 30%, 0.5);
+  background: hsl(var(--border));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsla(262, 83%, 58%, 0.4);
+  background: hsl(var(--muted-foreground));
 }

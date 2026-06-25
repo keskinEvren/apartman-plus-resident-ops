@@ -23,7 +23,7 @@ export function ResidentPreferenceMatrix({
     <div className="overflow-x-auto text-xs text-foreground">
       <table className="w-full min-w-[500px] text-left border-collapse">
         <thead>
-          <tr className="border-b border-white/[0.06] text-muted-foreground text-[9px] uppercase font-bold tracking-wider">
+          <tr className="border-b border-border text-muted-foreground text-[9px] uppercase font-bold tracking-wider">
             <th className="py-2 pr-4">Bildirim Kategorisi</th>
             {channels.map((ch) => (
               <th key={ch} className="py-2 px-4 text-center">
@@ -38,9 +38,9 @@ export function ResidentPreferenceMatrix({
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-white/[0.04]">
+        <tbody className="divide-y divide-border">
           {rows.map((row) => (
-            <tr key={row.key} className="hover:bg-white/[0.01] transition-all">
+            <tr key={row.key} className="hover:bg-muted transition-all">
               <td className="py-3 pr-4 font-bold text-[11px] text-foreground">
                 {row.label}
               </td>
@@ -52,7 +52,7 @@ export function ResidentPreferenceMatrix({
                   <td key={ch} className="py-3 px-4 text-center">
                     <div className="inline-flex items-center justify-center p-1 rounded-full">
                       {active ? (
-                        <Check className="h-4 w-4 text-emerald-400" />
+                        <Check className="h-4 w-4 text-emerald-600" />
                       ) : (
                         <Minus className="h-4 w-4 text-muted-foreground/30" />
                       )}

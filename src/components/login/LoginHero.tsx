@@ -12,7 +12,7 @@ export function LoginHero({ onSelect }: LoginHeroProps) {
         <img
           src="/komsu.jpeg"
           alt="komşu"
-          className="h-10 w-10 rounded-xl object-cover shadow-glow"
+          className="h-10 w-10 rounded-xl object-cover"
         />
         <span className="font-heading text-2xl font-bold text-foreground">
           komşu<span className="text-primary font-medium">.site</span>
@@ -27,7 +27,7 @@ export function LoginHero({ onSelect }: LoginHeroProps) {
         </h1>
         <p className="text-muted-foreground text-base max-w-lg leading-relaxed">
           Ziyaretçiler, paket teslimatları, ortak alan rezervasyonları ve destek
-          talepleri. Hepsi tek bir premium dark-glassmorphism panelde, entegre
+          talepleri. Hepsi tek bir modern panelde, entegre
           ve yüksek güvenlikli.
         </p>
       </div>

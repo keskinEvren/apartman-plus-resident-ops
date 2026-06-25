@@ -54,7 +54,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-black/60 transition-opacity"
         onClick={onClose}
       />
 
@@ -62,7 +62,7 @@ export function Modal({
       <div
         ref={modalRef}
         className={cn(
-          "relative bg-background w-full shadow-2xl overflow-hidden flex flex-col",
+          "relative bg-white w-full shadow-2xl overflow-hidden flex flex-col",
           "rounded-t-[24px] sm:rounded-2xl",
           "max-h-[85vh] sm:max-h-[90vh]",
           "mx-0 sm:mx-4 animate-in fade-in slide-in-from-bottom-16 sm:slide-in-from-bottom-4 duration-300 ease-out",
@@ -72,16 +72,16 @@ export function Modal({
       >
         {/* Drag handle for mobile bottom sheet */}
         <div className="flex justify-center py-2 sm:hidden shrink-0">
-          <div className="h-1.5 w-12 rounded-full bg-white/[0.15]" />
+          <div className="h-1.5 w-12 rounded-full bg-gray-300" />
         </div>
 
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between px-4 pb-4 pt-2 sm:pt-4 border-b border-white/[0.04] shrink-0">
+          <div className="flex items-center justify-between px-4 pb-4 pt-2 sm:pt-4 border-b border-border shrink-0">
             <h2 className="text-base font-semibold">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-white/[0.04] transition"
+              className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition"
             >
               <X className="h-5 w-5" />
             </button>

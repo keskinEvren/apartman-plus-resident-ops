@@ -36,14 +36,14 @@ export function ResidentPackageList({ packages }: ResidentPackageListProps) {
       {packages.map((pack) => (
         <GlassCard
           key={pack.id}
-          className="gradient-border flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
         >
           <div className="flex items-center gap-4">
             <div
               className={`h-12 w-12 rounded-xl flex items-center justify-center shrink-0 ${
                 pack.status === "RECEIVED"
-                  ? "bg-amber-500/10 text-amber-400"
-                  : "bg-emerald-500/10 text-emerald-400"
+                  ? "bg-amber-50 text-amber-600"
+                  : "bg-emerald-50 text-emerald-600"
               }`}
             >
               <Truck className="h-6 w-6" />
@@ -56,8 +56,8 @@ export function ResidentPackageList({ packages }: ResidentPackageListProps) {
                 <span
                   className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
                     pack.status === "RECEIVED"
-                      ? "bg-amber-500/15 border-amber-500/20 text-amber-400"
-                      : "bg-emerald-500/15 border-emerald-500/20 text-emerald-400"
+                      ? "bg-amber-50 border-amber-200 text-amber-600"
+                      : "bg-emerald-50 border-emerald-200 text-emerald-600"
                   }`}
                 >
                   {pack.status === "RECEIVED"
@@ -71,7 +71,7 @@ export function ResidentPackageList({ packages }: ResidentPackageListProps) {
                   Geliş: {new Date(pack.receivedAt).toLocaleString("tr-TR")}
                 </span>
                 {pack.deliveredAt && (
-                  <span className="flex items-center gap-1 text-emerald-400">
+                  <span className="flex items-center gap-1 text-emerald-600">
                     <CheckCircle2 className="h-3.5 w-3.5" />
                     Teslim: {new Date(pack.deliveredAt).toLocaleString("tr-TR")}
                   </span>

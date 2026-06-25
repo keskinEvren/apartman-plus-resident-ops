@@ -30,7 +30,7 @@ export function PetsTab() {
 
         {/* Right Side: Pets List */}
         <div className="lg:col-span-7">
-          <GlassCard className="gradient-border p-6 space-y-4 h-full flex flex-col">
+          <GlassCard className="p-6 space-y-4 h-full flex flex-col">
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
               <Heart className="h-4 w-4 text-rose-500 fill-rose-500" /> Evcil
               Hayvanlarım ({pets.length})
@@ -42,7 +42,7 @@ export function PetsTab() {
                 {pets.map((pet) => (
                   <div
                     key={pet.id}
-                    className="p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl flex flex-col justify-between hover:bg-white/[0.04] transition-all group"
+                    className="p-4 bg-secondary border border-border rounded-xl flex flex-col justify-between hover:bg-secondary transition-all group"
                   >
                     <div>
                       <div className="flex items-center justify-between">
@@ -51,7 +51,7 @@ export function PetsTab() {
                         </p>
                         <button
                           onClick={() => deletePet.mutate({ petId: pet.id })}
-                          className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-red-400 p-1 transition-all rounded"
+                          className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-red-600 p-1 transition-all rounded"
                           title="Sil"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -66,9 +66,9 @@ export function PetsTab() {
                         </p>
                       )}
                     </div>
-                    <div className="mt-3 pt-3 border-t border-white/[0.04] flex items-center gap-1 text-[9px] text-muted-foreground">
+                    <div className="mt-3 pt-3 border-t border-border flex items-center gap-1 text-[9px] text-muted-foreground">
                       <Shield
-                        className={`h-3 w-3 ${pet.vaccineStatus === "Aşıları Tam" ? "text-emerald-400" : "text-amber-400"}`}
+                        className={`h-3 w-3 ${pet.vaccineStatus === "Aşıları Tam" ? "text-emerald-600" : "text-amber-600"}`}
                       />
                       <span>{pet.vaccineStatus}</span>
                     </div>

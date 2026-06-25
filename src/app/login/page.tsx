@@ -49,7 +49,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 px-4 py-12 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-lavender-50 via-white to-purple-50 px-4 py-12 relative overflow-hidden">
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
 
@@ -57,7 +57,7 @@ export default function LoginPage() {
         <LoginHero onSelect={handleSimulatedSelect} />
 
         <div className="lg:col-span-5 flex flex-col justify-center">
-          <GlassCard className="gradient-border p-8 space-y-6">
+          <GlassCard className="p-8 space-y-6">
             {showJoinCode ? (
               <InvitationJoinCard onBack={() => setShowJoinCode(false)} />
             ) : (
@@ -77,7 +77,7 @@ export default function LoginPage() {
                   >
                     Aktivasyon Koduyla Siteye Katıl
                   </button>
-                  <div className="border-t border-white/[0.06] pt-3 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                  <div className="border-t border-border pt-3 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                     <Building2 className="h-3.5 w-3.5" />
                     <span>Multi-Tenant apartman altyapısı aktiftir</span>
                   </div>
