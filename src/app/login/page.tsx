@@ -24,10 +24,12 @@ export default function LoginPage() {
     localStorage.removeItem("auth-token");
     localStorage.removeItem("active-site-id");
     localStorage.removeItem("active-membership-id");
+    document.cookie = "auth-token=; path=/; max-age=0";
   }, []);
 
   const handleLoginSuccess = (data: LoginSuccessData) => {
     localStorage.setItem("auth-token", data.token);
+    document.cookie = `auth-token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
     if (data.memberships && data.memberships.length > 0) {
       localStorage.setItem("active-site-id", data.memberships[0].siteId);
       localStorage.setItem(

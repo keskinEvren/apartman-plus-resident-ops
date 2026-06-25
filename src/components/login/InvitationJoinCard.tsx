@@ -21,6 +21,7 @@ export function InvitationJoinCard({ onBack }: InvitationJoinCardProps) {
   const registerMutation = trpc.onboarding.registerWithInvitation.useMutation({
     onSuccess: (data) => {
       localStorage.setItem("auth-token", data.token);
+      document.cookie = `auth-token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
       if (data.memberships && data.memberships.length > 0) {
         localStorage.setItem("active-site-id", data.memberships[0].siteId);
         localStorage.setItem(
@@ -38,6 +39,7 @@ export function InvitationJoinCard({ onBack }: InvitationJoinCardProps) {
   const loginMutation = trpc.onboarding.loginWithInvitation.useMutation({
     onSuccess: (data) => {
       localStorage.setItem("auth-token", data.token);
+      document.cookie = `auth-token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
       if (data.memberships && data.memberships.length > 0) {
         localStorage.setItem("active-site-id", data.memberships[0].siteId);
         localStorage.setItem(

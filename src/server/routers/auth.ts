@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, protectedProcedure } from "../trpc";
 import { users, memberships, roles, userSessions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { comparePassword, signToken } from "@/lib/auth";
@@ -88,4 +88,15 @@ export const authRouter = router({
         memberships: userMemberships,
       };
     }),
+
+  logout: protectedProcedure.mutation(async ({ ctx }) => {
+    // Revoke the current session
+    if (ctx.user.sessionId) {
+      await ctx.db
+        .update(userSessions)
+        .set({ isActive: false, revokedAt: new Date() })
+        .where(eq(userSessions.id, ctx.user.sessionId));
+    }
+    return { success: true };
+  }),
 });

@@ -1,10 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Bell, ChevronDown, Check, Building, Menu, X } from "lucide-react";
+import {
+  Bell,
+  ChevronDown,
+  Check,
+  Building,
+  Menu,
+  X,
+  LogOut,
+  Settings,
+  User,
+} from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { showToast } from "@/components/shared/Toast";
+
 interface HeaderProps {
   className?: string;
   unreadCount?: number;
@@ -12,6 +24,7 @@ interface HeaderProps {
   onMenuClick?: () => void;
   isMenuOpen?: boolean;
 }
+
 export function Header({
   className,
   unreadCount = 0,
@@ -19,22 +32,46 @@ export function Header({
   onMenuClick,
   isMenuOpen = false,
 }: HeaderProps) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [activeSiteId, setActiveSiteId] = useState<string | null>(null);
   const [activeMembershipId, setActiveMembershipId] = useState<string | null>(
     null,
   );
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     setActiveSiteId(localStorage.getItem("active-site-id"));
     setActiveMembershipId(localStorage.getItem("active-membership-id"));
   }, []);
+
   const { data: mySites = [] } = trpc.site.getMySites.useQuery();
+  const { data: me } = trpc.user.me.useQuery();
+  const logoutMutation = trpc.auth.logout.useMutation({
+    onSuccess: () => {
+      localStorage.removeItem("auth-token");
+      localStorage.removeItem("active-site-id");
+      localStorage.removeItem("active-membership-id");
+      document.cookie = "auth-token=; path=/; max-age=0";
+      router.push("/login");
+    },
+    onError: () => {
+      // Even if backend fails, clear local state and redirect
+      localStorage.removeItem("auth-token");
+      localStorage.removeItem("active-site-id");
+      localStorage.removeItem("active-membership-id");
+      document.cookie = "auth-token=; path=/; max-age=0";
+      router.push("/login");
+    },
+  });
+
   const currentMembership = mySites?.find((s) =>
     activeMembershipId
       ? s.membershipId === activeMembershipId
       : s.site?.id === activeSiteId,
   );
+
   const handleSiteSwitch = (siteId: string, name: string, mId: string) => {
     localStorage.setItem("active-site-id", siteId);
     localStorage.setItem("active-membership-id", mId);
@@ -42,6 +79,30 @@ export function Header({
     setIsOpen(false);
     window.location.reload();
   };
+
+  const handleLogout = () => {
+    setIsUserMenuOpen(false);
+    logoutMutation.mutate();
+  };
+
+  // Get user initials for avatar
+  const userInitials = me?.name
+    ? me.name
+        .split(" ")
+        .map((n: string) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "?";
+
+  const roleName = currentMembership?.role?.name;
+  const roleLabel =
+    roleName === "SUPER_ADMIN" || roleName === "SITE_ADMIN"
+      ? "Yönetici"
+      : roleName === "STAFF"
+        ? "Görevli"
+        : "Sakin";
+
   return (
     <header
       className={cn(
@@ -153,8 +214,8 @@ export function Header({
         )}
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-3">
+      {/* Actions: Notification + User Menu */}
+      <div className="flex items-center gap-2">
         <button
           onClick={onNotificationClick}
           className="relative rounded-lg p-2 text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
@@ -167,6 +228,74 @@ export function Header({
             </span>
           )}
         </button>
+
+        {/* User Avatar + Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+            className="flex items-center gap-2 p-1 rounded-lg hover:bg-secondary transition-colors"
+          >
+            <div className="h-8 w-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary">
+              {userInitials}
+            </div>
+            <div className="hidden sm:block text-left">
+              <p className="text-xs font-semibold text-foreground truncate max-w-[100px]">
+                {me?.name || "Yükleniyor..."}
+              </p>
+              <p className="text-[10px] text-muted-foreground">{roleLabel}</p>
+            </div>
+            <ChevronDown className="h-3 w-3 text-muted-foreground hidden sm:block" />
+          </button>
+
+          {isUserMenuOpen && (
+            <>
+              <div
+                className="fixed inset-0 z-40"
+                onClick={() => setIsUserMenuOpen(false)}
+              />
+              <div className="absolute right-0 mt-1.5 w-56 rounded-lg bg-white border border-border p-1 shadow-lg z-50 animate-fade-in">
+                {/* User info */}
+                <div className="px-3 py-2.5 border-b border-border mb-1">
+                  <p className="text-sm font-semibold text-foreground truncate">
+                    {me?.name}
+                  </p>
+                  <p className="text-[11px] text-muted-foreground truncate">
+                    {me?.email}
+                  </p>
+                </div>
+
+                {/* Menu items */}
+                <Link
+                  href="/dashboard/settings?tab=PROFILE"
+                  onClick={() => setIsUserMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                >
+                  <User className="h-3.5 w-3.5" />
+                  Profil
+                </Link>
+                <Link
+                  href="/dashboard/settings?tab=ACCOUNT"
+                  onClick={() => setIsUserMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                >
+                  <Settings className="h-3.5 w-3.5" />
+                  Ayarlar
+                </Link>
+
+                <div className="border-t border-border mt-1 pt-1">
+                  <button
+                    onClick={handleLogout}
+                    disabled={logoutMutation.isPending}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-xs text-red-600 hover:bg-red-50 transition-colors"
+                  >
+                    <LogOut className="h-3.5 w-3.5" />
+                    {logoutMutation.isPending ? "Çıkış yapılıyor..." : "Çıkış Yap"}
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

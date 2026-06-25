@@ -27,6 +27,7 @@ export function AccountTab({ currentMembership }: AccountTabProps) {
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: (data) => {
       localStorage.setItem("auth-token", data.token || "");
+      document.cookie = `auth-token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
       if (data.memberships && data.memberships.length > 0) {
         localStorage.setItem("active-site-id", data.memberships[0].siteId);
       }
@@ -44,6 +45,7 @@ export function AccountTab({ currentMembership }: AccountTabProps) {
   const handleSimulatedSwap = (email: string, pass: string) => {
     localStorage.removeItem("auth-token");
     localStorage.removeItem("active-site-id");
+    document.cookie = "auth-token=; path=/; max-age=0";
     loginMutation.mutate({ email, password: pass });
   };
 
